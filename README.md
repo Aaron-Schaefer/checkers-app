@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Aaron Schaefer
-- An Chang (Mark)
+- An Chang (Mark) 
 - MEMBER3
 - MEMBER4
 
