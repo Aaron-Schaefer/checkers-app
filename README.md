@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Aaron Schaefer
 - An Chang (Mark)
-- MEMBER3
+- Ries Scerbin
 - MEMBER4
 
 
