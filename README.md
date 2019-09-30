@@ -10,6 +10,7 @@ a web micro-framework.
 - An Chang (Mark)
 - Ries Scerbin
 - Gavin Burris
+- Zachary Hahn
 
 
 ## Prerequisites
