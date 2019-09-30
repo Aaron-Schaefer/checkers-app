@@ -9,7 +9,7 @@ a web micro-framework.
 - Aaron Schaefer
 - An Chang (Mark)
 - Ries Scerbin
-- MEMBER4
+- Gavin Burris
 
 
 ## Prerequisites
