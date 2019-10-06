@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 
 import java.util.Iterator;
 
-public class Row implements Iterator{
+public class Row implements Iterable{
     private int index;
 
     public int getIndex() {
