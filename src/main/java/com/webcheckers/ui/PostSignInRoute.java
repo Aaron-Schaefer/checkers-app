@@ -44,11 +44,21 @@ public class PostSignInRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-        final String name = request.queryParams("playerName");
-        System.out.println(name);
-        Player player = new Player(name);
+        Session session = request.session();
 
-        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        PlayerLobby playerLobby = new PlayerLobby();
+        final String name = request.queryParams("playerName");
+        Player player = new Player(name);
+        session.attribute("currentPlayer", player);
+//        playerLobby.addPlayer(player);
+//        System.out.println(playerLobby.listPlayers());
+
+        response.redirect("/");
+        return "";
+
+        //return "Hello " + name + "!";
+
+        //return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
 
 

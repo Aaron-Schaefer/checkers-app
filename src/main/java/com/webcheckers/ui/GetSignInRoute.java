@@ -43,9 +43,11 @@ public class GetSignInRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-        final String name = request.queryParams("playerName");
-        System.out.println(name);
-        Player player = new Player(name);
+//        final String name = request.queryParams("playerName");
+//        System.out.println(name);
+        //Player player = new Player(name);
+
+        //return "Hello World!";
 
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
