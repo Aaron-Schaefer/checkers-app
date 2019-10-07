@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class GetSignInRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+public class PostSignInRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
@@ -21,11 +21,12 @@ public class GetSignInRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetSignInRoute(final TemplateEngine templateEngine) {
+    public PostSignInRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
-        LOG.config("GetSignInRoute is initialized.");
+        LOG.config("PostSignInRoute is initialized.");
     }
+
 
     /**
      * Render the WebCheckers SignIn page.
@@ -39,7 +40,7 @@ public class GetSignInRoute implements Route {
      *   the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
-        LOG.finer("GetSignInRoute is invoked.");
+        LOG.finer("PostSignInRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
 
@@ -49,4 +50,6 @@ public class GetSignInRoute implements Route {
 
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
+
+
 }
