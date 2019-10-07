@@ -17,8 +17,12 @@ public class GetGameRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response){
-        final Map<String, Object> vm = new HashMap<>();
+        Map<String, Object> vm = new HashMap<>();
 
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        vm.put("viewMode", "PLAY");
+
+
+
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }
