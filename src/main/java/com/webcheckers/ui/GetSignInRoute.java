@@ -1,16 +1,14 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.TemplateEngine;
+import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class GetSignInRoute {
+public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
@@ -44,7 +42,8 @@ public class GetSignInRoute {
         LOG.finer("GetSignInRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
+       // vm.put("Sign_Msg", "Enter Here:");
 
-        return null;
+        return templateEngine.render(new ModelAndView(vm , "nav-bar.ftl"));
     }
 }

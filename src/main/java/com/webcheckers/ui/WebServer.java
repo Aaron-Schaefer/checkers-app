@@ -54,6 +54,8 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  public static final String SIGN_IN_URL = "/signin";
+
   //
   // Attributes
   //
@@ -138,6 +140,9 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(templateEngine));
+
+    // Shows the Checkers game Sign In page.
+    get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
 
 
     //
