@@ -3,6 +3,11 @@ package com.webcheckers.ui;
 public class Space {
     private int cellIdx;
 
+    public Space(int index){
+
+        this.cellIdx = index;
+    }
+
     public int getCellIdx() {
         return cellIdx;
     }
