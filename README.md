@@ -7,9 +7,10 @@ a web micro-framework.
 ## Team
 
 - Aaron Schaefer
-- An Chang (Mark) 
-- MEMBER3
-- MEMBER4
+- An Chang (Mark)
+- Ries Scerbin
+- Gavin Burris
+- Zachary Hahn
 
 
 ## Prerequisites
