@@ -45,6 +45,7 @@ public class PostSignOutRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         // PlayerLobby playerLobby = new PlayerLobby();
+        request.session().invalidate();
 //        playerLobby.addPlayer(player);
 //        System.out.println(playerLobby.listPlayers());
 
