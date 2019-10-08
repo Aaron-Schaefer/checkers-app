@@ -7,10 +7,11 @@ package com.webcheckers.ui;
 
 public class Space {
     private int cellIdx;
-
-    public Space(int index){
+    private boolean isViable;
+    public Space(int index, boolean isViable){
 
         this.cellIdx = index;
+        this.isViable = isViable;
     }
 
     public int getCellIdx() {
@@ -18,7 +19,7 @@ public class Space {
     }
 
     public boolean isValid(){
-        return false;
+        return isViable;
     }
 
     public Piece getPiece(){

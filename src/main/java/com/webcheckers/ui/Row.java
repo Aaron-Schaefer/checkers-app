@@ -23,12 +23,12 @@ public class Row implements Iterable{
         this.index = index;
         for(int i =0; i<8; i++){
 
-            spaces.add(new Space(i));
+            spaces.add(new Space(i, (index+i)%2 == 1));
         }
     }
 
     @Override
     public Iterator<Space> iterator() {
-        return null;
+        return spaces.iterator();
     }
 }
