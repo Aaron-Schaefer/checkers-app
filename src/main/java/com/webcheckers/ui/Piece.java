@@ -5,7 +5,7 @@ package com.webcheckers.ui;
  * Can be a single piece or a king
  * Can be red or white
  *
- * @author
+ * @author Ries Scerbin
  */
 
 public class Piece {
