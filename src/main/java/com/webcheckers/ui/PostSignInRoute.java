@@ -49,6 +49,7 @@ public class PostSignInRoute implements Route {
         Player player = new Player(name);
         session.attribute("currentPlayer", player);
         boolean success = WebServer.PLAYER_LOBBY.addPlayer(player);
+        System.out.println(success);
         if (!success){
 
             session.invalidate();
@@ -56,6 +57,7 @@ public class PostSignInRoute implements Route {
         }
 
         response.redirect("/");
+        System.out.println(WebServer.PLAYER_LOBBY.listPlayers());
         return "";
 
         //return "Hello " + name + "!";

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerLobby {
-    private List<Player> players;
+    private ArrayList<Player> players;
 
     public PlayerLobby(){
         players = new ArrayList<>();
@@ -12,9 +12,11 @@ public class PlayerLobby {
 
     public boolean addPlayer(Player player){
         if(!players.contains(player)){
+
             players.add(player);
           //  wasAdded = true;
             return true;
+
         }
         return false;
     }
@@ -26,4 +28,12 @@ public class PlayerLobby {
         }
         return playString;
     }
+
+    public void remove(Player player){
+
+        players.remove(player);
+
+    }
+
+
 }

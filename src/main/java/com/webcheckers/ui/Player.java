@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 public class Player {
     private String name;
-    private boolean currentUser;
 
     public Player(String name){
         this.name = name;
@@ -10,5 +9,18 @@ public class Player {
 
     public String getName(){
         return this.name;
+    }
+
+    @Override
+    public boolean equals(Object object){
+
+        if (object ==this) return true;
+
+        if (!(object instanceof Player)) return false;
+
+        final Player that = (Player) object;
+
+        return (this.name.equals(that.name));
+
     }
 }
