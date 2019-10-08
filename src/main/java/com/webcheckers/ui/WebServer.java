@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import java.security.PublicKey;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -56,6 +57,7 @@ public class WebServer {
 
   public static final String SIGN_IN_URL = "/signin";
 
+  public static final String SIGN_OUT_URL = "/signout";
   //
   // Attributes
   //
@@ -145,6 +147,8 @@ public class WebServer {
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
 
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine));
+
+    post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
 
 
     //

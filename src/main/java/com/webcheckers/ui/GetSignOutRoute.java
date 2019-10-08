@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class PostSignOutRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
+public class GetSignOutRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
@@ -21,12 +21,11 @@ public class PostSignOutRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostSignOutRoute(final TemplateEngine templateEngine) {
+    public GetSignOutRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
-        LOG.config("PostSignInRoute is initialized.");
+        LOG.config("GetSignInRoute is initialized.");
     }
-
 
     /**
      * Render the WebCheckers SignIn page.
@@ -40,21 +39,16 @@ public class PostSignOutRoute implements Route {
      *   the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
-        LOG.finer("PostSignOutRoute is invoked.");
+        LOG.finer("GetSignInRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
 
-        // PlayerLobby playerLobby = new PlayerLobby();
-//        playerLobby.addPlayer(player);
-//        System.out.println(playerLobby.listPlayers());
+//        final String name = request.queryParams("playerName");
+//        System.out.println(name);
+        //Player player = new Player(name);
 
-        response.redirect("/");
-        return "";
+        //return "Hello World!";
 
-        //return "Hello " + name + "!";
-
-        //return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
     }
-
-
 }
