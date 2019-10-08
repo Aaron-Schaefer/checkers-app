@@ -1,5 +1,10 @@
 package com.webcheckers.ui;
 
+/** A single space on a checkers board
+ *
+ * @author Aaron Schaefer
+ */
+
 public class Space {
     private int cellIdx;
 
