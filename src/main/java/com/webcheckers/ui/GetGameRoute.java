@@ -20,8 +20,10 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         vm.put("viewMode", "PLAY");
+        //Will need to check the current player turn (Options: boolean field for a player -OR- increment turns and set
+        //a players turn based on even or odd
 
-
+        vm.put("activeColor", "RED");
 
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
