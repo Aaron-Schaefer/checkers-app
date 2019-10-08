@@ -28,11 +28,4 @@ public class PlayerLobby {
         }
         return playString;
     }
-
-    public static void main(String[] args) {
-        PlayerLobby playerLobby = new PlayerLobby();
-        Player player = new Player("Gavin");
-        playerLobby.addPlayer(player);
-        System.out.println(playerLobby.listPlayers());
-    }
 }

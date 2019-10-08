@@ -46,7 +46,7 @@ public class PostSignInRoute implements Route {
 
         Session session = request.session();
 
-        PlayerLobby playerLobby = new PlayerLobby();
+       // PlayerLobby playerLobby = new PlayerLobby();
         final String name = request.queryParams("playerName");
         Player player = new Player(name);
         session.attribute("currentPlayer", player);
