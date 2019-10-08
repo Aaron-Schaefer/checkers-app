@@ -9,15 +9,20 @@ package com.webcheckers.ui;
  */
 
 public class Piece {
-    private enum type{ SINGLE, KING}
+    private Type type;
+    private Color color;
 
-    private enum color{ RED, WHITE}
+    private enum Type{ SINGLE, KING}
 
-    public type getType(){
-        return null;
+    public enum Color{ RED, WHITE}
+
+    public Piece(Type type, Color color){
+        this.type = type;
+        this.color = color;
     }
+    public Type getType(){ return this.type; }
 
-    public color getColor(){
-        return null;
+    public Color getColor(){
+        return this.color;
     }
 }
