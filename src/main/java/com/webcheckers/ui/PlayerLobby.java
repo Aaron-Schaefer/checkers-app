@@ -10,15 +10,13 @@ public class PlayerLobby {
         players = new ArrayList<>();
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
-        //boolean wasAdded = false;
-//        if(!players.contains(player)){
-//            players.add(player);
-//          //  wasAdded = true;
-//        }
-        //return wasAdded;
-
+    public boolean addPlayer(Player player){
+        if(!players.contains(player)){
+            players.add(player);
+          //  wasAdded = true;
+            return true;
+        }
+        return false;
     }
 
     public String listPlayers(){

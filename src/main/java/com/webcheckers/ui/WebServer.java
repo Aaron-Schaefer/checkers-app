@@ -58,6 +58,8 @@ public class WebServer {
   public static final String SIGN_IN_URL = "/signin";
 
   public static final String SIGN_OUT_URL = "/signout";
+
+  public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
   //
   // Attributes
   //
