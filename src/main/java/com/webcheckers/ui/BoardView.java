@@ -25,6 +25,6 @@ public class BoardView implements Iterable {
 
     @Override
     public Iterator<Row> iterator() {
-        return null;
+        return rows.iterator();
     }
 }
