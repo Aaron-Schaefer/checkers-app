@@ -7,7 +7,9 @@ package com.webcheckers.ui;
 
 public class Space {
     private int cellIdx;
+    private Piece piece;
     private boolean isViable;
+
     public Space(int index, boolean isViable){
 
         this.cellIdx = index;
@@ -23,6 +25,6 @@ public class Space {
     }
 
     public Piece getPiece(){
-        return null;
+        return piece;
     }
 }
