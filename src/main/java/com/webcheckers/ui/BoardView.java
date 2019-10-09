@@ -23,10 +23,8 @@ public class BoardView implements Iterable {
     public BoardView(Board board){
         rows = new ArrayList<Row>();
         for(int i =0; i<8; i++){
-
-            rows.add(new Row(i));
+            rows.add(new Row(i, board.getRow(i)));
         }
-
     }
 
     public Piece.Color getActiveColor(){return activeColor;}

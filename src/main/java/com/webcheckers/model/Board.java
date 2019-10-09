@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.ui.Row;
 import com.webcheckers.ui.Space;
 import javafx.scene.layout.BackgroundSize;
 
@@ -42,6 +43,8 @@ public class Board {
             }
         }
     }
+
+    public Space[] getRow(int row){ return boardArray[row];}
 
     public boolean isSpaceValid(int row, int col ){
 

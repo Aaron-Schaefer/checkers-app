@@ -17,13 +17,13 @@ public class Row implements Iterable{
         return index;
     }
 
-    public Row(int index){
+    public Row(int index, Space[] spaceArray){
 
         spaces = new ArrayList<Space>();
         this.index = index;
         for(int i =0; i<8; i++){
 
-            spaces.add(new Space(i, (index+i)%2 == 1));
+            spaces.add(spaceArray[i]);
         }
     }
 
