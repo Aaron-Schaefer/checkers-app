@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PlayerLobby {
     private ArrayList<Player> players;
@@ -28,6 +27,15 @@ public class PlayerLobby {
         }
         return playString;
     }
+
+    public String[] playerArray(){
+        String[] playerNames = new String[players.size()];
+        for(int i = 0; i < players.size(); i++){
+            playerNames[i] = players.get(i).getName();
+        }
+        return playerNames;
+    }
+
 
     public void remove(Player player){
 

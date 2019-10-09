@@ -1,8 +1,6 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 import spark.*;
@@ -56,6 +54,9 @@ public class GetHomeRoute implements Route {
     if(player!=null){
       vm.put("currentUser", player);
     }
+    List<String> names = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
+    vm.put("players", names);
+
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
