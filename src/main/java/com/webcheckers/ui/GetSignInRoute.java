@@ -5,7 +5,6 @@ package com.webcheckers.ui;
  * Author: An Chang (Mark), Gavin Burris.
  * Purpose: A class to get sign in route.
  */
-import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -15,13 +14,14 @@ import java.util.logging.Logger;
 
 public class GetSignInRoute implements Route {
 
-    //
+    //The LOG for GetSignInRoute.
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
+    //The template engine for spark.
     private final TemplateEngine templateEngine;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /signin} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
