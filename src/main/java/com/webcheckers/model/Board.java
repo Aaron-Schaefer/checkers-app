@@ -18,13 +18,34 @@ public class Board {
     public Board(){
 
         boardArray = new Space[BOARD_SIZE][BOARD_SIZE];
+        initializeSpaces();
 
 
     }
 
+    private void initializeSpaces(){
+
+        for(int r = 0; r< BOARD_SIZE; r++){
+            for (int c = 0; c< BOARD_SIZE; c++){
+                if(r%2 == 0){
+                    if(c%2 == 0)
+                    boardArray[r][c] = new Space(c,false );
+                    else
+                        boardArray[r][c] = new Space(c, true);
+                }
+                else {
+                    if(c%2 == 0)
+                        boardArray[r][c] = new Space(c, true);
+                    else
+                        boardArray[r][c] = new Space(c, false);
+                }
+            }
+        }
+    }
+
     public boolean isSpaceValid(int row, int col ){
 
-        return (row%2==0 || col%2==0) && !(row%2==0 && col%2==0);
+        return boardArray[row][col].isValid() && boardArray[row][col].getPiece() == null;
     }
 
     public boolean addPiece(int row, int col, CheckersPiece piece){
