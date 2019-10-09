@@ -44,9 +44,18 @@ public class PostSignInRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
+        Message error = Message.info("Error!");
         Session session = request.session();
         String name = request.queryParams("playerName");
-        ;
+        if (name.equals("")){
+
+            session.invalidate();
+            vm.put("message", error);
+            response.redirect("/signin");
+            return "";
+
+
+        }
         Player player = new Player(name);
         session.attribute("currentPlayer", player);
         boolean success = WebServer.PLAYER_LOBBY.addPlayer(player);
@@ -54,6 +63,9 @@ public class PostSignInRoute implements Route {
         if (!success){
 
             session.invalidate();
+            vm.put("message", error);
+            response.redirect("/signin");
+            return "";
 
         }
 

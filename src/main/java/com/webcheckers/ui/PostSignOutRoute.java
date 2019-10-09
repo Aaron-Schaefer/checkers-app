@@ -44,9 +44,7 @@ public class PostSignOutRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-//        WebServer.PLAYER_LOBBY.remove(player);
-        Player player = request.session().attribute("currentPlayer");
-        WebServer.PLAYER_LOBBY.remove(player);
+        //WebServer.PLAYER_LOBBY.remove(player);
         request.session().invalidate();
 
         response.redirect("/");
