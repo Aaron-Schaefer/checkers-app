@@ -45,7 +45,8 @@ public class PostSignInRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         Session session = request.session();
-        final String name = request.queryParams("playerName");
+        String name = request.queryParams("playerName");
+        ;
         Player player = new Player(name);
         session.attribute("currentPlayer", player);
         boolean success = WebServer.PLAYER_LOBBY.addPlayer(player);
