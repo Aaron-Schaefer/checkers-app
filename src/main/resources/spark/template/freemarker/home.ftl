@@ -20,11 +20,15 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
-    <#list players as player>
-        <p>${player}
+    <#if currentUser??>
+        <#list players as player>
+            <a href="/">${player}</a></br>
+        </#list>
     <#else>
-        <p>No users
-    </#list>
+        <p>There <#if numPlayers == 1> is<#else> are</#if> currently
+        ${numPlayers} Player<#if numPlayers != 1>s</#if> signed in.
+    </#if>
+
 
 
     <!-- TODO: future content on the Home:
