@@ -48,34 +48,24 @@ public class PostSignInRoute implements Route {
         Session session = request.session();
         String name = request.queryParams("playerName");
         if (name.equals("")){
-
             session.invalidate();
             vm.put("message", error);
-            response.redirect("/signin");
-            return "";
-
-
+            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
+
         Player player = new Player(name);
         session.attribute("currentPlayer", player);
         boolean success = WebServer.PLAYER_LOBBY.addPlayer(player);
         System.out.println(success);
         if (!success){
-
             session.invalidate();
             vm.put("message", error);
-            response.redirect("/signin");
-            return "";
-
+            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
         response.redirect("/");
         System.out.println(WebServer.PLAYER_LOBBY.listPlayers());
         return "";
-
-        //return "Hello " + name + "!";
-
-        //return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
 
 
