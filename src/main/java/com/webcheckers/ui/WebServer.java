@@ -148,8 +148,11 @@ public class WebServer {
     // Shows the Checkers game Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
 
+    //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
+    //Player gets added to player lobby.
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine));
 
+    //Sign the player out and remove player from player lobby. Redirect back to home page.
     post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
 
 

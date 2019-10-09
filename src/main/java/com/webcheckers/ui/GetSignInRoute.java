@@ -1,5 +1,10 @@
 package com.webcheckers.ui;
 
+/**
+ * Language: Java
+ * Author: An Chang (Mark), Gavin Burris.
+ * Purpose: A class to get sign in route.
+ */
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -9,9 +14,9 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class GetSignInRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    //
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     private final TemplateEngine templateEngine;
 
