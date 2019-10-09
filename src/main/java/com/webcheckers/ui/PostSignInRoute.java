@@ -67,7 +67,6 @@ public class PostSignInRoute implements Route {
             response.redirect("/signin");
             return "";
 
-
         }
 
         response.redirect("/");
