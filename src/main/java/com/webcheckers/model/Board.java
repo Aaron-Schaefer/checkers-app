@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import com.webcheckers.ui.Space;
+import javafx.scene.layout.BackgroundSize;
+
 /**
  * Model of a checkers board
  *
@@ -8,11 +11,14 @@ package com.webcheckers.model;
  */
 public class Board {
 
-    private CheckersPiece boardArray[][];
+    private static final int BOARD_SIZE = 8;
+    private Space boardArray[][];
+
 
     public Board(){
 
-        boardArray = new CheckersPiece[8][8];
+        boardArray = new Space[BOARD_SIZE][BOARD_SIZE];
+
 
     }
 
@@ -25,19 +31,21 @@ public class Board {
 
         if(boardArray[row][col] == null && isSpaceValid(row, col)){
 
-            boardArray[row][col] = piece;
+            //TODO
+            //boardArray[row][col] = ;
 
         }
 
         return true;
     }
 
-    public CheckersPiece getPiece(int row, int col){
+    public Space getSpace(int row, int col){
 
         return boardArray[row][col];
     }
 
-    public boolean removePiece(int row, int col){
+    //TODO
+    /*public boolean removePiece(int row, int col){
 
         if(boardArray[row][col] != null){
 
@@ -47,6 +55,6 @@ public class Board {
         else
             return false;
 
-    }
+    }*/
 
 }
