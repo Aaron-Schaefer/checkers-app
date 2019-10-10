@@ -52,6 +52,32 @@ public class Board {
         }
     }
 
+    private void putPieces(){
+
+        for(int r = 0; r<BOARD_SIZE; r++){
+            for(int c= 0; c<BOARD_SIZE; c++){
+                if(r < 2){
+                    if(isSpaceValid(r,c)){
+                        addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+
+                    }
+
+
+                }
+
+                else if (r>5){
+                    addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+
     /**
      * Gets a row from the board model
      *
@@ -99,8 +125,7 @@ public class Board {
 
         if(boardArray[row][col] == null && isSpaceValid(row, col)){
 
-            //TODO
-            //boardArray[row][col] = ;
+            boardArray[row][col].addPiece(piece);
 
         }
 

@@ -27,4 +27,8 @@ public class Space {
     public Piece getPiece(){
         return piece;
     }
+
+    public void addPiece(Piece piece){
+        this.piece = piece;
+    }
 }
