@@ -29,7 +29,7 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         initializeSpaces();
-
+        putPieces();
 
     }
 
@@ -61,21 +61,12 @@ public class Board {
                         addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
 
                     }
-
-
                 }
-
                 else if (r>5){
                     addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
                 }
-
-
             }
-
-
         }
-
-
     }
 
     /**
@@ -137,17 +128,17 @@ public class Board {
         return boardArray[row][col];
     }
 
-    //TODO
-    /*public boolean removePiece(int row, int col){
+
+    public boolean removePiece(int row, int col){
 
         if(boardArray[row][col] != null){
 
-            boardArray[row][col] = null;
+            boardArray[row][col].addPiece(null);
             return true;
         }
         else
             return false;
 
-    }*/
+    }
 
 }
