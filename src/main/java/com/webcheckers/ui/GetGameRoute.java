@@ -25,19 +25,19 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
         Player player = session.attribute("currentPlayer");
-        System.out.println(player.getName());
 
-        String name = request.queryParams("playerName");
-        System.out.println(name);
-        Player whitePlayer = WebServer.PLAYER_LOBBY.getPlayer(name);
-       // System.out.println(whitePlayer);
-
+        if(WebServer.PLAYER_LOBBY.getRedPlayer() == null){
+            String name = request.queryParams("playerName");
+            WebServer.PLAYER_LOBBY.addToGame(player);
+            Player whitePlayer = WebServer.PLAYER_LOBBY.getPlayer(name);
+            WebServer.PLAYER_LOBBY.addToGame(whitePlayer);
+        }
 
         vm.put("title", "Time to play!");
         vm.put("viewMode", "PLAY");
         vm.put("currentUser", player);
-        vm.put("redPlayer", player);
-        vm.put("whitePlayer", whitePlayer);
+        vm.put("redPlayer", WebServer.PLAYER_LOBBY.getRedPlayer());
+        vm.put("whitePlayer", WebServer.PLAYER_LOBBY.getWhitePlayer());
         vm.put("activeColor", "activeColTest");
 
 

@@ -53,10 +53,19 @@ public class GetHomeRoute implements Route {
     Player player = session.attribute("currentPlayer");
     if(player!=null){
       vm.put("currentUser", player);
+      if(WebServer.PLAYER_LOBBY.getWhitePlayer() != null){
+        if(player.equals(WebServer.PLAYER_LOBBY.getWhitePlayer())){
+          System.out.println("This is working");
+          response.redirect("/game");
+        }
+      }
     }
     List<Player> names = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
     vm.put("players", names);
     vm.put("numPlayers", names.size());
+
+
+
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);

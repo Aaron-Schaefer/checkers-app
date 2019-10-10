@@ -20,8 +20,6 @@ public class PlayerLobby {
     public PlayerLobby(){
         players = new ArrayList<>();
         gamePlayers = new ArrayList<>();
-        Player redPlayer = null;
-        Player whitePlayer = null;
     }
 
     /**
