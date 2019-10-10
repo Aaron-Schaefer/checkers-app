@@ -12,7 +12,7 @@ public class Piece {
     private Type type;
     private Color color;
 
-    private enum Type{ SINGLE, KING}
+    public enum Type{ SINGLE, KING}
 
     public enum Color{ RED, WHITE}
 

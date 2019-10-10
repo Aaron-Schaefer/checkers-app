@@ -14,14 +14,18 @@ import java.util.Iterator;
 
 public class BoardView implements Iterable {
 
+    private static final int BOARD_SIZE = 8;
     private ArrayList<Row> rows;
     private Piece.Color activeColor;
-    //private Player redPlayer;
-    //private Player whitePlayer;
+    private Player redPlayer;
+    private Player whitePlayer;
 
 
-    public BoardView(Board board){
+    public BoardView(Board board, Player player){
         rows = new ArrayList<Row>();
+
+        Piece.Color playersColor = getPlayerColor(player, board);
+
         for(int i =0; i<8; i++){
             rows.add(new Row(i, board.getRow(i)));
         }
@@ -29,29 +33,28 @@ public class BoardView implements Iterable {
 
     public Piece.Color getActiveColor(){return activeColor;}
 
-    //TODO will need player class to implement the following code
+    private Piece.Color getPlayerColor(Player player, Board model) {
+        if (model.getWhitePlayer().equals(player) ) {
+            return Piece.Color.WHITE;
+        }
+        if (model.getRedPlayer().equals(player)) {
+            return Piece.Color.RED;
+        }
+        return null;
+    }
 
-//    private Piece.color getPlayerColor(Player player, BoardModel model) {
-//        if (model.getWhitePlayer() == player) {
-//            return Piece.color.WHITE;
-//        }
-//        if (model.getRedPlayer() == player) {
-//            return Piece.color.RED;
-//        }
-//        return null;
-//    }
 
-    //Will need the following for checking and getting the players/colors
-//    public Player getWhitePlayer(){return whitePlayer;}
-//
-//    public Player getRedPlayer(){return redPlayer}
-//
-//    public Player getActivePlayer(){
-//        if (activeColor == Piece.Color.RED){
-//            return redPlayer;
-//        }
-//        else{return whitePlayer}
-//    }
+    public Player getWhitePlayer(){return whitePlayer;}
+
+    public Player getRedPlayer(){return redPlayer;}
+
+    public Player getActivePlayer(){
+        if (activeColor == Piece.Color.RED){
+            return redPlayer;
+        }
+        else
+            return whitePlayer;
+    }
     @Override
     public Iterator<Row> iterator() {
         return rows.iterator();

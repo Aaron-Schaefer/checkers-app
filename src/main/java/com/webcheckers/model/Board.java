@@ -1,9 +1,9 @@
 package com.webcheckers.model;
 
 import com.webcheckers.ui.Piece;
-import com.webcheckers.ui.Row;
+import com.webcheckers.ui.Player;
 import com.webcheckers.ui.Space;
-import javafx.scene.layout.BackgroundSize;
+
 
 /**
  * Model of a checkers board
@@ -15,15 +15,19 @@ public class Board {
 
     private static final int BOARD_SIZE = 8;
     private Space boardArray[][];
+    private Player whitePlayer;
+    private Player redPlayer;
 
 
     /**
      * Constructor for the Board
      *
      */
-    public Board(){
+    public Board(Player whitePlayer, Player redPlayer){
 
         boardArray = new Space[BOARD_SIZE][BOARD_SIZE];
+        this.redPlayer = redPlayer;
+        this.whitePlayer = whitePlayer;
         initializeSpaces();
 
 
@@ -74,6 +78,10 @@ public class Board {
         }
         return backwardsRow;
     }
+
+    public Player getWhitePlayer(){return whitePlayer; }
+
+    public Player getRedPlayer(){return redPlayer;}
 
     /**
      * Checks if space is a valid space for a piece to exist

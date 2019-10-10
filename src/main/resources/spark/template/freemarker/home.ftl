@@ -26,7 +26,7 @@
         </br>
         <#list players as player>
             <#if currentUser.name != player>
-                <a href="/">${player}</a></br></br>
+                <a href="/game">${player}</a></br></br>
             <#else>
                 <#if numPlayers lt 2>
                     There are no other players available to play at this time.
@@ -37,6 +37,7 @@
         <p>There <#if numPlayers == 1> is<#else> are</#if> currently
         ${numPlayers} Player<#if numPlayers != 1>s</#if> signed in.
     </#if>
+
 
 
 
