@@ -62,11 +62,12 @@ public class Board {
                 if(r < 2){
                     if(isSpaceValid(r,c)){
                         addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-
+                        System.out.println("red piece added");
                     }
                 }
                 else if (r>5){
                     addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                    System.out.println("white piece added");
                 }
             }
         }
@@ -93,7 +94,7 @@ public class Board {
 
         for(int i = 0; i<BOARD_SIZE; i++){
 
-            backwardsRow[(BOARD_SIZE-i)-1] = temp[i-1];
+            backwardsRow[(BOARD_SIZE-i)-1] = temp[i];
 
         }
         return backwardsRow;
