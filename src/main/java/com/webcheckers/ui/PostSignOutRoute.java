@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
+/**
+ * Language: Java
+ * Author: An Chang (Mark), Gavin Burris.
+ * Purpose: A class to post a sign out route..
+ */
 public class PostSignOutRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
@@ -44,7 +48,7 @@ public class PostSignOutRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-//        WebServer.PLAYER_LOBBY.remove(player);
+        //Gets the player, and remove him from the player lobby.
         Player player = request.session().attribute("currentPlayer");
         WebServer.PLAYER_LOBBY.remove(player);
         request.session().invalidate();
@@ -52,9 +56,6 @@ public class PostSignOutRoute implements Route {
         response.redirect("/");
         return "";
 
-        //return "Hello " + name + "!";
-
-        //return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
 
 
