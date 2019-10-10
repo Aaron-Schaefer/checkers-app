@@ -52,6 +52,9 @@ public class Board {
         }
     }
 
+    /**
+     * Puts a piece in a valid space
+     */
     private void putPieces(){
 
         for(int r = 0; r<BOARD_SIZE; r++){
@@ -96,8 +99,16 @@ public class Board {
         return backwardsRow;
     }
 
+    /**
+     *Get the white player
+     * @return
+     */
     public Player getWhitePlayer(){return whitePlayer; }
 
+    /**
+     *Get the red player
+     * @return
+     */
     public Player getRedPlayer(){return redPlayer;}
 
     /**
@@ -112,6 +123,13 @@ public class Board {
         return boardArray[row][col].isValid() && boardArray[row][col].getPiece() == null;
     }
 
+    /**
+     *Adds a piece to a location on the board
+     * @param row
+     * @param col
+     * @param piece
+     * @return
+     */
     public boolean addPiece(int row, int col, Piece piece){
 
         if(boardArray[row][col] == null && isSpaceValid(row, col)){
@@ -123,12 +141,23 @@ public class Board {
         return true;
     }
 
+    /**
+     * Gets the space at a row and col
+     * @param row
+     * @param col
+     * @return
+     */
     public Space getSpace(int row, int col){
 
         return boardArray[row][col];
     }
 
-
+    /**
+     *Removes a piece from a specific space
+     * @param row
+     * @param col
+     * @return
+     */
     public boolean removePiece(int row, int col){
 
         if(boardArray[row][col] != null){
