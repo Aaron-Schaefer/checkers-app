@@ -26,8 +26,16 @@ public class BoardView implements Iterable {
 
         Piece.Color playersColor = getPlayerColor(player, board);
 
-        for(int i =0; i<8; i++){
-            rows.add(new Row(i, board.getRow(i)));
+        if(playersColor == Piece.Color.RED) {
+            for (int i = 0; i < 8; i++) {
+                rows.add(new Row(i, board.getRow(i)));
+            }
+        }
+        else if(playersColor == Piece.Color.WHITE){
+            for(int i = 7; i>=0; i--){
+                rows.add(new Row(i, board.getBackwardsRow(i)));
+            }
+
         }
     }
 
