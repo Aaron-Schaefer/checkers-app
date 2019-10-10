@@ -25,8 +25,11 @@
     <#if currentUser??>
         </br>
         <#list players as player>
-            <#if currentUser.name != player>
-                <a href="/game">${player}</a></br></br>
+            <#if currentUser.name != player.name>
+                <form action="/game" method="GET">
+                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
+                    <button type='submit'>Play Game</button>
+                </form>
             <#else>
                 <#if numPlayers lt 2>
                     There are no other players available to play at this time.

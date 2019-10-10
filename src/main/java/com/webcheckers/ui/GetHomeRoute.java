@@ -54,10 +54,9 @@ public class GetHomeRoute implements Route {
     if(player!=null){
       vm.put("currentUser", player);
     }
-    List<String> names = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
+    List<Player> names = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
     vm.put("players", names);
     vm.put("numPlayers", names.size());
-
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);

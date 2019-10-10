@@ -10,12 +10,18 @@ import java.util.*;
 public class PlayerLobby {
     //ArrayList of players.
     private ArrayList<Player> players;
+    private ArrayList<Player> gamePlayers;
+    private Player redPlayer;
+    private Player whitePlayer;
 
     /**
      *Initializes a new player lobby.
      */
     public PlayerLobby(){
         players = new ArrayList<>();
+        gamePlayers = new ArrayList<>();
+        Player redPlayer = null;
+        Player whitePlayer = null;
     }
 
     /**
@@ -34,19 +40,45 @@ public class PlayerLobby {
         return false;
     }
 
+    public void addToGame(Player player){
+        if(gamePlayers.isEmpty()){
+            redPlayer = player;
+        }
+        else{
+            whitePlayer = player;
+        }
+        gamePlayers.add(player);
+    }
+
+    public Player getRedPlayer(){
+        return this.redPlayer;
+    }
+
+    public Player getWhitePlayer(){
+        return this.whitePlayer;
+    }
 
     /**
      * Returns the list of players in a string array.
      * @return  the players in a string array with their username,
      */
-    public String[] playerArray(){
-        String[] playerNames = new String[players.size()];
+    public Player[] playerArray(){
+        Player[] playerNames = new Player[players.size()];
         for(int i = 0; i < players.size(); i++){
-            playerNames[i] = players.get(i).getName();
+            playerNames[i] = players.get(i);
         }
         return playerNames;
     }
 
+    public Player getPlayer(String name){
+        Player[] playerNames = this.playerArray();
+        for(int i = 0; i < playerNames.length; i++){
+            if(playerNames[i].getName().equals(name)){
+                return playerNames[i];
+            }
+        }
+        return null;
+    }
 
     /**
      * Removes a player.

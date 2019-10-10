@@ -57,36 +57,36 @@
           </fieldset>
           
         </div>
-  
-        <div class="game-board">
-          <table id="game-board">
-            <tbody>
-            <#list board.iterator() as row>
-              <tr data-row="${row.index}">
-              <#list row.iterator() as space>
-                <td data-cell="${space.cellIdx}"
-                    <#if space.isValid() >
-                    class="Space"
-                    </#if>
-                    >
-                <#if space.piece??>
-                  <div class="Piece"
-                       id="piece-${row.index}-${space.cellIdx}"
-                       data-type="${space.piece.type}"
-                       data-color="${space.piece.color}">
-                  </div>
-                </#if>
-                </td>
-              </#list>
-              </tr>
-            </#list>
-            </tbody>
-          </table>
-        </div>
-      </div>
 
-    </div>
-  </div>
+<#--        <div class="game-board">-->
+<#--          <table id="game-board">-->
+<#--            <tbody>-->
+<#--            <#list board.iterator() as row>-->
+<#--              <tr data-row="${row.index}">-->
+<#--              <#list row.iterator() as space>-->
+<#--                <td data-cell="${space.cellIdx}"-->
+<#--                    <#if space.isValid() >-->
+<#--                    class="Space"-->
+<#--                    </#if>-->
+<#--                    >-->
+<#--                <#if space.piece??>-->
+<#--                  <div class="Piece"-->
+<#--                       id="piece-${row.index}-${space.cellIdx}"-->
+<#--                       data-type="${space.piece.type}"-->
+<#--                       data-color="${space.piece.color}">-->
+<#--                  </div>-->
+<#--                </#if>-->
+<#--                </td>-->
+<#--              </#list>-->
+<#--              </tr>-->
+<#--            </#list>-->
+<#--            </tbody>-->
+<#--          </table>-->
+<#--        </div>-->
+<#--      </div>-->
+
+<#--    </div>-->
+<#--  </div>-->
 
   <audio id="audio" src="http://www.soundjay.com/button/beep-07.mp3" autostart="false" ></audio>
   
