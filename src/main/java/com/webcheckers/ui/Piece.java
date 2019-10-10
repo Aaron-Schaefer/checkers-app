@@ -11,17 +11,31 @@ package com.webcheckers.ui;
 public class Piece {
     private Type type;
     private Color color;
-
+    //
     public enum Type{ SINGLE, KING}
-
+    //
     public enum Color{ RED, WHITE}
 
+    /**
+     *Constructor for a piece
+     * @param type
+     * @param color
+     */
     public Piece(Type type, Color color){
         this.type = type;
         this.color = color;
     }
+
+    /**
+     *Gets the type of the piece
+     * @return
+     */
     public Type getType(){ return this.type; }
 
+    /**
+     *Gets the color of the piece
+     * @return
+     */
     public Color getColor(){
         return this.color;
     }

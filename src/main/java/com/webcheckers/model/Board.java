@@ -29,7 +29,7 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         initializeSpaces();
-
+        putPieces();
 
     }
 
@@ -47,6 +47,26 @@ public class Board {
                 }
                 else if( (c+r)%2 != 0){
                     boardArray[r][c] = new Space(c, true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Puts a piece in a valid space
+     */
+    private void putPieces(){
+
+        for(int r = 0; r<BOARD_SIZE; r++){
+            for(int c= 0; c<BOARD_SIZE; c++){
+                if(r < 2){
+                    if(isSpaceValid(r,c)){
+                        addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+
+                    }
+                }
+                else if (r>5){
+                    addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
                 }
             }
         }
@@ -79,8 +99,16 @@ public class Board {
         return backwardsRow;
     }
 
+    /**
+     *Get the white player
+     * @return
+     */
     public Player getWhitePlayer(){return whitePlayer; }
 
+    /**
+     *Get the red player
+     * @return
+     */
     public Player getRedPlayer(){return redPlayer;}
 
     /**
@@ -95,34 +123,51 @@ public class Board {
         return boardArray[row][col].isValid() && boardArray[row][col].getPiece() == null;
     }
 
+    /**
+     *Adds a piece to a location on the board
+     * @param row
+     * @param col
+     * @param piece
+     * @return
+     */
     public boolean addPiece(int row, int col, Piece piece){
 
         if(boardArray[row][col] == null && isSpaceValid(row, col)){
 
-            //TODO
-            //boardArray[row][col] = ;
+            boardArray[row][col].addPiece(piece);
 
         }
 
         return true;
     }
 
+    /**
+     * Gets the space at a row and col
+     * @param row
+     * @param col
+     * @return
+     */
     public Space getSpace(int row, int col){
 
         return boardArray[row][col];
     }
 
-    //TODO
-    /*public boolean removePiece(int row, int col){
+    /**
+     *Removes a piece from a specific space
+     * @param row
+     * @param col
+     * @return
+     */
+    public boolean removePiece(int row, int col){
 
         if(boardArray[row][col] != null){
 
-            boardArray[row][col] = null;
+            boardArray[row][col].addPiece(null);
             return true;
         }
         else
             return false;
 
-    }*/
+    }
 
 }
