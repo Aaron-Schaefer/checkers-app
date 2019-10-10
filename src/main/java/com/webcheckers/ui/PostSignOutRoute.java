@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 public class PostSignOutRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-
     private final TemplateEngine templateEngine;
 
     /**
@@ -45,8 +43,6 @@ public class PostSignOutRoute implements Route {
      */
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignOutRoute is invoked.");
-        //
-        Map<String, Object> vm = new HashMap<>();
 
         //Gets the player, and remove him from the player lobby.
         Player player = request.session().attribute("currentPlayer");
