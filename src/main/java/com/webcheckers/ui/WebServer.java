@@ -59,6 +59,8 @@ public class WebServer {
 
   public static final String SIGN_OUT_URL = "/signout";
 
+  public static final String GAME_URL = "/game";
+
   public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
   //
   // Attributes
@@ -154,6 +156,9 @@ public class WebServer {
 
     //Sign the player out and remove player from player lobby. Redirect back to home page.
     post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
+
+    //Display of the game for the player
+    get(GAME_URL, new GetGameRoute(templateEngine));
 
 
     //
