@@ -1,25 +1,53 @@
 package com.webcheckers.ui;
 
+/**
+ * Language: Java
+ * Author: An Chang (Mark), Gavin Burris.
+ * Purpose: A class to get sign in route.
+ */
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+public class GetSignInRoute implements Route {
 
-import com.webcheckers.util.Message;
-//public class GetSignInRoute {
-//    private final TemplateEngine templateEngine;
-//    private boolean IsSignedIn;
-//    public Object handle(Request request, Response response){
-//        final Map<String,Object> vm = new HashMap<>();
-//        vm.put("pageTitle", "Home");
-//        return templateEngine.render(new ModelAndView(vm,"home.ftl"));
-//
-//    }
-//
-//}
+    //The LOG for GetSignInRoute.
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+
+    //The template engine for spark.
+    private final TemplateEngine templateEngine;
+
+    /**
+     * Create the Spark Route (UI controller) to handle all {@code GET /signin} HTTP requests.
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
+    public GetSignInRoute(final TemplateEngine templateEngine) {
+        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        //
+        LOG.config("GetSignInRoute is initialized.");
+    }
+
+    /**
+     * Render the WebCheckers SignIn page.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Home page
+     */
+    public Object handle(Request request, Response response) {
+        LOG.finer("GetSignInRoute is invoked.");
+        //
+        Map<String, Object> vm = new HashMap<>();
+
+        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+    }
+}

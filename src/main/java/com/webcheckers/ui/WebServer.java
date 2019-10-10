@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import java.security.PublicKey;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -54,11 +55,11 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
-  /**
-   * The URL pattern to request the Game page.
-   */
-  public static final String GAME_URL = "/game";
+  public static final String SIGN_IN_URL = "/signin";
 
+  public static final String SIGN_OUT_URL = "/signout";
+
+  public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
   //
   // Attributes
   //
@@ -144,8 +145,16 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(templateEngine));
 
-    // Shows the Checkers game Game page.
-    get(GAME_URL, new GetGameRoute(templateEngine));
+    // Shows the Checkers game Sign In page.
+    get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+
+    //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
+    //Player gets added to player lobby.
+    post(SIGN_IN_URL, new PostSignInRoute(templateEngine));
+
+    //Sign the player out and remove player from player lobby. Redirect back to home page.
+    post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
+
 
     //
     LOG.config("WebServer is initialized.");
