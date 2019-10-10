@@ -7,12 +7,16 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GetGameRoute implements Route {
-    private final TemplateEngine templateEngine;
 
-    GetGameRoute(final TemplateEngine templateEngine) {
+    private final TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
+
+    GetGameRoute(final TemplateEngine templateEngine, PlayerLobby playerLobby) {
         Objects.requireNonNull(templateEngine, "templateEngine is required");
+        Objects.requireNonNull(playerLobby, "Players are required to play");
         //
         this.templateEngine = templateEngine;
+        this.playerLobby = playerLobby;
     }
 
     @Override
