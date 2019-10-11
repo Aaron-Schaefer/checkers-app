@@ -21,6 +21,7 @@ public class Board {
 
     /**
      * Constructor for the Board
+     * Creates a board model
      *
      */
     public Board(Player whitePlayer, Player redPlayer){
@@ -30,7 +31,7 @@ public class Board {
         this.whitePlayer = whitePlayer;
         initializeSpaces();
         //putPieces();
-        print();
+        //print();
 
 
 
@@ -83,6 +84,11 @@ public class Board {
 //        }
 //    }
 
+
+    /**
+     * Test print of the board to standard output
+     *
+     */
     public void print(){
 
         for(int r = 0; r<BOARD_SIZE; r++){
@@ -129,13 +135,13 @@ public class Board {
 
     /**
      *Get the white player
-     * @return
+     * @return the white player
      */
     public Player getWhitePlayer(){return whitePlayer; }
 
     /**
      *Get the red player
-     * @return
+     * @return the red player
      */
     public Player getRedPlayer(){return redPlayer;}
 
