@@ -45,14 +45,21 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
-    //
+
+    //Hash map for the view model.
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
+    //Get current session, and get the current Player from the session.
     Session session = request.session();
     Player player = session.attribute("currentPlayer");
+
+    //Sets the current User as the current Player if not already set.
     if(player!=null){
       vm.put("currentUser", player);
+
+      //Redirects the current Player to the /game URL if the current Player
+      //is the White Player.
       if(WebServer.PLAYER_LOBBY.getWhitePlayer() != null){
         if(player.equals(WebServer.PLAYER_LOBBY.getWhitePlayer())){
           response.redirect("/game");
@@ -60,14 +67,16 @@ public class GetHomeRoute implements Route {
       }
     }
 
-    List<Player> names = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
-    vm.put("players", names);
-    vm.put("numPlayers", names.size());
+    //Makes a list of players and puts it, and the number of Players to the
+    //home.ftl file.
+    List<Player> players = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
+    vm.put("players", players);
+    vm.put("numPlayers", players.size());
 
-    // display a user message in the Home page
+    //Displays a user error if the current Player chose a Player who's already
+    //in a game. Otherwise it displaces the WELCOME_MSG.
     if(WebServer.PLAYER_LOBBY.isChoseInGame()){
       Message inGame = Message.info("Error! This player is already in a game!");
-      System.out.println("Yes");
       vm.put("message", inGame);
       WebServer.PLAYER_LOBBY.notChoseInGame();
     }
@@ -75,7 +84,7 @@ public class GetHomeRoute implements Route {
       vm.put("message", WELCOME_MSG);
     }
 
-    // render the View
+    //Render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }
 }

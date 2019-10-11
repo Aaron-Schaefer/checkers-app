@@ -43,11 +43,14 @@ public class GetSignInRoute implements Route {
      * @return
      *   the rendered HTML for the Home page
      */
+    @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignInRoute is invoked.");
-        //
+
+        //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
 
+        //Renders the view
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
 }
