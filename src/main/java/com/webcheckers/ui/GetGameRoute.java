@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Board;
 import spark.*;
 
 import java.util.HashMap;
@@ -44,7 +45,12 @@ public class GetGameRoute implements Route {
         vm.put("currentUser", currentPlayer);
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);
-        vm.put("activeColor", "activeColTest");
+        vm.put("activeColor", Piece.Color.RED);
+
+        Board model = new Board(WebServer.PLAYER_LOBBY.getWhitePlayer(), WebServer.PLAYER_LOBBY.getRedPlayer());
+        BoardView boardView = new BoardView(model, currentPlayer);
+
+        vm.put("board", boardView);
 
 
 
