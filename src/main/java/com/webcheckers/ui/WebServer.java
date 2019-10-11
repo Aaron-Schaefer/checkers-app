@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
-import java.security.PublicKey;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -41,7 +40,7 @@ import spark.TemplateEngine;
  * </ul>
  * </p>
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>, An Chang (Mark)
  */
 public class WebServer {
   private static final Logger LOG = Logger.getLogger(WebServer.class.getName());

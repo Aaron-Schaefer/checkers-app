@@ -11,9 +11,9 @@ package com.webcheckers.ui;
 public class Piece {
     private Type type;
     private Color color;
-    //
+    //Type of chest piece.
     public enum Type{ SINGLE, KING}
-    //
+    //Color of chest piece.
     public enum Color{ RED, WHITE}
 
     /**

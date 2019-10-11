@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 
 /**
  * Language: Java
- * Author: An Chang (Mark), Gavin Burris.
+ * @Author: An Chang (Mark), Gavin Burris.
  * Purpose: A class to represent a player lobby.
  */
 import java.util.*;

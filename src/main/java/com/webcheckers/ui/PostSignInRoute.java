@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 
 /**
  * Language: Java
- * Author: An Chang (Mark), Gavin Burris.
+ * @Author: An Chang (Mark), Gavin Burris.
  * Purpose: A class to post a sign in route..
  */
 import com.webcheckers.util.Message;
