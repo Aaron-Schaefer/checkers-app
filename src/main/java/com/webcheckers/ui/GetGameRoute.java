@@ -42,9 +42,15 @@ public class GetGameRoute implements Route {
         //Get current session, and get the current Player from the session.
         Session session = request.session();
         Player currentPlayer = session.attribute("currentPlayer");
+
+        //Set the Red Player and the White player as the Red Player and White Player
+        //given by the Player Lobby.
         Player redPlayer = WebServer.PLAYER_LOBBY.getRedPlayer();
         Player whitePlayer = WebServer.PLAYER_LOBBY.getWhitePlayer();
 
+        //Sets the Red Player as the current Player who selected to start a game. Sets
+        //the White Player as the player who was selected on the home page. Adds both to
+        //PlayerLobby.
         if(WebServer.PLAYER_LOBBY.getRedPlayer() == null){
             redPlayer = currentPlayer;
             WebServer.PLAYER_LOBBY.addToGame(redPlayer);
@@ -52,6 +58,8 @@ public class GetGameRoute implements Route {
             whitePlayer = WebServer.PLAYER_LOBBY.getPlayer(name);
             WebServer.PLAYER_LOBBY.addToGame(whitePlayer);
         }
+        //Sets the boolean in PlayerLobby to true to display a message error if the current
+        //User selects a player who is already in a game.
         else if(currentPlayer != redPlayer && currentPlayer != whitePlayer){
             WebServer.PLAYER_LOBBY.playerChoseInGame();
             response.redirect("/");
@@ -60,18 +68,22 @@ public class GetGameRoute implements Route {
             WebServer.PLAYER_LOBBY.notChoseInGame();
         }
 
+        //Creates the Board model.
+        Board model = new Board(whitePlayer, redPlayer);
+
+        //Creates the BoardView.
+        BoardView boardView = new BoardView(model, currentPlayer);
+
+        //Uses view model to put to the variables to the game.ftl file.
         vm.put("title", "Time to play!");
         vm.put("viewMode", "PLAY");
         vm.put("currentUser", currentPlayer);
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);
         vm.put("activeColor", Piece.Color.RED);
-
-        Board model = new Board(WebServer.PLAYER_LOBBY.getWhitePlayer(), WebServer.PLAYER_LOBBY.getRedPlayer());
-        BoardView boardView = new BoardView(model, currentPlayer);
-
         vm.put("board", boardView);
 
+        //Renders the view.
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

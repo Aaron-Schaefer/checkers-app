@@ -8,11 +8,15 @@ package com.webcheckers.ui;
 import java.util.*;
 
 public class PlayerLobby {
-    //ArrayList of players.
+    //ArrayList of Players.
     private ArrayList<Player> players;
+    //ArrayList of Players in the game.
     private ArrayList<Player> gamePlayers;
+    //The red Player.
     private Player redPlayer;
+    //The white Player.
     private Player whitePlayer;
+    //The boolean for the error message.
     private boolean choseInGame;
 
     /**
@@ -33,7 +37,6 @@ public class PlayerLobby {
         if(!players.contains(player)){
 
             players.add(player);
-          //  wasAdded = true;
             return true;
 
         }
@@ -90,14 +93,24 @@ public class PlayerLobby {
 
     }
 
+    /**
+     * Sets choseInGame to true.
+     */
     public void playerChoseInGame(){
         choseInGame = true;
     }
 
+    /**
+     * Sets choseInGame to false.
+     */
     public void notChoseInGame(){
         choseInGame = false;
     }
 
+    /**
+     * Returns choseInGame.
+     * @return choseInGame
+     */
     public boolean isChoseInGame(){
         return choseInGame;
     }

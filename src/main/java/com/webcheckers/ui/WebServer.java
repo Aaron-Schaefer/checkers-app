@@ -55,12 +55,22 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  /**
+   * The URL pattern to request the Sign In page.
+   */
   public static final String SIGN_IN_URL = "/signin";
 
+  /**
+   * The URL pattern to request the Sign Out page.
+   */
   public static final String SIGN_OUT_URL = "/signout";
 
+  /**
+   * The URL pattern to request the Game page.
+   */
   public static final String GAME_URL = "/game";
 
+  //Initializes the Games PlayerLobby.
   public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
   //
   // Attributes
