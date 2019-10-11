@@ -18,6 +18,7 @@ public class Piece {
 
     /**
      *Constructor for a piece
+     *
      * @param type
      * @param color
      */
