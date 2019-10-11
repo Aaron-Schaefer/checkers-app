@@ -50,6 +50,7 @@ public class Space {
      * @param piece
      */
     public void addPiece(Piece piece){
-        this.piece = piece;
+        if(piece != null)
+            this.piece = piece;
     }
 }

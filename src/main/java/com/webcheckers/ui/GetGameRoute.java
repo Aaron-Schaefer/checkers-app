@@ -38,14 +38,14 @@ public class GetGameRoute implements Route {
         vm.put("currentUser", player);
         vm.put("redPlayer", WebServer.PLAYER_LOBBY.getRedPlayer());
         vm.put("whitePlayer", WebServer.PLAYER_LOBBY.getWhitePlayer());
-        vm.put("activeColor", "activeColTest");
+        vm.put("activeColor", Piece.Color.RED);
 
         Board model = new Board(WebServer.PLAYER_LOBBY.getWhitePlayer(), WebServer.PLAYER_LOBBY.getRedPlayer());
         BoardView boardView = new BoardView(model, player);
 
+
+
         vm.put("board", boardView);
-
-
 
 
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));

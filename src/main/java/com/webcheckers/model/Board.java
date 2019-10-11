@@ -29,7 +29,10 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         initializeSpaces();
-        putPieces();
+        //putPieces();
+        print();
+
+
 
     }
 
@@ -47,30 +50,54 @@ public class Board {
                 }
                 else if( (c+r)%2 != 0){
                     boardArray[r][c] = new Space(c, true);
+                    if(r<2) {
+                        addPiece(r, c, new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+                        //System.out.println(boardArray[r][c].getPiece().toString());
+                    }
+                    else if(r>5)
+                        addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+
                 }
             }
         }
     }
 
-    /**
-     * Puts a piece in a valid space
-     */
-    private void putPieces(){
+//    /**
+//     * Puts a piece in a valid space
+//     */
+//    private void putPieces(){
+//
+//        for(int r = 0; r<BOARD_SIZE; r++){
+//            for(int c= 0; c<BOARD_SIZE; c++){
+//                if(r < 2){
+//                    if(isSpaceValid(r,c)){
+//                        addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+//                        System.out.println("red piece added");
+//                    }
+//                }
+//                else if (r>5){
+//                    addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+//                    System.out.println("white piece added");
+//                }
+//            }
+//        }
+//    }
+
+    public void print(){
 
         for(int r = 0; r<BOARD_SIZE; r++){
-            for(int c= 0; c<BOARD_SIZE; c++){
-                if(r < 2){
-                    if(isSpaceValid(r,c)){
-                        addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-                        System.out.println("red piece added");
-                    }
-                }
-                else if (r>5){
-                    addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-                    System.out.println("white piece added");
-                }
+            for(int c =0; c<BOARD_SIZE; c++){
+
+                if(boardArray[r][c].getPiece() != null)
+                    System.out.print("["+ boardArray[r][c].getPiece().toString() +"]");
+
+                 else
+                    System.out.print("[ ]");
             }
+            System.out.println();
+
         }
+
     }
 
     /**
@@ -133,7 +160,7 @@ public class Board {
      */
     public boolean addPiece(int row, int col, Piece piece){
 
-        if(boardArray[row][col] == null && isSpaceValid(row, col)){
+        if(boardArray[row][col].getPiece() == null && isSpaceValid(row, col)){
 
             boardArray[row][col].addPiece(piece);
 

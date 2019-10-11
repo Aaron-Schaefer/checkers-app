@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -28,12 +30,9 @@ public class Row implements Iterable{
      */
     public Row(int index, Space[] spaceArray){
 
-        spaces = new ArrayList<Space>();
+        spaces = new ArrayList<>();
         this.index = index;
-        for(int i =0; i<8; i++){
-
-            spaces.add(spaceArray[i]);
-        }
+        spaces.addAll(Arrays.asList(spaceArray));
     }
 
     /**
