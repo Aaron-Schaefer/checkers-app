@@ -13,6 +13,7 @@ public class PlayerLobby {
     private ArrayList<Player> gamePlayers;
     private Player redPlayer;
     private Player whitePlayer;
+    private boolean choseInGame;
 
     /**
      *Initializes a new player lobby.
@@ -20,6 +21,7 @@ public class PlayerLobby {
     public PlayerLobby(){
         players = new ArrayList<>();
         gamePlayers = new ArrayList<>();
+        choseInGame = false;
     }
 
     /**
@@ -88,5 +90,16 @@ public class PlayerLobby {
 
     }
 
+    public void playerChoseInGame(){
+        choseInGame = true;
+    }
+
+    public void notChoseInGame(){
+        choseInGame = false;
+    }
+
+    public boolean isChoseInGame(){
+        return choseInGame;
+    }
 
 }
