@@ -6,8 +6,7 @@ import com.webcheckers.ui.Space;
 
 
 /**
- * Model of a checkers board
- *
+ * Purpose: Model of a checkers board
  *
  * @author Aaron Schaefer
  */

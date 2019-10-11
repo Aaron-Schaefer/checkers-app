@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * A single Board view
+ * Purpose: A single Board view
  *
  *
  * @author Aaron Schaefer

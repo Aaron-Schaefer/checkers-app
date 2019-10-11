@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 /**
  * Language: Java
- * Author: An Chang (Mark), Gavin Burris.
+ * @Author: An Chang (Mark), Gavin Burris.
  * Purpose: A class to post a sign out route..
  */
 public class PostSignOutRoute implements Route {
