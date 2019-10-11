@@ -1,15 +1,9 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
 import com.webcheckers.util.Message;
 
@@ -51,14 +45,46 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
-    //
+
+    //Hash map for the view model.
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    //Get current session, and get the current Player from the session.
+    Session session = request.session();
+    Player player = session.attribute("currentPlayer");
 
-    // render the View
+    //Sets the current User as the current Player if not already set.
+    if(player!=null){
+      vm.put("currentUser", player);
+
+      //Redirects the current Player to the /game URL if the current Player
+      //is the White Player.
+      if(WebServer.PLAYER_LOBBY.getWhitePlayer() != null){
+        if(player.equals(WebServer.PLAYER_LOBBY.getWhitePlayer())){
+          response.redirect("/game");
+        }
+      }
+    }
+
+    //Makes a list of players and puts it, and the number of Players to the
+    //home.ftl file.
+    List<Player> players = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
+    vm.put("players", players);
+    vm.put("numPlayers", players.size());
+
+    //Displays a user error if the current Player chose a Player who's already
+    //in a game. Otherwise it displaces the WELCOME_MSG.
+    if(WebServer.PLAYER_LOBBY.isChoseInGame()){
+      Message inGame = Message.info("Error! This player is already in a game!");
+      vm.put("message", inGame);
+      WebServer.PLAYER_LOBBY.notChoseInGame();
+    }
+    else{
+      vm.put("message", WELCOME_MSG);
+    }
+
+    //Render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }
 }

@@ -40,7 +40,7 @@ import spark.TemplateEngine;
  * </ul>
  * </p>
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>, An Chang (Mark)
  */
 public class WebServer {
   private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
@@ -55,10 +55,22 @@ public class WebServer {
   public static final String HOME_URL = "/";
 
   /**
+   * The URL pattern to request the Sign In page.
+   */
+  public static final String SIGN_IN_URL = "/signin";
+
+  /**
+   * The URL pattern to request the Sign Out page.
+   */
+  public static final String SIGN_OUT_URL = "/signout";
+
+  /**
    * The URL pattern to request the Game page.
    */
   public static final String GAME_URL = "/game";
 
+  //Initializes the Games PlayerLobby.
+  public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
   //
   // Attributes
   //
@@ -144,8 +156,19 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(templateEngine));
 
-    // Shows the Checkers game Game page.
+    // Shows the Checkers game Sign In page.
+    get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+
+    //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
+    //Player gets added to player lobby.
+    post(SIGN_IN_URL, new PostSignInRoute(templateEngine));
+
+    //Sign the player out and remove player from player lobby. Redirect back to home page.
+    post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
+
+    //Display of the game for the player
     get(GAME_URL, new GetGameRoute(templateEngine));
+
 
     //
     LOG.config("WebServer is initialized.");

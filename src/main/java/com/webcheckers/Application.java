@@ -45,6 +45,7 @@ public final class Application {
    * The explicit, private property lookup method.
    */
   private static boolean _isInDemoMode() {
+
     final String demoModeStr = System.getProperty(DEMO_MODE_PROPERTY);
     if (demoModeStr == null) {
       return false;

@@ -57,7 +57,7 @@
           </fieldset>
           
         </div>
-  
+
         <div class="game-board">
           <table id="game-board">
             <tbody>
