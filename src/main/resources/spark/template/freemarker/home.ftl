@@ -24,18 +24,20 @@
 
     <#if currentUser??>
         </br>
+      <form action="/game" method="GET">
         <#list players as player>
             <#if currentUser.name != player.name>
-                <form action="/game" method="GET">
                     <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
-                    <button type='submit'>Play Game</button>
-                </form>
             <#else>
                 <#if numPlayers lt 2>
                     There are no other players available to play at this time.
                 </#if>
             </#if>
         </#list>
+          <#if numPlayers gt 1>
+            <button type='submit'>Play Game</button>
+          </#if>
+      </form>
     <#else>
         <p>There <#if numPlayers == 1> is<#else> are</#if> currently
         ${numPlayers} Player<#if numPlayers != 1>s</#if> signed in.
