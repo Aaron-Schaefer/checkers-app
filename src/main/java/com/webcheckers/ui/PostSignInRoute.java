@@ -5,6 +5,7 @@ package com.webcheckers.ui;
  * @Author: An Chang (Mark), Gavin Burris.
  * Purpose: A class to post a sign in route..
  */
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class PostSignInRoute implements Route {
         Session session = request.session();
 
         //Query for the playerName.
-        String name = request.queryParams("playerName");
+        String name = request.queryParams("playerName").trim();
 
         //If the playername is empty, print error message and have them try again.
         if (name.equals("")){

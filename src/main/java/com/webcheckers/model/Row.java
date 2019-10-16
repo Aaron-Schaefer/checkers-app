@@ -1,6 +1,5 @@
-package com.webcheckers.ui;
+package com.webcheckers.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -25,8 +24,8 @@ public class Row implements Iterable{
 
     /**
      *Constructor for Row
-     * @param index
-     * @param spaceArray
+     * @param index The index of the row
+     * @param spaceArray The spaces in the row
      */
     public Row(int index, Space[] spaceArray){
 

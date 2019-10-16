@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package com.webcheckers.model;
 
 /**
  * A single checkers piece
@@ -19,8 +19,8 @@ public class Piece {
     /**
      *Constructor for a piece
      *
-     * @param type
-     * @param color
+     * @param type The type of the piece
+     * @param color The color of the piece
      */
     public Piece(Type type, Color color){
         this.type = type;
@@ -29,13 +29,13 @@ public class Piece {
 
     /**
      *Gets the type of the piece
-     * @return
+     * @return Return the type of the piece
      */
     public Type getType(){ return this.type; }
 
     /**
      *Gets the color of the piece
-     * @return
+     * @return Returns the color of the piece
      */
     public Color getColor(){
         return this.color;

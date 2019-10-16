@@ -1,4 +1,6 @@
-package com.webcheckers.ui;
+package com.webcheckers.model;
+
+import com.webcheckers.model.Piece;
 
 /** A single space on a checkers board
  *
@@ -12,8 +14,8 @@ public class Space {
 
     /**
      * Constructor for a space
-     * @param index
-     * @param isViable
+     * @param index The index of the space
+     * @param isViable If the space is viable
      */
     public Space(int index, boolean isViable){
 
@@ -47,7 +49,7 @@ public class Space {
 
     /**
      *Adds a piece
-     * @param piece
+     * @param piece The piece added
      */
     public void addPiece(Piece piece){
         if(piece != null)

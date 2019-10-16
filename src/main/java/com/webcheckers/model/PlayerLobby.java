@@ -1,10 +1,12 @@
-package com.webcheckers.ui;
+package com.webcheckers.model;
 
 /**
  * Language: Java
  * @Author: An Chang (Mark), Gavin Burris.
  * Purpose: A class to represent a player lobby.
  */
+import com.webcheckers.model.Player;
+
 import java.util.*;
 
 public class PlayerLobby {
@@ -75,9 +77,9 @@ public class PlayerLobby {
 
     public Player getPlayer(String name){
         Player[] playerNames = this.playerArray();
-        for(int i = 0; i < playerNames.length; i++){
-            if(playerNames[i].getName().equals(name)){
-                return playerNames[i];
+        for (Player playerName : playerNames) {
+            if (playerName.getName().equals(name)) {
+                return playerName;
             }
         }
         return null;
@@ -85,7 +87,7 @@ public class PlayerLobby {
 
     /**
      * Removes a player.
-     * @param player
+     * @param player the player removed.
      */
     public void remove(Player player){
 

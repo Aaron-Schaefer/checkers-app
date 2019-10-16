@@ -1,9 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.ui.Piece;
-import com.webcheckers.ui.Player;
-import com.webcheckers.ui.Space;
-
 
 /**
  * Purpose: Model of a checkers board
@@ -158,12 +154,11 @@ public class Board {
 
     /**
      *Adds a piece to a location on the board
-     * @param row
-     * @param col
-     * @param piece
-     * @return
+     * @param row The row the piece is added to
+     * @param col The column the piece is added to
+     * @param piece The piece added
      */
-    public boolean addPiece(int row, int col, Piece piece){
+    public void addPiece(int row, int col, Piece piece){
 
         if(boardArray[row][col].getPiece() == null && isSpaceValid(row, col)){
 
@@ -171,14 +166,13 @@ public class Board {
 
         }
 
-        return true;
     }
 
     /**
      * Gets the space at a row and col
-     * @param row
-     * @param col
-     * @return
+     * @param row The row of the space
+     * @param col The column of the space
+     * @return The space
      */
     public Space getSpace(int row, int col){
 
@@ -187,9 +181,9 @@ public class Board {
 
     /**
      *Removes a piece from a specific space
-     * @param row
-     * @param col
-     * @return
+     * @param row The row of the removed piece
+     * @param col The column of the removed piece
+     * @return True if a piece was removed; False if not removed
      */
     public boolean removePiece(int row, int col){
 

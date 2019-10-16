@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import java.util.*;
 import java.util.logging.Logger;
 
+import com.webcheckers.model.Player;
 import spark.*;
 
 import com.webcheckers.util.Message;

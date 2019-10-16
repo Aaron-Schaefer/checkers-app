@@ -1,6 +1,9 @@
-package com.webcheckers.ui;
+package com.webcheckers.model;
 
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Piece;
+import com.webcheckers.model.Player;
+import com.webcheckers.model.Row;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,11 +25,11 @@ public class BoardView implements Iterable {
 
     /**
      *Constructor for the boardview
-     * @param board
-     * @param player
+     * @param board The board to be viewed
+     * @param player The player viewing thee board
      */
     public BoardView(Board board, Player player){
-        rows = new ArrayList<Row>();
+        rows = new ArrayList<>();
 
         Piece.Color playersColor = getPlayerColor(player, board);
 
@@ -51,8 +54,8 @@ public class BoardView implements Iterable {
 
     /**
      * Gets the players color based on the piece they are playing
-     * @param player
-     * @param model
+     * @param player The player playing on the board
+     * @param model The board being played on
      * @return the players piece color
      */
     private Piece.Color getPlayerColor(Player player, Board model) {
