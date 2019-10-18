@@ -9,7 +9,7 @@ package com.webcheckers.model;
 public class Board {
 
     private static final int BOARD_SIZE = 8;
-    private Space boardArray[][];
+    private Space[][] boardArray;
     private Player whitePlayer;
     private Player redPlayer;
 
