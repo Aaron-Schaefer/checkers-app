@@ -73,6 +73,7 @@ public class GetGameRoute implements Route {
 
         //Creates the Board model.
         Board model = new Board(whitePlayer, redPlayer);
+        session.attribute("board", model);
 
         //Creates the BoardView.
         BoardView boardView = new BoardView(model, currentPlayer);

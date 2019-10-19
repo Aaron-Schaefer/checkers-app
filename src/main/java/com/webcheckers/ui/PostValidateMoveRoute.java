@@ -3,7 +3,9 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
+import com.webcheckers.model.Piece;
 import com.webcheckers.model.Position;
 import spark.Request;
 import spark.Response;
@@ -52,9 +54,14 @@ public class PostValidateMoveRoute implements Route {
         final String moveJSON = URLDecoder.decode(request.body()).replace("{", "").replace("}", "");
         //Move move = gson.fromJson("{"+moveJSON+"}", Move.class);
         String[] moveString = moveJSON.split("[,:]");
-        Position start = new Position(Integer.parseInt(moveString[3]), Integer.parseInt(moveString[5]));
-        Position end = new Position(Integer.parseInt(moveString[8]), Integer.parseInt(moveString[10]));
+        Position start = new Position(Integer.parseInt(moveString[2]), Integer.parseInt(moveString[4]));
+        Position end = new Position(Integer.parseInt(moveString[7]), Integer.parseInt(moveString[9]));
         Move move = new Move(start, end);
+        Board model = request.session().attribute("board");
+        Piece piece = model.getSpace(start.getRow(), start.getCell()).getPiece();
+        model.removePiece(start.getRow(), start.getCell());
+        model.addPiece(end.getRow(), end.getCell(), piece);
+        request.session().attribute("board", model);
         return moveJSON;
     }
 }
