@@ -43,7 +43,7 @@ public class PostSignInRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   the rendered HTML for the SignIn page
      */
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
