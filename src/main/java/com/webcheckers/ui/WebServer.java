@@ -178,7 +178,7 @@ public class WebServer {
     //Display of the game for the player
     get(GAME_URL, new GetGameRoute(templateEngine));
 
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
 
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine));
 

@@ -86,6 +86,7 @@ public class GetGameRoute implements Route {
         vm.put("activeColor", Piece.Color.RED);
         vm.put("board", boardView);
 
+        model.print();
         //Renders the view.
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
