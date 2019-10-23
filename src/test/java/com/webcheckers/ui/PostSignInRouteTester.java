@@ -1,15 +1,12 @@
 package com.webcheckers.ui;
 
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import spark.TemplateEngine;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @Tag("UI-tier")
-public class PostSignInRoute {
+public class PostSignInRouteTester {
 
-    private PostSignInRoute CuT;
+    private PostSignInRouteTester CuT;
     private TemplateEngine engine;
 
 
