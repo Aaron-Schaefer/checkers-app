@@ -45,14 +45,14 @@ public class TemplateEngineTester {
    * Assert that the View-Model object exists.
    */
   public void assertViewModelExists() {
-    assertNotNull(model, "the View-Model exists");
+    assertNotNull(model, "Model is null.");
   }
 
   /**
    * Assert that the View-Model object exists.
    */
   public void assertViewModelIsaMap() {
-    assertTrue(model instanceof Map, "the View-Model is a Map");
+    assertTrue(model instanceof Map, "View-Model is not a Map");
   }
 
   /**
@@ -67,6 +67,7 @@ public class TemplateEngineTester {
   /**
    * Assert that the View-Model attribute is absent.
    */
+
   public void assertViewModelAttributeIsAbsent(final String attrName) {
     @SuppressWarnings("unchecked")
     final Map<String, Object> vm = (Map<String, Object>) model;
@@ -78,8 +79,8 @@ public class TemplateEngineTester {
    */
   public void assertViewName(final String expectedName) {
     assertAll("View assertions",
-        () -> { assertNotNull(viewName, "the View name exists"); },
-        () -> { assertEquals(expectedName, viewName, "the View name matches"); }
+        () -> { assertNotNull(viewName, "View name is null"); },
+        () -> { assertEquals(expectedName, viewName, "View name does not match"); }
         );
   }
 }
