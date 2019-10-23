@@ -36,7 +36,7 @@ public class PlayerLobby {
      * @return true if successful, false otherwise.
      */
     public boolean addPlayer(Player player){
-        if(!players.contains(player)){
+        if(!players.contains(player) && player != null){
 
             players.add(player);
             return true;
@@ -90,9 +90,7 @@ public class PlayerLobby {
      * @param player the player removed.
      */
     public void remove(Player player){
-
         players.remove(player);
-
     }
 
     /**

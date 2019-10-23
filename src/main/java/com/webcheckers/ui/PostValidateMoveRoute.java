@@ -61,6 +61,13 @@ public class PostValidateMoveRoute implements Route {
         Piece piece = model.getSpace(start.getRow(), start.getCell()).getPiece();
         model.removePiece(start.getRow(), start.getCell());
         model.addPiece(end.getRow(), end.getCell(), piece);
+        model.print();
+        if(piece.getColor() == Piece.Color.RED){
+            request.session().attribute("currentColor", Piece.Color.WHITE);
+        }
+        else {
+            request.session().attribute("currentColor", Piece.Color.RED);
+        }
         request.session().attribute("board", model);
         return moveJSON;
     }

@@ -52,7 +52,6 @@ public class Space {
      * @param piece The piece added
      */
     public void addPiece(Piece piece){
-        if(piece != null)
             this.piece = piece;
     }
 }
