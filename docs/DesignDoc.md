@@ -19,11 +19,11 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This project is a web based checkers game.
+This is a summary of the project
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+This Project is a web based checkers game that is played in a browser.
+Players can login in and play checkers against eachother.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -31,6 +31,8 @@ This project is a web based checkers game.
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
+| MVP | Minimum viable product|
+|-------------------|
 
 
 ## Requirements
@@ -47,7 +49,12 @@ This section describes the features of the application.
 3. Either player can resign from the game at any moment.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+*Sign-in/out
+*Start a Game
+*Move Pieces
+*Move Validation
+*Take Pieces
+*Resign
 
 ### Roadmap of Enhancements
 > _Provide a list of top-level features in the order you plan to consider them._
