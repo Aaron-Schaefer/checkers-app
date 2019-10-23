@@ -19,7 +19,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
+This project is a web based checkers game.
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
@@ -42,7 +42,9 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+1. Every player must sign-in to play a game and should be able to sign out after.
+2. Two players should be able to play a game of checkers following the American rules.
+3. Either player can resign from the game at any moment.
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
