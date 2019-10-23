@@ -15,8 +15,6 @@ public class BoardTester {
     private Player redPlayer;
     private Board CuT;
 
-
-
     @BeforeEach
     public void Setup(){
          whitePlayer = mock(Player.class);

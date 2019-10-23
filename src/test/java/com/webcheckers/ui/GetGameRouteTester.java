@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.*;
@@ -25,6 +26,15 @@ public class GetGameRouteTester {
         templateEngine = mock(TemplateEngine.class);
         response = mock(Response.class);
         CuT = new GetGameRoute(templateEngine);
+        WebServer webServer = mock(WebServer.class);
+        webServer.initialize();
+
+        Player red = mock(Player.class);
+        Player white = mock(Player.class);
+
+        webServer.PLAYER_LOBBY.addToGame(red);
+        webServer.PLAYER_LOBBY.addToGame(white);
+
 
     }
 
@@ -35,6 +45,8 @@ public class GetGameRouteTester {
 
         when(templateEngine.render(any(ModelAndView.class) )).thenAnswer(helper.makeAnswer());
         CuT.handle(request, response);
+
+
 
         helper.assertViewModelExists();
         helper.assertViewModelIsaMap();
