@@ -7,6 +7,7 @@ package com.webcheckers.ui;
  */
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.PlayerLobby;
 import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -26,11 +27,13 @@ public class PostSignInRouteTester {
     private Request request;
     private Session session;
     private Response response;
+    private PlayerLobby playerLobby;
 
     @BeforeEach
     private void setup(){
         request = mock(Request.class);
         session = mock(Session.class);
+        playerLobby = mock(PlayerLobby.class);
         when(request.session()).thenReturn(session);
         templateEngine = mock(TemplateEngine.class);
         response = mock(Response.class);

@@ -14,9 +14,9 @@ import spark.Session;
 import spark.TemplateEngine;
 
 @Tag("UI-tier")
-public class GetSignOutRouteTest {
+public class GetSignInRouteTester {
 
-    private GetSignOutRoute CuT;
+    private GetSignInRoute CuT;
 
     private TemplateEngine templateEngine;
     private Request request;
@@ -28,22 +28,22 @@ public class GetSignOutRouteTest {
     @BeforeEach
     private void setup() {
         request = mock(Request.class);
-        session = request.session();
+        session = mock(Session.class);
+        templateEngine = mock(TemplateEngine.class);
         Response response = mock(Response.class);
         PlayerLobby playerLobby = mock(PlayerLobby.class);
         for (String name : names) {
             playerLobby.addPlayer(new Player(name));
         }
         session.attribute("currentPlayer", new Player("Gavin"));
-        CuT = new PostSignOutRoute(templateEngine);
+        CuT = new GetSignInRoute(templateEngine);
     }
 
     @Test
     public void test_no_currentPlayer(){
         CuT.handle(request, response);
-        Player currentPlayer = null;
-        playerLobby.addPlayer(currentPlayer);
-        assertNull(playerLobby.getPlayer(currentPlayer.getName()));
+        Player currentPlayer = new Player("hi");
+        assertTrue(playerLobby.addPlayer(currentPlayer));
     }
 
     @Test
