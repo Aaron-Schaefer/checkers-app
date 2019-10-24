@@ -12,9 +12,14 @@ import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Answers;
+import org.mockito.stubbing.Answer;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +34,9 @@ public class PostSignInRouteTester {
     private Response response;
     private PlayerLobby playerLobby;
 
+    /**
+     * Initialization.
+     */
     @BeforeEach
     private void setup(){
         request = mock(Request.class);
@@ -42,22 +50,27 @@ public class PostSignInRouteTester {
         webServer.initialize();
     }
 
+    /**
+     * Make sure the player was added correctly.
+     */
     @Test
     public void testSignIn(){
 
         final TemplateEngineTester helper = new TemplateEngineTester();
+        String sadf = "h";
 
         when(templateEngine.render(any(ModelAndView.class) )).thenAnswer(helper.makeAnswer());
-        session.attribute("playerName","h");
-        request.attribute("playerName","h");
+        when(request.queryParams("playerName")).thenReturn("h");
+        //when(request.queryParams("playerName").thenAnswer("playerName","h"));
+        //session.attribute("playerName","h");
+        //request.params().put("playerName","hsadf");
+
+        //System.out.println(request.queryParams("playerName"));
 
         CuT.handle(request,response);
 
-        helper.assertViewModelExists();
-        helper.assertViewModelIsaMap();
-
-
-        helper.assertViewModelAttributeIsAbsent("currentPlayer");
+        Player player = new Player("h");
+        assertNotNull(playerLobby.getPlayer("h")!= null);
 
     }
 

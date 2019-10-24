@@ -1,17 +1,22 @@
 package com.webcheckers.ui;
 
+/**
+ * Language: Java
+ * @Author: An Chang (Mark)
+ * Purpose: A class to test GetSignInRoute.
+ */
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.model.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.TemplateEngine;
+import spark.*;
 
 @Tag("UI-tier")
 public class GetSignInRouteTester {
@@ -22,8 +27,6 @@ public class GetSignInRouteTester {
     private Request request;
     private Session session;
     private Response response;
-    private PlayerLobby playerLobby;
-    private String[] names = {"Gavin", "Zach", "Ries", "Aaron", "Mark"};
 
     @BeforeEach
     private void setup() {
@@ -32,25 +35,24 @@ public class GetSignInRouteTester {
         templateEngine = mock(TemplateEngine.class);
         Response response = mock(Response.class);
         PlayerLobby playerLobby = mock(PlayerLobby.class);
-        for (String name : names) {
-            playerLobby.addPlayer(new Player(name));
-        }
-        session.attribute("currentPlayer", new Player("Gavin"));
         CuT = new GetSignInRoute(templateEngine);
     }
 
+    /**
+     * See if the attributes from getSignInRoute works.
+     */
     @Test
-    public void test_no_currentPlayer(){
-        CuT.handle(request, response);
-        Player currentPlayer = new Player("hi");
-        assertTrue(playerLobby.addPlayer(currentPlayer));
-    }
+    public void testAttributes(){
 
-    @Test
-    public void test_current_player(){
+        final TemplateEngineTester helper = new TemplateEngineTester();
+
+        when(templateEngine.render(any(ModelAndView.class) )).thenAnswer(helper.makeAnswer());
         CuT.handle(request, response);
-        Player currentPlayer = session.attribute("currentPlayer");
-        playerLobby.addPlayer(currentPlayer);
-        assert((playerLobby.getPlayer(currentPlayer.getName())) != null);
+
+        helper.assertViewModelExists();
+        helper.assertViewModelIsaMap();
+
+
+
     }
 }
