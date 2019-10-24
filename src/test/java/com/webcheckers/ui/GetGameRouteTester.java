@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
+@Tag("UI-tier")
 public class GetGameRouteTester {
 
     private GetGameRoute CuT;
