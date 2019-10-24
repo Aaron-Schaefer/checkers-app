@@ -74,6 +74,13 @@ public class GetGameRoute implements Route {
         //Creates the Board model.
         Board model = new Board(whitePlayer, redPlayer);
         session.attribute("board", model);
+ //       Piece.Color color;
+//        if(session.attribute("currentColor") == null){
+//            color = Piece.Color.RED;
+//        }
+//        else{
+//            color = session.attribute("currentColor");
+//        }
 
         //Creates the BoardView.
         BoardView boardView = new BoardView(model, currentPlayer);
@@ -87,7 +94,7 @@ public class GetGameRoute implements Route {
         vm.put("activeColor", Piece.Color.RED);
         vm.put("board", boardView);
 
-        model.print();
+        //model.print();
         //Renders the view.
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }

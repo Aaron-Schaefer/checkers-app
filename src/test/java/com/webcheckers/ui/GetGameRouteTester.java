@@ -39,14 +39,12 @@ public class GetGameRouteTester {
     }
 
     @Test
-    public void testAtributes(){
+    public void testAttributes(){
 
         final TemplateEngineTester helper = new TemplateEngineTester();
 
         when(templateEngine.render(any(ModelAndView.class) )).thenAnswer(helper.makeAnswer());
         CuT.handle(request, response);
-
-
 
         helper.assertViewModelExists();
         helper.assertViewModelIsaMap();
