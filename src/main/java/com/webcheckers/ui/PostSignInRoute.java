@@ -59,6 +59,7 @@ public class PostSignInRoute implements Route {
         Session session = request.session();
 
         //Query for the playerName.
+        System.out.println(request.queryParams().contains("playerName"));
         String name = request.queryParams("playerName").trim();
 
         //If the playername is empty, print error message and have them try again.
