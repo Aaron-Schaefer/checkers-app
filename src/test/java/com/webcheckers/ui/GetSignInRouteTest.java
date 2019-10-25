@@ -1,19 +1,27 @@
 package com.webcheckers.ui;
 
+/**
+ * Language: Java
+ * @Author: An Chang (Mark)
+ * Purpose: A class to test GetSignInRoute.
+ */
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.webcheckers.model.Player;
+import com.webcheckers.model.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
-
 @Tag("UI-tier")
-public class GetGameRouteTester {
+public class GetSignInRouteTest {
 
-    private GetGameRoute CuT;
+    private GetSignInRoute CuT;
 
     private TemplateEngine templateEngine;
     private Request request;
@@ -21,25 +29,18 @@ public class GetGameRouteTester {
     private Response response;
 
     @BeforeEach
-    private void setup(){
+    private void setup() {
         request = mock(Request.class);
         session = mock(Session.class);
-        when(request.session()).thenReturn(session);
         templateEngine = mock(TemplateEngine.class);
-        response = mock(Response.class);
-        CuT = new GetGameRoute(templateEngine);
-        WebServer webServer = mock(WebServer.class);
-        webServer.initialize();
-
-        Player red = mock(Player.class);
-        Player white = mock(Player.class);
-
-        webServer.PLAYER_LOBBY.addToGame(red);
-        webServer.PLAYER_LOBBY.addToGame(white);
-
-
+        Response response = mock(Response.class);
+        PlayerLobby playerLobby = mock(PlayerLobby.class);
+        CuT = new GetSignInRoute(templateEngine);
     }
 
+    /**
+     * See if the attributes from getSignInRoute works.
+     */
     @Test
     public void testAttributes(){
 
@@ -51,12 +52,7 @@ public class GetGameRouteTester {
         helper.assertViewModelExists();
         helper.assertViewModelIsaMap();
 
-        helper.assertViewModelAttribute("viewMode", "PLAY");
-        helper.assertViewModelAttribute("currentUser", session.attribute("currentUser"));
 
 
     }
-
-
-
 }

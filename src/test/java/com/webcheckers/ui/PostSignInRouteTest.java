@@ -24,7 +24,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Tag("UI-tier")
-public class PostSignInRouteTester {
+public class PostSignInRouteTest {
 
     private PostSignInRoute CuT;
 

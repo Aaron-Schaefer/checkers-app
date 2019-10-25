@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 @Tag("Model-tier")
-public class BoardTester {
+public class BoardTest {
     private final int BOARD_SIZE = 8;
 
     private Player whitePlayer;
