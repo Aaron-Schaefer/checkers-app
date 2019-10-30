@@ -8,9 +8,7 @@ import spark.TemplateEngine;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static spark.route.HttpMethod.get;
-
-public class PostSubmitTurnRoute implements Route {
+public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
@@ -21,10 +19,10 @@ public class PostSubmitTurnRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostSubmitTurnRoute(final TemplateEngine templateEngine) {
+    public PostCheckTurnRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
-        LOG.config("PostSubmitTurnRoute is initialized.");
+        LOG.config("PostCheckTurnRoute is initialized.");
     }
 
     /**
@@ -40,8 +38,8 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        get("/game");
-        return null;
+        String s = request.queryParams("actionData");
+        System.out.println(s);
+        return "";
     }
-
 }

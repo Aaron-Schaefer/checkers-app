@@ -1,18 +1,16 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
-import com.webcheckers.model.Position;
+import com.webcheckers.util.Message;
+import org.eclipse.jetty.client.HttpResponse;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
 
-import java.net.URLDecoder;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -51,29 +49,28 @@ public class PostValidateMoveRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-//        final String moveJSON = URLDecoder.decode(request.body()).replace("{", "").replace("}", "");
-        String moveJSON = request.body();
-        System.out.println("test-  " + moveJSON);
+        final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
+        WebServer.RECENT_MOVE = move;
         System.out.println(move.getStart().getCell());
-        System.out.println(move);
-//        String[] moveString = moveJSON.split("[,:]");
-//        System.out.println(moveJSON);
-//        Position start = new Position(Integer.parseInt(moveString[2]), Integer.parseInt(moveString[4]));
-//        Position end = new Position(Integer.parseInt(moveString[7]), Integer.parseInt(moveString[9]));
-//        Move move = new Move(start, end);
+        Message message = Message.info("true");
+        System.out.println(message.toString());
+//        HttpResponse.BodyHandler<Message> messageBodyHandler = message;
+        //response.body(message.toString());
+//        System.out.println(move);
 //        Board model = request.session().attribute("board");
-////        Piece piece = model.getSpace(start.getRow(), start.getCell()).getPiece();
-////        model.removePiece(start.getRow(), start.getCell());
-////        model.addPiece(end.getRow(), end.getCell(), piece);
-////        model.print();
-////        if(piece.getColor() == Piece.Color.RED){
-////            request.session().attribute("currentColor", Piece.Color.WHITE);
-////        }
-////        else {
-////            request.session().attribute("currentColor", Piece.Color.RED);
-////        }
-////        request.session().attribute("board", model);
-        return moveJSON;
+//        Piece piece = model.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
+//        model.removePiece(move.getStart().getRow(), move.getStart().getCell());
+//        model.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
+//        model.print();
+//        if(piece.getColor() == Piece.Color.RED){
+//            request.session().attribute("currentColor", Piece.Color.WHITE);
+//        }
+//        else {
+//            request.session().attribute("currentColor", Piece.Color.RED);
+//        }
+//        request.session().attribute("board", model);
+
+        return message;
     }
 }
