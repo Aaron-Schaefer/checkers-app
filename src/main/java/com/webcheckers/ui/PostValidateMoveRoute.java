@@ -52,17 +52,14 @@ public class PostValidateMoveRoute implements Route {
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
         WebServer.RECENT_MOVE = move;
-        System.out.println(move.getStart().getCell());
         Message message = Message.info("true");
-        System.out.println(message.toString());
-//        HttpResponse.BodyHandler<Message> messageBodyHandler = message;
-        //response.body(message.toString());
-//        System.out.println(move);
-//        Board model = request.session().attribute("board");
-//        Piece piece = model.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
-//        model.removePiece(move.getStart().getRow(), move.getStart().getCell());
-//        model.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
-//        model.print();
+        String jsonMsg = gson.toJson(message, Message.class);
+//        response.body(jsonMsg);
+        Board model = request.session().attribute("board");
+        Piece piece = model.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
+        model.removePiece(move.getStart().getRow(), move.getStart().getCell());
+        model.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
+////        model.print();
 //        if(piece.getColor() == Piece.Color.RED){
 //            request.session().attribute("currentColor", Piece.Color.WHITE);
 //        }
@@ -70,7 +67,6 @@ public class PostValidateMoveRoute implements Route {
 //            request.session().attribute("currentColor", Piece.Color.RED);
 //        }
 //        request.session().attribute("board", model);
-
-        return message;
+        return jsonMsg;
     }
 }

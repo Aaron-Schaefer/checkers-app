@@ -186,13 +186,13 @@ public class WebServer {
 
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
 
-    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine));
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gson));
 
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine));
 
     post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine));
 
-    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine));
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gson));
 
     //
     LOG.config("WebServer is initialized.");

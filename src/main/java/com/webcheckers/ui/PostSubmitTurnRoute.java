@@ -1,9 +1,8 @@
 package com.webcheckers.ui;
 
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.google.gson.Gson;
+import com.webcheckers.util.Message;
+import spark.*;
 
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -15,14 +14,17 @@ public class PostSubmitTurnRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
+    private Gson gson;
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostSubmitTurnRoute(final TemplateEngine templateEngine) {
+    public PostSubmitTurnRoute(final TemplateEngine templateEngine, Gson gson) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        this.gson = gson;
         //
         LOG.config("PostSubmitTurnRoute is initialized.");
     }
@@ -40,8 +42,10 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        get("/game");
-        return null;
+        Message message = Message.info("true");
+        String jsonMsg = gson.toJson(message, Message.class);
+        Spark.get(WebServer.GAME_URL, this);
+        return jsonMsg;
     }
 
 }
