@@ -53,23 +53,32 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
-        Message message = Message.info("true");;
+        Message message = Message.info("true");
+        System.out.println(MoveValidator.validateMove(WebServer.BOARD, move));
         switch (MoveValidator.validateMove(WebServer.BOARD, move)){
             case VALID:
                 move.setValidState(MoveValidator.MoveValidation.VALID);
                 message = Message.info(VALID_MOVE);
+                break;
+
             case JUMPNEEDED:
                 move.setValidState(MoveValidator.MoveValidation.JUMPNEEDED);
                 message = Message.info(JUMP_MOVE);
+                break;
+
             case OCCUPIED:
                 move.setValidState(MoveValidator.MoveValidation.OCCUPIED);
                 message = Message.info(OCCUPIED_SPACE);
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
+                break;
+
             case TOOFAR:
                 move.setValidState(MoveValidator.MoveValidation.TOOFAR);
                 message = Message.info(MOVED_TOO_FAR);
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
+                break;
         }
+        System.out.println(move.getValidState());
         WebServer.RECENT_MOVE = move;
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
