@@ -1,6 +1,8 @@
 package com.webcheckers.model;
 
 
+import java.util.List;
+
 /**
  * Purpose: Model of a checkers board
  *
@@ -13,6 +15,7 @@ public class Board {
     private Player whitePlayer;
     private Player redPlayer;
     private Piece.Color activeColor;
+    private List<Space> spacesTaken;
 
     /**
      * Constructor for the Board
@@ -25,6 +28,7 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
+        this.spacesTaken = null;
         initializeSpaces();
         //putPieces();
         //print();
