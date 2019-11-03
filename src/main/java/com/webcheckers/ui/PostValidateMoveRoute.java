@@ -1,10 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.BoardView;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
+import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
 import org.eclipse.jetty.client.HttpResponse;
 import spark.Request;
@@ -58,11 +55,11 @@ public class PostValidateMoveRoute implements Route {
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
         WebServer.RECENT_MOVE = move;
+        if(move.getStart().getCell() == 0){
+            move.setValidState(MoveValidator.MoveValidation.JUMPNEEDED);
+        }
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
-        Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
-        WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
-        WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
         return jsonMsg;
     }
 }

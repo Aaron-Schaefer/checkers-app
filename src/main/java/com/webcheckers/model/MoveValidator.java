@@ -1,8 +1,5 @@
 package com.webcheckers.model;
 
-import javafx.geometry.Pos;
-import spark.ModelAndView;
-
 public class MoveValidator {
 
     public enum MoveValidation{

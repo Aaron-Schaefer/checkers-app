@@ -1,8 +1,9 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.util.Message;
 import freemarker.template.Template;
-import spark.*
+import spark.*;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -21,12 +22,14 @@ public class PostResignGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
+    private Gson gson;
 
-    public PostResignGameRoute(final TemplateEngine templateEngine){
+
+    public PostResignGameRoute(final TemplateEngine templateEngine, Gson gson){
 
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         LOG.config("PostResignGameRoute is initialized.");
-
+        this.gson = gson;
     }
 
 
@@ -39,10 +42,11 @@ public class PostResignGameRoute implements Route {
         Message gameover = Message.info("Error! Game is already over you cannot Resign@");
         Session session = request.session();
 
-        return null;
+        Message message = Message.info("true");
+        String jsonMsg = gson.toJson(message, Message.class);
+        return jsonMsg;
     }
 
 
 
-    }
 }

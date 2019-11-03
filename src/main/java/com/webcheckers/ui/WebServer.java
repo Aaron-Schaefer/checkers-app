@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 
 import com.webcheckers.model.Board;
-import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.PlayerLobby;
 import spark.TemplateEngine;
@@ -195,7 +194,7 @@ public class WebServer {
 
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine, gson));
 
-    post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine));
+    post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gson));
 
     post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gson));
 
