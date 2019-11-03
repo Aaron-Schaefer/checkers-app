@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.ui.WebServer;
+
 public class MoveValidator {
 
     public enum MoveValidation{
@@ -38,6 +40,7 @@ public class MoveValidator {
         //simple move
         if(rowChange == 1){
 
+            System.out.println("Simple move");
             if(teamHasJump(model,start.getPiece().getColor()))
                 return MoveValidation.JUMPNEEDED;
 
@@ -48,6 +51,7 @@ public class MoveValidator {
         //jump move
         if(rowChange == 2){
 
+            System.out.println("jump move 1");
             return validateJumpMove(model, start, move);
         }
 
@@ -70,14 +74,19 @@ public class MoveValidator {
 
         int colChange = Math.abs(start.getCell()-end.getCell());
         int rowChange = start.getRow()- end.getRow();
+        System.out.println("col change " + colChange);
+        System.out.println("row change " + rowChange);
 
         if(colChange > 1)
             return MoveValidation.TOOFAR;
 
         if(color.equals(Piece.Color.RED) && type.equals(Piece.Type.SINGLE) ){
 
-            if(rowChange > 0 && rowChange < 2)
+            System.out.println("red single");
+            if(rowChange == 1) {
+                System.out.println("valid");
                 return MoveValidation.VALID;
+            }
             else
                 return MoveValidation.TOOFAR;
         }
@@ -98,11 +107,14 @@ public class MoveValidator {
 
 
 
-        if(!teamHasJump(model, start.getPiece().getColor()))
+        if(!teamHasJump(model, start.getPiece().getColor())) {
+            System.out.println("team has jump");
             return MoveValidation.TOOFAR;
+        }
 
         if(checkSimpleJump(move,model)){
 
+            System.out.println("check jump move");
             return MoveValidation.VALID;
         }
         else
@@ -133,10 +145,10 @@ public class MoveValidator {
 
     private static boolean pieceHasJump( Position pos, Board model, Piece.Color color){
 
-        int teamOffset = -1;
+        int teamOffset = 1;
 
         if(color.equals(Piece.Color.RED))
-            teamOffset = 1;
+            teamOffset = -1;
 
         int leftCell = pos.getCell()-2;
         int rightCell = pos.getCell() +2;
@@ -189,6 +201,7 @@ public class MoveValidator {
                 return false;
             }
             else {
+                WebServer.BOARD.addSpaceTaken(model.getSpace(taken.getRow(),taken.getCell()));
                 return true;
             }
         }
