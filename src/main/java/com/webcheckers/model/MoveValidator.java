@@ -60,14 +60,14 @@ public class MoveValidator {
 
         if(color.equals(Piece.Color.RED) && type.equals(Piece.Type.SINGLE) ){
 
-            if(rowChange > 0)
+            if(rowChange > 0 && rowChange < 2)
                 return MoveValidation.VALID;
             else
                 return MoveValidation.TOOFAR;
         }
         else if(color.equals(Piece.Color.WHITE) && type.equals(Piece.Type.SINGLE)){
 
-            if(rowChange < 0)
+            if(rowChange < 0 && rowChange > -2)
                 return MoveValidation.VALID;
             else
                 return MoveValidation.TOOFAR;
@@ -153,7 +153,7 @@ public class MoveValidator {
     }
 
     public static boolean checkSimpleJump(Move move, Board model){
-        
+
 
         return false;
     }
