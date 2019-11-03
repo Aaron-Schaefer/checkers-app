@@ -9,6 +9,13 @@ public class MoveValidator {
 
     }
 
+    /**
+     * Takes a move and validates whether or not it is valid based on American Checker rules
+     *
+     * @param model The active populated checkers board
+     * @param move The move made
+     * @return enum of if the move is valid or if not why it is not
+     */
     public static MoveValidation validateMove(Board model, Move move){
 
         final Position startPos = move.getStart();
@@ -49,6 +56,15 @@ public class MoveValidator {
 
     }
 
+    /**
+     * Validates a simple move
+     *
+     * @param color color of the piece moved
+     * @param type type of the pice (King or Single)
+     * @param start The start position of the move
+     * @param end The end Position of the move
+     * @return enum of if the move is valid or if not why it is not
+     */
     private static MoveValidation validateSimpleMove(Piece.Color color, Piece.Type type, Position start, Position end){
 
 
@@ -175,8 +191,6 @@ public class MoveValidator {
             else {
                 return true;
             }
-
-
         }
 
         return false;
