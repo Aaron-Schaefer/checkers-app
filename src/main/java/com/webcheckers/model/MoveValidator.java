@@ -12,7 +12,7 @@ public class MoveValidator {
 
     }
 
-    public static boolean validateMove(Board model, Move move){
+    public static MoveValidation validateMove(Board model, Move move){
 
         final Position startPos = move.getStart();
         final Position endPos = move.getEnd();
@@ -23,24 +23,23 @@ public class MoveValidator {
         final Piece piece = start.getPiece();
 
         if(!end.isValid())
-            return false;
+            return MoveValidation.OCCUPIED;
 
 
         int rowChange = Math.abs(startPos.getRow() - endPos.getRow());
 
         if(rowChange > 2)
-            return false;
+            return MoveValidation.TOOFAR;
 
         //simple move
         if(rowChange == 1){
 
             if(teamHasJump(model,start.getPiece().getColor()))
-                return false;
+                return MoveValidation.JUMPNEEDED;
 
             return validateSimpleMove(start.getPiece().getColor(), start.getPiece().getType(),startPos, endPos);
 
         }
-
 
         //jump move
         if(rowChange == 2){
@@ -49,43 +48,43 @@ public class MoveValidator {
         }
 
 
-        return false;
+        return MoveValidation.VALID;
+
     }
 
-    private static boolean validateSimpleMove(Piece.Color color, Piece.Type type, Position start, Position end){
+    private static MoveValidation validateSimpleMove(Piece.Color color, Piece.Type type, Position start, Position end){
 
 
         int colChange = Math.abs(start.getCell()-end.getCell());
         int rowChange = start.getRow()- end.getRow();
 
         if(colChange > 1)
-            return false;
+            return MoveValidation.TOOFAR;
 
         if(color.equals(Piece.Color.RED) && type.equals(Piece.Type.SINGLE) ){
 
             if(rowChange > 0)
-                return true;
+                return MoveValidation.VALID;
             else
-                return false;
+                return MoveValidation.TOOFAR;
         }
         else if(color.equals(Piece.Color.WHITE) && type.equals(Piece.Type.SINGLE)){
 
             if(rowChange < 0)
-                return true;
+                return MoveValidation.VALID;
             else
-                return false;
+                return MoveValidation.TOOFAR;
 
         }
-
-
-        return false;
+        
+       return MoveValidation.TOOFAR;
     }
 
 
-    private static boolean validateJumpMove(){
+    private static MoveValidation validateJumpMove(){
 
 
-        return false;
+        return MoveValidation.VALID;
     }
 
 
