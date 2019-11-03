@@ -203,5 +203,4 @@ public class Board {
     public Piece.Color getActiveColor(){
         return this.activeColor;
     }
-
 }

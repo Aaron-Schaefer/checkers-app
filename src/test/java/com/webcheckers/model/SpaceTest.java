@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 @Tag("Model-tier")
-public class SpaceTester {
+public class SpaceTest {
     private boolean isViable;
     private Piece piece;
     private int cellIdx;
