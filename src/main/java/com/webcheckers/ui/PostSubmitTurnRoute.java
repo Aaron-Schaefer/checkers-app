@@ -42,9 +42,13 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        System.out.println("HI");
+        WebServer.TEST = true;
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
-        Spark.get(WebServer.GAME_URL, this);
+        request.session().attribute("turnMade", "true");
+        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+        WebServer.BOARD.changeActiveColor();
         return jsonMsg;
     }
 

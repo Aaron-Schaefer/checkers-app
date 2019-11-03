@@ -2,11 +2,9 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
+import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -43,7 +41,13 @@ public class PostCheckTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        Message message = Message.info("true");
+        Message message = Message.info("false");
+            if (WebServer.TEST) {
+               message = Message.info("true");
+                Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+            }
+//        }
+        System.out.println(message.toString());
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
     }

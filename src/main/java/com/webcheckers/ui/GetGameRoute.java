@@ -72,21 +72,12 @@ public class GetGameRoute implements Route {
         }
 
         //Creates the Board model.
-        Board model = new Board(whitePlayer, redPlayer);
-        session.attribute("board", model);
-        Piece.Color color;
-        if(session.attribute("currentColor") == null){
-            color = Piece.Color.RED;
-        }
-        else{
-            color = session.attribute("currentColor");
+        if(WebServer.BOARD == null) {
+            WebServer.BOARD = new Board(whitePlayer, redPlayer);
         }
 
         //Creates the BoardView.
-        if (session.attribute("boardView") == null){
-            BoardView boardView = new BoardView(model, currentPlayer);
-            session.attribute("boardView", boardView);
-        }
+        BoardView boardView = new BoardView(WebServer.BOARD, currentPlayer);
 
         //Uses view model to put to the variables to the game.ftl file.
         vm.put("title", "Time to play!");
@@ -94,10 +85,9 @@ public class GetGameRoute implements Route {
         vm.put("currentUser", currentPlayer);
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);
-        vm.put("activeColor", color);
-        vm.put("board", session.attribute("boardView"));
+        vm.put("activeColor", WebServer.BOARD.getActiveColor());
+        vm.put("board", boardView);
 
-        //model.print();
         //Renders the view.
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }

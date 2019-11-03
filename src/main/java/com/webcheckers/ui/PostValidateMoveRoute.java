@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
@@ -54,19 +55,15 @@ public class PostValidateMoveRoute implements Route {
         WebServer.RECENT_MOVE = move;
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
-//        response.body(jsonMsg);
-        Board model = request.session().attribute("board");
-        Piece piece = model.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
-        model.removePiece(move.getStart().getRow(), move.getStart().getCell());
-        model.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
-////        model.print();
-//        if(piece.getColor() == Piece.Color.RED){
+        Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
+        WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
+        WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
+        if(piece.getColor() == Piece.Color.RED){
 //            request.session().attribute("currentColor", Piece.Color.WHITE);
-//        }
-//        else {
+        }
+        else {
 //            request.session().attribute("currentColor", Piece.Color.RED);
-//        }
-//        request.session().attribute("board", model);
+        }
         return jsonMsg;
     }
 }
