@@ -22,6 +22,12 @@ public class PostValidateMoveRoute implements Route {
 
     private Gson gson;
 
+    private static final String VALID_MOVE = "This is a valid move.";
+    private static final String OCCUPIED_SPACE = "Invalid move! This space is already occupied.";
+    private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
+    private static final String NOT_DIAGONAL = "Invalid move! Your move was not diagonal.";
+
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
@@ -36,7 +42,6 @@ public class PostValidateMoveRoute implements Route {
         LOG.config("PostValidateMoveRoute is initialized.");
     }
 
-//    private static JsonObject object = null;
     /**
      * Render the WebCheckers Home page.
      *
@@ -58,12 +63,6 @@ public class PostValidateMoveRoute implements Route {
         Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
         WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
         WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
-        if(piece.getColor() == Piece.Color.RED){
-//            request.session().attribute("currentColor", Piece.Color.WHITE);
-        }
-        else {
-//            request.session().attribute("currentColor", Piece.Color.RED);
-        }
         return jsonMsg;
     }
 }

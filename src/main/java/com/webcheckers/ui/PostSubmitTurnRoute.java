@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Move;
+import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -48,6 +50,10 @@ public class PostSubmitTurnRoute implements Route {
         String jsonMsg = gson.toJson(message, Message.class);
         request.session().attribute("turnMade", "true");
         Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+        Move move = WebServer.RECENT_MOVE;
+        Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
+        WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
+        WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
         WebServer.BOARD.changeActiveColor();
         return jsonMsg;
     }
