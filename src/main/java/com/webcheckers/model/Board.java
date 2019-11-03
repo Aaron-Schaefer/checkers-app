@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
-        this.spacesTaken = null;
+        this.spacesTaken = new ArrayList<>();
         initializeSpaces();
         //putPieces();
         //print();
