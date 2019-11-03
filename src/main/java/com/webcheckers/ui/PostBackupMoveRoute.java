@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -13,14 +15,17 @@ public class PostBackupMoveRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
+    private Gson gson;
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostBackupMoveRoute(final TemplateEngine templateEngine) {
+    public PostBackupMoveRoute(final TemplateEngine templateEngine, Gson gson) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        this.gson = gson;
         //
         LOG.config("PostBackupMoveRoute is initialized.");
     }
@@ -38,6 +43,8 @@ public class PostBackupMoveRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        return null;
+        Message message = Message.info("true");
+        String jsonMsg = gson.toJson(message, Message.class);
+        return jsonMsg;
     }
 }
