@@ -1,17 +1,14 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
 import spark.*;
 
+import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static spark.route.HttpMethod.get;
-
-public class PostSubmitTurnRoute implements Route {
+public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
@@ -24,11 +21,11 @@ public class PostSubmitTurnRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostSubmitTurnRoute(final TemplateEngine templateEngine, Gson gson) {
+    public PostCheckTurnRoute(final TemplateEngine templateEngine, Gson gson) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         this.gson = gson;
         //
-        LOG.config("PostSubmitTurnRoute is initialized.");
+        LOG.config("PostCheckTurnRoute is initialized.");
     }
 
     /**
@@ -44,18 +41,15 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        System.out.println("HI");
-        WebServer.TEST = true;
-        Message message = Message.info("true");
+        Message message = Message.info("false");
+            if (WebServer.TEST) {
+               message = Message.info("true");
+                Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+            }
+//        }
+        WebServer.TEST = false;
+        System.out.println(message.toString());
         String jsonMsg = gson.toJson(message, Message.class);
-        request.session().attribute("turnMade", "true");
-        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
-        Move move = WebServer.RECENT_MOVE;
-        Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
-        WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
-        WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
-        WebServer.BOARD.changeActiveColor();
         return jsonMsg;
     }
-
 }

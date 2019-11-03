@@ -12,7 +12,7 @@ public class Board {
     private Space[][] boardArray;
     private Player whitePlayer;
     private Player redPlayer;
-
+    private Piece.Color activeColor;
 
     /**
      * Constructor for the Board
@@ -24,6 +24,7 @@ public class Board {
         boardArray = new Space[BOARD_SIZE][BOARD_SIZE];
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        this.activeColor = Piece.Color.RED;
         initializeSpaces();
         //putPieces();
         //print();
@@ -193,5 +194,13 @@ public class Board {
         else
             return false;
 
+    }
+
+    public void changeActiveColor(){
+        this.activeColor = (this.activeColor == Piece.Color.RED) ? Piece.Color.WHITE :Piece.Color.RED;
+    }
+
+    public Piece.Color getActiveColor(){
+        return this.activeColor;
     }
 }
