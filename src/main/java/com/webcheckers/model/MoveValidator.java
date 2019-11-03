@@ -6,7 +6,7 @@ public class MoveValidator {
 
     public enum MoveValidation{
 
-        VALID, TOOFAR, OCCUPIED, JUMPNEEDED;
+        VALID, TOOFAR, OCCUPIED, JUMPNEEDED, VALIDJUMP;
 
 
     }
@@ -115,7 +115,7 @@ public class MoveValidator {
         if(checkSimpleJump(move,model)){
 
             System.out.println("check jump move");
-            return MoveValidation.VALID;
+            return MoveValidation.VALIDJUMP;
         }
         else
             return MoveValidation.TOOFAR;
@@ -143,7 +143,7 @@ public class MoveValidator {
         return false;
     }
 
-    private static boolean pieceHasJump( Position pos, Board model, Piece.Color color){
+    public static boolean pieceHasJump( Position pos, Board model, Piece.Color color){
 
         int teamOffset = 1;
 
@@ -180,7 +180,7 @@ public class MoveValidator {
         return false;
     }
 
-    public static boolean checkSimpleJump(Move move, Board model){
+    private static boolean checkSimpleJump(Move move, Board model){
 
         Position start = move.getStart();
         Position end = move.getEnd();
