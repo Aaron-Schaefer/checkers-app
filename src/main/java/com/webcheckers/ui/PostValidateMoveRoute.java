@@ -17,7 +17,7 @@ public class PostValidateMoveRoute implements Route {
     private Gson gson;
 
     private static final String VALID_MOVE = "This is a valid move.";
-    private static final String JUMP_MOVE = "This is a valid move. Another Jump move is required";
+    private static final String JUMP_MOVE = "A jump move is required";
     private static final String OCCUPIED_SPACE = "Invalid move! This space is already occupied.";
     private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
     private static final String VERTICAL_MOVE = "Invalid move! Your move was vertical.";

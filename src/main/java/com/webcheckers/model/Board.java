@@ -207,4 +207,16 @@ public class Board {
     public Piece.Color getActiveColor(){
         return this.activeColor;
     }
+
+    public void addSpaceTaken(Space space){
+        spacesTaken.add(space);
+    }
+
+    public void clearSpacesTaken(){
+        spacesTaken.clear();
+    }
+
+    public List<Space> getSpacesTaken(){
+        return this.spacesTaken;
+    }
 }
