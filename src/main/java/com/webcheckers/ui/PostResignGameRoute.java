@@ -1,7 +1,5 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
-import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -15,17 +13,14 @@ public class PostResignGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
-    private Gson gson;
-
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostResignGameRoute(final TemplateEngine templateEngine, Gson gson) {
+    public PostResignGameRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        this.gson = gson;
         //
         LOG.config("PostResignGameRoute is initialized.");
     }
@@ -43,8 +38,6 @@ public class PostResignGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        Message message = Message.info("true");
-        String jsonMsg = gson.toJson(message, Message.class);
-        return jsonMsg;
+        return null;
     }
 }
