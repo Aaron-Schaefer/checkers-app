@@ -154,6 +154,30 @@ public class MoveValidator {
 
     public static boolean checkSimpleJump(Move move, Board model){
 
+        Position start = move.getStart();
+        Position end = move.getEnd();
+
+        int rowdif = Math.abs(start.getRow()- end.getRow());
+        int coldif = Math.abs(start.getCell() - end.getCell());
+
+        if(coldif ==2 && rowdif ==2){
+
+            Position taken = new Position((start.getRow() + end.getRow())/2, (start.getCell() + end.getCell())/2 );
+            Piece takenPiece = model.getSpace(taken.getRow(),taken.getCell()).getPiece();
+            Piece startPiece = model.getSpace(start.getRow(),start.getCell()).getPiece();
+
+            if(takenPiece == null) {
+                return false;
+            }
+            else if(takenPiece.getColor() == startPiece.getColor()) {
+                return false;
+            }
+            else {
+                return true;
+            }
+
+
+        }
 
         return false;
     }
