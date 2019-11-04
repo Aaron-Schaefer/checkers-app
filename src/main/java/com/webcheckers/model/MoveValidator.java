@@ -202,7 +202,7 @@ public class MoveValidator {
             }
             else {
                 if(realMove)
-                    WebServer.BOARD.addSpaceTaken(model.getSpace(taken.getRow(),taken.getCell()));
+                    WebServer.BOARD.addPositionTaken(taken);
                 return true;
             }
         }

@@ -17,6 +17,7 @@ public class PostValidateMoveRoute implements Route {
     private Gson gson;
 
     private static final String VALID_MOVE = "This is a valid move.";
+    private static final String VALID_JUMP_MOVE = "This is a valid move. You ";
     private static final String JUMP_MOVE = "A jump move is required";
     private static final String OCCUPIED_SPACE = "Invalid move! This space is already occupied.";
     private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
@@ -61,9 +62,21 @@ public class PostValidateMoveRoute implements Route {
                 message = Message.info(VALID_MOVE);
                 break;
 
+            case VALIDJUMP:
+                if(MoveValidator.pieceHasJump(move.getEnd(), WebServer.BOARD, WebServer.BOARD.getSpace(move.getStart().getRow(),
+                        move.getStart().getCell()).getPiece().getColor(), false)){
+                    move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
+                    message = Message.info(VALID_JUMP_MOVE);
+                }
+                else{
+                    move.setValidState(MoveValidator.MoveValidation.VALID);
+                    message = Message.info(VALID_MOVE);
+                }
+
             case JUMPNEEDED:
                 move.setValidState(MoveValidator.MoveValidation.JUMPNEEDED);
                 message = Message.info(JUMP_MOVE);
+                Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
                 break;
 
             case OCCUPIED:

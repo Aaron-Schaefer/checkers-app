@@ -16,7 +16,7 @@ public class Board {
     private Player whitePlayer;
     private Player redPlayer;
     private Piece.Color activeColor;
-    private List<Space> spacesTaken;
+    private List<Position> positionsTaken;
 
     /**
      * Constructor for the Board
@@ -29,7 +29,7 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
-        this.spacesTaken = new ArrayList<>();
+        this.positionsTaken = new ArrayList<>();
         initializeSpaces();
         //putPieces();
         //print();
@@ -209,15 +209,15 @@ public class Board {
         return this.activeColor;
     }
 
-    public void addSpaceTaken(Space space){
-        spacesTaken.add(space);
+    public void addPositionTaken(Position position){
+        positionsTaken.add(position);
     }
 
-    public void clearSpacesTaken(){
-        spacesTaken.clear();
+    public void clearPositionsTaken(){
+        positionsTaken.clear();
     }
 
-    public List<Space> getSpacesTaken(){
-        return this.spacesTaken;
+    public List<Position> getPositionsTaken(){
+        return this.positionsTaken;
     }
 }

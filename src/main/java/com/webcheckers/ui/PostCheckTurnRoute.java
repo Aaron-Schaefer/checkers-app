@@ -44,7 +44,7 @@ public class PostCheckTurnRoute implements Route {
         Message message = Message.info("false");
         if (WebServer.TURN_MADE) {
             message = Message.info("true");
-            Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+            Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
         }
         WebServer.TURN_MADE = false;
         String jsonMsg = gson.toJson(message, Message.class);

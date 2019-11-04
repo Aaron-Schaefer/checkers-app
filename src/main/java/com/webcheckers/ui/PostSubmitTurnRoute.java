@@ -1,9 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.MoveValidator;
-import com.webcheckers.model.Piece;
+import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -50,9 +48,10 @@ public class PostSubmitTurnRoute implements Route {
 //        request.session().attribute("test", true);
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
-        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
         Move move = WebServer.RECENT_MOVE;
-        if(move.getValidState() == MoveValidator.MoveValidation.OCCUPIED
+        if(move.getValidState() == MoveValidator.MoveValidation.JUMPNEEDED
+                || move.getValidState() == MoveValidator.MoveValidation.OCCUPIED
                 || move.getValidState() == MoveValidator.MoveValidation.TOOFAR){
 
         }
@@ -60,11 +59,16 @@ public class PostSubmitTurnRoute implements Route {
             Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
             WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
             WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
-            if (move.getValidState() == MoveValidator.MoveValidation.JUMPNEEDED) {
+            if (move.getValidState() == MoveValidator.MoveValidation.VALIDJUMP) {
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
-            } else if (move.getValidState() == MoveValidator.MoveValidation.VALID) {
+            }
+            else if (move.getValidState() == MoveValidator.MoveValidation.VALID) {
                 WebServer.BOARD.changeActiveColor();
             }
+            for(Position position : WebServer.BOARD.getPositionsTaken()){
+                WebServer.BOARD.removePiece(position.getRow(), position.getCell());
+            }
+            WebServer.BOARD.clearPositionsTaken();
         }
         return jsonMsg;
     }
