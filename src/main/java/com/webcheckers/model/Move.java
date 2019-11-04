@@ -1,5 +1,11 @@
 package com.webcheckers.model;
 
+/**
+ * Purpose: The move class responsible for
+ *
+ *
+ * @author Aaron Schaefer
+ */
 public class Move {
     private Position start;
     private Position end;

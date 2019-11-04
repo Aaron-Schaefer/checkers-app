@@ -91,6 +91,9 @@ public class WebServer {
 
   public static boolean TURN_MADE = false;
 
+  public static boolean resign_check = false;
+
+
   //
   // Attributes
   //
@@ -187,7 +190,7 @@ public class WebServer {
     post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
 
     //Display of the game for the player
-    get(GAME_URL, new GetGameRoute(templateEngine));
+    get(GAME_URL, new GetGameRoute(templateEngine, gson));
 
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
 
