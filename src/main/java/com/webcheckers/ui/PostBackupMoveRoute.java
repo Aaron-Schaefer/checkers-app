@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -46,11 +43,7 @@ public class PostBackupMoveRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Message message = Message.info("true");
-        Move move = WebServer.RECENT_MOVE;
-        Move newMove = new Move(move.getEnd(), move.getStart());
-        Piece piece = WebServer.BOARD.getSpace(newMove.getStart().getRow(), newMove.getStart().getCell()).getPiece();
-        WebServer.BOARD.removePiece(newMove.getStart().getRow(), newMove.getStart().getCell());
-        WebServer.BOARD.addPiece(newMove.getEnd().getRow(), newMove.getEnd().getCell(), piece);
+        Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
     }
