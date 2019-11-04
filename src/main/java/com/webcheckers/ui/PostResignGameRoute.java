@@ -45,7 +45,7 @@ public class PostResignGameRoute implements Route {
         Session session = request.session();
 
 
-        WebServer.resign_check = true;
+        WebServer.RESIGN_CHECK = true;
         Message message = Message.info("Resign");
         String jsonMsg = gson.toJson(message, Message.class);
 

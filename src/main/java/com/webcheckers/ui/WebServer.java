@@ -91,7 +91,7 @@ public class WebServer {
 
   public static boolean TURN_MADE = false;
 
-  public static boolean resign_check = false;
+  public static boolean RESIGN_CHECK = false;
 
 
   //

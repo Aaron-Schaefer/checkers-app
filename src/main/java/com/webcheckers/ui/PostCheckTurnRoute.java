@@ -41,7 +41,11 @@ public class PostCheckTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        if(WebServer.RESIGN_CHECK){
+            Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
+        }
         Message message = Message.info("false");
+//        System.out.println("CHECK");
         if (WebServer.TURN_MADE) {
             message = Message.info("true");
             Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));

@@ -40,7 +40,6 @@ public class MoveValidator {
         //simple move
         if(rowChange == 1){
 
-            System.out.println("Simple move");
             if(teamHasJump(model,start.getPiece().getColor()))
                 return MoveValidation.JUMPNEEDED;
 
@@ -51,7 +50,6 @@ public class MoveValidator {
         //jump move
         if(rowChange == 2){
 
-            System.out.println("jump move 1");
             return validateJumpMove(model, start, move);
         }
 
@@ -74,17 +72,13 @@ public class MoveValidator {
 
         int colChange = Math.abs(start.getCell()-end.getCell());
         int rowChange = start.getRow()- end.getRow();
-        System.out.println("col change " + colChange);
-        System.out.println("row change " + rowChange);
 
         if(colChange > 1)
             return MoveValidation.TOOFAR;
 
         if(color.equals(Piece.Color.RED) && type.equals(Piece.Type.SINGLE) ){
 
-            System.out.println("red single");
             if(rowChange == 1) {
-                System.out.println("valid");
                 return MoveValidation.VALID;
             }
             else
@@ -112,9 +106,8 @@ public class MoveValidator {
             return MoveValidation.TOOFAR;
         }*/
 
-        if(checkSimpleJump(move,model, true)){
+        if(checkSimpleJump(move,model, true, null)){
 
-            System.out.println("check jump move");
             return MoveValidation.VALIDJUMP;
         }
         else
@@ -155,32 +148,34 @@ public class MoveValidator {
 
         int forwardRow = pos.getRow() +2*teamOffset;
 
-        if(forwardRow>7 || forwardRow<0)
+        if(forwardRow>7 || forwardRow<0) {
             return false;
+        }
 
         if(leftCell<8 && leftCell>0){
 
             Position end = new Position(forwardRow, leftCell);
             Move move = new Move(pos, end);
 
-            return checkSimpleJump(move,model, realMove);
+            if(checkSimpleJump(move,model, realMove, color)){
+                return checkSimpleJump(move,model, realMove, color);
+            }
+            else{
+                if(rightCell<8 && rightCell>0){
 
+                    end = new Position(forwardRow,rightCell);
+                    move = new Move(pos, end);
 
-        }
-
-        if(rightCell<8 && rightCell>0){
-
-            Position end = new Position(forwardRow,rightCell);
-            Move move = new Move(pos, end);
-
-            return checkSimpleJump(move,model, realMove);
+                    return checkSimpleJump(move,model, realMove, color);
+                }
+            }
 
         }
 
         return false;
     }
 
-    private static boolean checkSimpleJump(Move move, Board model, boolean realMove){
+    private static boolean checkSimpleJump(Move move, Board model, boolean realMove, Piece.Color color){
 
         Position start = move.getStart();
         Position end = move.getEnd();
@@ -194,24 +189,28 @@ public class MoveValidator {
             Piece takenPiece = model.getSpace(taken.getRow(),taken.getCell()).getPiece();
             Piece startPiece = model.getSpace(start.getRow(),start.getCell()).getPiece();
 
-            System.out.println("start piece " + startPiece);
-            System.out.println("taken Picec " + takenPiece);
-
             if(model.getSpace(end.getRow(),end.getCell()).getPiece() != null){
                 return false;
             }
 
-            if(takenPiece == null) {
-                return false;
+            Piece.Color colorUsed;
+            if(takenPiece != null){
+                if(startPiece != null){
+                     colorUsed = startPiece.getColor();
+                }
+                else{
+                     colorUsed = color;
+                }
+                if(takenPiece.getColor() == colorUsed) {
+                    return false;
+                }
+                else {
+                    if(realMove)
+                        WebServer.BOARD.addPositionTaken(taken);
+                    return true;
+                }
             }
-            else if(takenPiece.getColor() == startPiece.getColor()) {
-                return false;
-            }
-            else {
-                if(realMove)
-                    WebServer.BOARD.addPositionTaken(taken);
-                return true;
-            }
+            return false;
         }
 
         return false;
