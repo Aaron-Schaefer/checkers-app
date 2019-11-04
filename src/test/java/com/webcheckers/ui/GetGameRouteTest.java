@@ -10,17 +10,27 @@ import spark.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
-
+/**
+ * Class to test the GetGameRoute.
+ *
+ * @author Aaron, Gavin, Mark, Ries, Zach
+ */
 @Tag("UI-tier")
 public class GetGameRouteTest {
 
+    /**
+     * Parameters used in testing.
+     */
     private GetGameRoute CuT;
-
     private TemplateEngine templateEngine;
     private Request request;
     private Session session;
     private Response response;
     private Gson gson;
+
+    /**
+     * Initialization.
+     */
     @BeforeEach
     private void setup(){
         request = mock(Request.class);
@@ -41,6 +51,9 @@ public class GetGameRouteTest {
 
     }
 
+    /**
+     * Tests the attributes of the GetGameRoute.
+     */
     @Test
     public void testAttributes(){
 
