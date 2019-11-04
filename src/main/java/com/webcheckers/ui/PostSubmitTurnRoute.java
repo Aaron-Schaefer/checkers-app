@@ -49,7 +49,7 @@ public class PostSubmitTurnRoute implements Route {
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
         request.session().attribute("turnMade", "true");
-        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
+        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine,gson));
         Move move = WebServer.RECENT_MOVE;
         Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
         WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());

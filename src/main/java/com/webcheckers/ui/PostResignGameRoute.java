@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import freemarker.template.Template;
 import spark.*;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+
 /**
  * Language: Java
  * Author: Ries Scerbin
@@ -39,11 +41,14 @@ public class PostResignGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        Message gameover = Message.info("Error! Game is already over you cannot Resign@");
+        Message gameover = Message.error("Error! Game is already over you cannot Resign");
         Session session = request.session();
 
-        Message message = Message.info("true");
+
+        WebServer.resign_check = true;
+        Message message = Message.info("Resign");
         String jsonMsg = gson.toJson(message, Message.class);
+
         return jsonMsg;
     }
 
