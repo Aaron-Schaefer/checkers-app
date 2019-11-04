@@ -112,7 +112,7 @@ public class MoveValidator {
             return MoveValidation.TOOFAR;
         }
 
-        if(checkSimpleJump(move,model)){
+        if(checkSimpleJump(move,model, true)){
 
             System.out.println("check jump move");
             return MoveValidation.VALIDJUMP;
@@ -133,7 +133,7 @@ public class MoveValidator {
 
                     Position position = new Position(r,c);
 
-                    if(pieceHasJump(position, model, color))
+                    if(pieceHasJump(position, model, color, false))
                         return true;
                 }
 
@@ -143,7 +143,7 @@ public class MoveValidator {
         return false;
     }
 
-    public static boolean pieceHasJump( Position pos, Board model, Piece.Color color){
+    public static boolean pieceHasJump( Position pos, Board model, Piece.Color color, boolean realMove){
 
         int teamOffset = 1;
 
@@ -163,7 +163,7 @@ public class MoveValidator {
             Position end = new Position(forwardRow, leftCell);
             Move move = new Move(pos, end);
 
-            return checkSimpleJump(move,model);
+            return checkSimpleJump(move,model, realMove);
 
 
         }
@@ -173,14 +173,14 @@ public class MoveValidator {
             Position end = new Position(forwardRow,rightCell);
             Move move = new Move(pos, end);
 
-            return checkSimpleJump(move,model);
+            return checkSimpleJump(move,model, realMove);
 
         }
 
         return false;
     }
 
-    private static boolean checkSimpleJump(Move move, Board model){
+    private static boolean checkSimpleJump(Move move, Board model, boolean realMove){
 
         Position start = move.getStart();
         Position end = move.getEnd();
@@ -201,7 +201,8 @@ public class MoveValidator {
                 return false;
             }
             else {
-                WebServer.BOARD.addSpaceTaken(model.getSpace(taken.getRow(),taken.getCell()));
+                if(realMove)
+                    WebServer.BOARD.addSpaceTaken(model.getSpace(taken.getRow(),taken.getCell()));
                 return true;
             }
         }
