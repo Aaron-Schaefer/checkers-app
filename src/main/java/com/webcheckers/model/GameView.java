@@ -1,6 +1,12 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.BoardView;
+/**
+ * Purpose: Class responsible for the game view.
+ *
+ *
+ * @author Aaron Schaefer
+ */
+
 import com.webcheckers.util.Message;
 
 import java.util.Map;
