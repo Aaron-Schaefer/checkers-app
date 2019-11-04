@@ -41,6 +41,10 @@ public class Piece {
         return this.color;
     }
 
+    public void setTypeKing(){
+        this.type = Type.KING;
+    }
+
     @Override
     public String toString() {
         return "" + color + "";

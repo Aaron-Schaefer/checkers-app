@@ -58,6 +58,10 @@ public class PostSubmitTurnRoute implements Route {
         else {
             Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
             WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
+            if((move.getEnd().getRow() == 0 && piece.getColor() == Piece.Color.RED)
+                    || (move.getEnd().getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
+                piece.setTypeKing();
+            }
             WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
             if (move.getValidState() == MoveValidator.MoveValidation.VALIDJUMP) {
                 System.out.println("reached jump");
