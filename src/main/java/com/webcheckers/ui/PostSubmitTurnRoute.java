@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.model.Move;
+import com.webcheckers.model.MoveValidator;
 import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static spark.route.HttpMethod.get;
+import static spark.route.HttpMethod.post;
 
 public class PostSubmitTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
@@ -44,18 +46,26 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        System.out.println("HI");
-        WebServer.TEST = true;
+        WebServer.TURN_MADE = true;
+//        request.session().attribute("test", true);
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
-        request.session().attribute("turnMade", "true");
-        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine,gson));
+        Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
         Move move = WebServer.RECENT_MOVE;
-        Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
-        WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
-        WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
-        WebServer.BOARD.changeActiveColor();
+        if(move.getValidState() == MoveValidator.MoveValidation.OCCUPIED
+                || move.getValidState() == MoveValidator.MoveValidation.TOOFAR){
+
+        }
+        else {
+            Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
+            WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
+            WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
+            if (move.getValidState() == MoveValidator.MoveValidation.JUMPNEEDED) {
+                Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
+            } else if (move.getValidState() == MoveValidator.MoveValidation.VALID) {
+                WebServer.BOARD.changeActiveColor();
+            }
+        }
         return jsonMsg;
     }
-
 }

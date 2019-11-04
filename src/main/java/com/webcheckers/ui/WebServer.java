@@ -88,7 +88,8 @@ public class WebServer {
   public static Move RECENT_MOVE = new Move();
 
   public static Board BOARD;
-  public static boolean TEST = false;
+
+  public static boolean TURN_MADE = false;
 
   public static boolean resign_check = false;
 
