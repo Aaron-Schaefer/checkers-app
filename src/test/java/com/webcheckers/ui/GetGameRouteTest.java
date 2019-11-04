@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -19,7 +20,7 @@ public class GetGameRouteTest {
     private Request request;
     private Session session;
     private Response response;
-
+    private Gson gson;
     @BeforeEach
     private void setup(){
         request = mock(Request.class);
@@ -27,7 +28,7 @@ public class GetGameRouteTest {
         when(request.session()).thenReturn(session);
         templateEngine = mock(TemplateEngine.class);
         response = mock(Response.class);
-        CuT = new GetGameRoute(templateEngine);
+        CuT = new GetGameRoute(templateEngine, gson);
         WebServer webServer = mock(WebServer.class);
         webServer.initialize();
 
