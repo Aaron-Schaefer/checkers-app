@@ -19,12 +19,18 @@ public class PlayerTest {
         assertEquals("test", CuT.getName());
     }
 
+    /**
+     * Tetsts if the name is null when assigned null.
+     */
     @Test
     public void ctor_nameNull(){
         Player CuT = new Player(null);
         assertNull(CuT.getName());
     }
 
+    /**
+     * Tests if two players are equal (when they should be).
+     */
     @Test
     public void equalsPlayer(){
         Player test1 = new Player("test");
