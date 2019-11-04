@@ -107,10 +107,10 @@ public class MoveValidator {
 
 
 
-        if(!teamHasJump(model, start.getPiece().getColor())) {
+        /*if(!teamHasJump(model, start.getPiece().getColor())) {
             System.out.println("team has jump");
             return MoveValidation.TOOFAR;
-        }
+        }*/
 
         if(checkSimpleJump(move,model, true)){
 
@@ -193,6 +193,9 @@ public class MoveValidator {
             Position taken = new Position((start.getRow() + end.getRow())/2, (start.getCell() + end.getCell())/2 );
             Piece takenPiece = model.getSpace(taken.getRow(),taken.getCell()).getPiece();
             Piece startPiece = model.getSpace(start.getRow(),start.getCell()).getPiece();
+
+            System.out.println("start piece " + startPiece);
+            System.out.println("taken Picec " + takenPiece);
 
             if(model.getSpace(end.getRow(),end.getCell()).getPiece() != null){
                 return false;

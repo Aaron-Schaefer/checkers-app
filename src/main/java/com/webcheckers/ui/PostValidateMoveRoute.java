@@ -72,6 +72,7 @@ public class PostValidateMoveRoute implements Route {
                     move.setValidState(MoveValidator.MoveValidation.VALID);
                     message = Message.info(VALID_MOVE);
                 }
+                break;
 
             case JUMPNEEDED:
                 move.setValidState(MoveValidator.MoveValidation.JUMPNEEDED);
