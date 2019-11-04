@@ -194,6 +194,10 @@ public class MoveValidator {
             Piece takenPiece = model.getSpace(taken.getRow(),taken.getCell()).getPiece();
             Piece startPiece = model.getSpace(start.getRow(),start.getCell()).getPiece();
 
+            if(model.getSpace(end.getRow(),end.getCell()).getPiece() != null){
+                return false;
+            }
+
             if(takenPiece == null) {
                 return false;
             }
