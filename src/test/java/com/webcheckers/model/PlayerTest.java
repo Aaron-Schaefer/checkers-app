@@ -3,9 +3,16 @@ package com.webcheckers.model;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
+/**
+ * Class to test the player.
+ *
+ * @author Aaron, Gavin, Mark, Ries, Zach
+ */
 @Tag("Model-tier")
 public class PlayerTest {
+    /**
+     * Tests if the player object successfully recieved the name.
+     */
     @Test
     public void ctor(){
         Player CuT = new Player("test");

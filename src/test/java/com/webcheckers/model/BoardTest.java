@@ -6,15 +6,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-
+/**
+ * Class to test the board..
+ *
+ * @author Aaron, Gavin, Mark, Ries, Zach
+ */
 @Tag("Model-tier")
 public class BoardTest {
-    private final int BOARD_SIZE = 8;
 
+    /**
+     * Parameters used in testing: board size, player objects, and the board (the unit under test).
+     */
+    private final int BOARD_SIZE = 8;
     private Player whitePlayer;
     private Player redPlayer;
     private Board CuT;
 
+    /**
+     * Create the mock player objects.
+     */
     @BeforeEach
     public void Setup(){
          whitePlayer = mock(Player.class);
@@ -23,7 +33,9 @@ public class BoardTest {
 
     }
 
-
+    /**
+     * Check to validate that the players have been successfully added.
+     */
     @Test
     public void ctor_valid_players(){
 
@@ -32,6 +44,9 @@ public class BoardTest {
         assertNotNull(CuT.getRedPlayer());
     }
 
+    /**
+     * Tests the setup of the board.
+     */
     @Test
     public void test_board_setup(){
 
