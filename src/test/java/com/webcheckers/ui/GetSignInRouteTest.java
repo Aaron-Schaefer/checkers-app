@@ -21,13 +21,18 @@ import spark.*;
 @Tag("UI-tier")
 public class GetSignInRouteTest {
 
+    /**
+     * Parameters used for testing.
+     */
     private GetSignInRoute CuT;
-
     private TemplateEngine templateEngine;
     private Request request;
     private Session session;
     private Response response;
 
+    /**
+     * Initialization.
+     */
     @BeforeEach
     private void setup() {
         request = mock(Request.class);
