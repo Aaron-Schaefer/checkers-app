@@ -45,22 +45,10 @@ public class PlayerLobby {
         return false;
     }
 
-    public void addToGame(Player player){
-        if(gamePlayers.isEmpty()){
-            redPlayer = player;
+    public void addGamePlayer(Player player){
+        if(!gamePlayers.contains(player) && player != null){
+            gamePlayers.add(player);
         }
-        else{
-            whitePlayer = player;
-        }
-        gamePlayers.add(player);
-    }
-
-    public Player getRedPlayer(){
-        return this.redPlayer;
-    }
-
-    public Player getWhitePlayer(){
-        return this.whitePlayer;
     }
 
     /**
@@ -83,6 +71,10 @@ public class PlayerLobby {
             }
         }
         return null;
+    }
+
+    public boolean isInGame(Player player){
+        return gamePlayers.contains(player);
     }
 
     /**

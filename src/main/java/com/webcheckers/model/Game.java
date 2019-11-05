@@ -7,10 +7,27 @@ public class Game {
     private Move recentMove;
     public boolean turnMade = false;
 
-    public Game(Player redPlayer, Player whitePlayer){
-        this.redPlayer = redPlayer;
-        this.whitePlayer = whitePlayer;
+    public Game(){}
+
+    public void addToGame(Player player){
+        if(redPlayer == null){
+            redPlayer = player;
+        }
+        else{
+            whitePlayer = player;
+        }
+    }
+
+    public void initializeBoard(){
         this.board = new Board(redPlayer, whitePlayer);
+    }
+
+    public Player getRedPlayer() {
+        return redPlayer;
+    }
+
+    public Player getWhitePlayer() {
+        return whitePlayer;
     }
 
     public void setRecentMove(Move move){

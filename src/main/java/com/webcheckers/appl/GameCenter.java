@@ -12,8 +12,9 @@ public class GameCenter {
         this.games = new HashMap<>();
     }
 
-    public void makeGame(Player redPlayer, Player whitePlayer){
-        Game game = new Game(redPlayer, whitePlayer);
+    public void addGame(Game game){
+        Player redPlayer = game.getRedPlayer();
+        Player whitePlayer = game.getWhitePlayer();
         List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
         games.put(playerList, game);
     }

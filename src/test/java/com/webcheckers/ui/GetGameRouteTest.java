@@ -45,8 +45,6 @@ public class GetGameRouteTest {
         Player red = mock(Player.class);
         Player white = mock(Player.class);
 
-        webServer.PLAYER_LOBBY.addToGame(red);
-        webServer.PLAYER_LOBBY.addToGame(white);
 
 
     }

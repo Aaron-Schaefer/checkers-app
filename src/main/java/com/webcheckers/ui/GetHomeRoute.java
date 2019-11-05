@@ -3,7 +3,9 @@ package com.webcheckers.ui;
 import java.util.*;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -57,6 +59,9 @@ public class GetHomeRoute implements Route {
     Player player = session.attribute("currentPlayer");
 
     PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
+    GameCenter gameCenter = WebServer.GAME_CENTER;
+
+    Game game = gameCenter.getGame(player);
 
     //Sets the current User as the current Player if not already set.
     if(player!=null){
@@ -64,9 +69,11 @@ public class GetHomeRoute implements Route {
 
       //Redirects the current Player to the /game URL if the current Player
       //is the White Player.
-      if(playerLobby.getWhitePlayer() != null){
-        if(player.equals(playerLobby.getWhitePlayer())){
-          response.redirect("/game");
+      if(game != null) {
+        if (game.getWhitePlayer() != null){
+          if (player.equals(game.getWhitePlayer())) {
+            response.redirect("/game");
+          }
         }
       }
     }
