@@ -52,29 +52,26 @@ public class PostValidateMoveRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        final String ID = request.queryParams("gameID");
+        System.out.println(ID);
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
         Message message = Message.info("true");
-        System.out.println(MoveValidator.validateMove(WebServer.BOARD, move));
         switch (MoveValidator.validateMove(WebServer.BOARD, move)){
             case VALID:
                 move.setValidState(MoveValidator.MoveValidation.VALID);
                 message = Message.info(VALID_MOVE);
-                System.out.println("1");
                 break;
-
 
             case VALIDJUMP:
                 if(MoveValidator.pieceHasJump(move.getEnd(), WebServer.BOARD, WebServer.BOARD.getSpace(move.getStart().getRow(),
                         move.getStart().getCell()).getPiece().getColor(), false)){
                     move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
                     message = Message.info(VALID_JUMP_MOVE);
-                    System.out.println("2");
                 }
                 else{
                     move.setValidState(MoveValidator.MoveValidation.VALID);
                     message = Message.info(VALID_MOVE);
-                    System.out.println("3");
                 }
                 break;
 
@@ -96,7 +93,6 @@ public class PostValidateMoveRoute implements Route {
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
                 break;
         }
-        System.out.println(move.getValidState());
         WebServer.RECENT_MOVE = move;
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;

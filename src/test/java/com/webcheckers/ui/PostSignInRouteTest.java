@@ -7,13 +7,10 @@ package com.webcheckers.ui;
  */
 
 import com.webcheckers.model.Player;
-import com.webcheckers.model.PlayerLobby;
-import com.webcheckers.util.Message;
+import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.Answers;
-import org.mockito.stubbing.Answer;
 import spark.*;
 
 import static org.junit.jupiter.api.Assertions.*;

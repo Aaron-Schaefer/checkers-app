@@ -6,13 +6,11 @@ package com.webcheckers.ui;
  * Purpose: A class to test GetSignInRoute.
  */
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.webcheckers.model.Player;
-import com.webcheckers.model.PlayerLobby;
+import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

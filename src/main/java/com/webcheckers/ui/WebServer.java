@@ -7,9 +7,10 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Move;
-import com.webcheckers.model.PlayerLobby;
+import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
 
@@ -84,6 +85,8 @@ public class WebServer {
 
   //Initializes the Games PlayerLobby.
   public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
+
+  public static GameCenter GAME_CENTER = new GameCenter();
 
   public static Move RECENT_MOVE = new Move();
 

@@ -23,7 +23,7 @@ public class Board {
      * Creates a board model
      *
      */
-    public Board(Player whitePlayer, Player redPlayer){
+    public Board(Player redPlayer, Player whitePlayer){
 
         boardArray = new Space[BOARD_SIZE][BOARD_SIZE];
         this.redPlayer = redPlayer;

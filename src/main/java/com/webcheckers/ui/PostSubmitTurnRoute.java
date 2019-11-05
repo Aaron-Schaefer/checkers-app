@@ -64,11 +64,9 @@ public class PostSubmitTurnRoute implements Route {
             }
             WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
             if (move.getValidState() == MoveValidator.MoveValidation.VALIDJUMP) {
-                System.out.println("reached jump");
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
             }
             else if (move.getValidState() == MoveValidator.MoveValidation.VALID) {
-                System.out.println("changed");
                 WebServer.BOARD.changeActiveColor();
             }
             for(Position position : WebServer.BOARD.getPositionsTaken()){

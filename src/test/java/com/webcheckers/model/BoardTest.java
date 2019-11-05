@@ -29,7 +29,7 @@ public class BoardTest {
     public void Setup(){
          whitePlayer = mock(Player.class);
          redPlayer = mock(Player.class);
-         CuT = new Board(whitePlayer, redPlayer);
+         CuT = new Board(redPlayer, whitePlayer);
 
     }
 

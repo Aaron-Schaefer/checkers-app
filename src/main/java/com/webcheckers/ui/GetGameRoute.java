@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Piece;
@@ -50,6 +51,8 @@ public class GetGameRoute implements Route {
         Session session = request.session();
         Player currentPlayer = session.attribute("currentPlayer");
 
+        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
+
         //Set the Red Player and the White player as the Red Player and White Player
         //given by the Player Lobby.
         Player redPlayer = WebServer.PLAYER_LOBBY.getRedPlayer();
@@ -77,8 +80,9 @@ public class GetGameRoute implements Route {
 
         //Creates the Board model.
         if(WebServer.BOARD == null) {
-            WebServer.BOARD = new Board(whitePlayer, redPlayer);
+            WebServer.BOARD = new Board(redPlayer, whitePlayer);
         }
+//        if(WebServer.GAME_CENTER.containsKey())
 
         //Creates the BoardView.
         BoardView boardView = new BoardView(WebServer.BOARD, currentPlayer);
