@@ -14,11 +14,13 @@ public class MoveValidator {
     /**
      * Takes a move and validates whether or not it is valid based on American Checker rules
      *
-     * @param model The active populated checkers board
+     * @param game The game containing the active checkers board
      * @param move The move made
      * @return enum of if the move is valid or if not why it is not
      */
-    public static MoveValidation validateMove(Board model, Move move){
+    public static MoveValidation validateMove(Game game, Move move){
+
+        Board model = game.getBoard();
 
         final Position startPos = move.getStart();
         final Position endPos = move.getEnd();
@@ -40,17 +42,17 @@ public class MoveValidator {
         //simple move
         if(rowChange == 1){
 
-            if(teamHasJump(model,start.getPiece().getColor()))
+            if(teamHasJump(game, piece.getColor()))
                 return MoveValidation.JUMPNEEDED;
 
-            return validateSimpleMove(start.getPiece().getColor(), start.getPiece().getType(),startPos, endPos);
+            return validateSimpleMove(piece.getColor(), piece.getType(),startPos, endPos);
 
         }
 
         //jump move
         if(rowChange == 2){
 
-            return validateJumpMove(model, start, move);
+            return validateJumpMove(game, start, move);
         }
 
 
@@ -97,16 +99,14 @@ public class MoveValidator {
     }
 
 
-    private static MoveValidation validateJumpMove(Board model, Space start, Move move){
-
-
+    private static MoveValidation validateJumpMove(Game game, Space start, Move move){
 
         /*if(!teamHasJump(model, start.getPiece().getColor())) {
             System.out.println("team has jump");
             return MoveValidation.TOOFAR;
         }*/
 
-        if(checkSimpleJump(move,model, true, null)){
+        if(checkSimpleJump(move, game, true, null)){
 
             return MoveValidation.VALIDJUMP;
         }
@@ -116,7 +116,9 @@ public class MoveValidator {
     }
 
 
-    private static boolean teamHasJump(Board model, Piece.Color color){
+    private static boolean teamHasJump(Game game, Piece.Color color){
+
+        Board model = game.getBoard();
 
         for(int r = 0; r < 8; r++){
 
@@ -126,7 +128,7 @@ public class MoveValidator {
 
                     Position position = new Position(r,c);
 
-                    if(pieceHasJump(position, model, color, false))
+                    if(pieceHasJump(position, game, color, false))
                         return true;
                 }
 
@@ -136,7 +138,9 @@ public class MoveValidator {
         return false;
     }
 
-    public static boolean pieceHasJump( Position pos, Board model, Piece.Color color, boolean realMove){
+    public static boolean pieceHasJump( Position pos, Game game, Piece.Color color, boolean realMove){
+
+        Board model = game.getBoard();
 
         int teamOffset = 1;
 
@@ -157,8 +161,8 @@ public class MoveValidator {
             Position end = new Position(forwardRow, leftCell);
             Move move = new Move(pos, end);
 
-            if(checkSimpleJump(move,model, realMove, color)){
-                return checkSimpleJump(move,model, realMove, color);
+            if(checkSimpleJump(move,game, realMove, color)){
+                return checkSimpleJump(move,game, realMove, color);
             }
             else{
                 if(rightCell<8 && rightCell>0){
@@ -166,7 +170,7 @@ public class MoveValidator {
                     end = new Position(forwardRow,rightCell);
                     move = new Move(pos, end);
 
-                    return checkSimpleJump(move,model, realMove, color);
+                    return checkSimpleJump(move,game, realMove, color);
                 }
             }
 
@@ -175,7 +179,9 @@ public class MoveValidator {
         return false;
     }
 
-    private static boolean checkSimpleJump(Move move, Board model, boolean realMove, Piece.Color color){
+    private static boolean checkSimpleJump(Move move, Game game, boolean realMove, Piece.Color color){
+
+        Board model = game.getBoard();
 
         Position start = move.getStart();
         Position end = move.getEnd();
@@ -186,10 +192,10 @@ public class MoveValidator {
         if(coldif ==2 && rowdif ==2){
 
             Position taken = new Position((start.getRow() + end.getRow())/2, (start.getCell() + end.getCell())/2 );
-            Piece takenPiece = model.getSpace(taken.getRow(),taken.getCell()).getPiece();
-            Piece startPiece = model.getSpace(start.getRow(),start.getCell()).getPiece();
+            Piece takenPiece = model.getPiece(taken.getRow(),taken.getCell());
+            Piece startPiece = model.getPiece(start.getRow(),start.getCell());
 
-            if(model.getSpace(end.getRow(),end.getCell()).getPiece() != null){
+            if(model.getPiece(end.getRow(),end.getCell()) != null){
                 return false;
             }
 
@@ -206,7 +212,7 @@ public class MoveValidator {
                 }
                 else {
                     if(realMove)
-                        WebServer.BOARD.addPositionTaken(taken);
+                        game.addPositionTaken(taken);
                     return true;
                 }
             }

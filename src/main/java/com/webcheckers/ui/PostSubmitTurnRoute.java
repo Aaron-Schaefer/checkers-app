@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -44,35 +45,27 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        WebServer.TURN_MADE = true;
-//        request.session().attribute("test", true);
+        GameCenter gameCenter = WebServer.GAME_CENTER;
+        Player currentPlayer = request.session().attribute("currentPlayer");
+        Game game = gameCenter.getGame(currentPlayer);
+        game.setTurnMade(true);
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
         Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
-        Move move = WebServer.RECENT_MOVE;
+        Move move = game.getRecentMove();
         if(move.getValidState() == MoveValidator.MoveValidation.JUMPNEEDED
                 || move.getValidState() == MoveValidator.MoveValidation.OCCUPIED
                 || move.getValidState() == MoveValidator.MoveValidation.TOOFAR){
 
         }
         else {
-            Piece piece = WebServer.BOARD.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
-            WebServer.BOARD.removePiece(move.getStart().getRow(), move.getStart().getCell());
-            if((move.getEnd().getRow() == 0 && piece.getColor() == Piece.Color.RED)
-                    || (move.getEnd().getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
-                piece.setTypeKing();
-            }
-            WebServer.BOARD.addPiece(move.getEnd().getRow(), move.getEnd().getCell(), piece);
+            game.updateBoard(move);
             if (move.getValidState() == MoveValidator.MoveValidation.VALIDJUMP) {
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
             }
             else if (move.getValidState() == MoveValidator.MoveValidation.VALID) {
-                WebServer.BOARD.changeActiveColor();
+                game.endTurn();
             }
-            for(Position position : WebServer.BOARD.getPositionsTaken()){
-                WebServer.BOARD.removePiece(position.getRow(), position.getCell());
-            }
-            WebServer.BOARD.clearPositionsTaken();
         }
         return jsonMsg;
     }

@@ -201,6 +201,11 @@ public class Board {
 
     }
 
+    public Piece getPiece(int row, int col){
+        Space space = this.getSpace(row, col);
+        return space.getPiece();
+    }
+
     public void changeActiveColor(){
         this.activeColor = (this.activeColor == Piece.Color.RED) ? Piece.Color.WHITE :Piece.Color.RED;
     }

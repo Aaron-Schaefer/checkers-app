@@ -88,10 +88,6 @@ public class WebServer {
 
   public static GameCenter GAME_CENTER = new GameCenter();
 
-  public static Move RECENT_MOVE = new Move();
-
-  public static Board BOARD;
-
   public static boolean TURN_MADE = false;
 
   public static boolean RESIGN_CHECK = false;

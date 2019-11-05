@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.*;
 import com.webcheckers.util.Message;
 import org.eclipse.jetty.client.HttpResponse;
@@ -52,19 +53,21 @@ public class PostValidateMoveRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        final String ID = request.queryParams("gameID");
-        System.out.println(ID);
+        GameCenter gameCenter = WebServer.GAME_CENTER;
+        Player currentPlayer = request.session().attribute("currentPlayer");
+        Game game = gameCenter.getGame(currentPlayer);
+        Board board = game.getBoard();
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
         Message message = Message.info("true");
-        switch (MoveValidator.validateMove(WebServer.BOARD, move)){
+        switch (MoveValidator.validateMove(game, move)){
             case VALID:
                 move.setValidState(MoveValidator.MoveValidation.VALID);
                 message = Message.info(VALID_MOVE);
                 break;
 
             case VALIDJUMP:
-                if(MoveValidator.pieceHasJump(move.getEnd(), WebServer.BOARD, WebServer.BOARD.getSpace(move.getStart().getRow(),
+                if(MoveValidator.pieceHasJump(move.getEnd(), game, board.getSpace(move.getStart().getRow(),
                         move.getStart().getCell()).getPiece().getColor(), false)){
                     move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
                     message = Message.info(VALID_JUMP_MOVE);
@@ -93,7 +96,7 @@ public class PostValidateMoveRoute implements Route {
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
                 break;
         }
-        WebServer.RECENT_MOVE = move;
+        game.setRecentMove(move);
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
     }

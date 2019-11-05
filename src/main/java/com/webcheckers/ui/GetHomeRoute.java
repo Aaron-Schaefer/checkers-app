@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import java.util.*;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -55,14 +56,16 @@ public class GetHomeRoute implements Route {
     Session session = request.session();
     Player player = session.attribute("currentPlayer");
 
+    PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
+
     //Sets the current User as the current Player if not already set.
     if(player!=null){
       vm.put("currentUser", player);
 
       //Redirects the current Player to the /game URL if the current Player
       //is the White Player.
-      if(WebServer.PLAYER_LOBBY.getWhitePlayer() != null){
-        if(player.equals(WebServer.PLAYER_LOBBY.getWhitePlayer())){
+      if(playerLobby.getWhitePlayer() != null){
+        if(player.equals(playerLobby.getWhitePlayer())){
           response.redirect("/game");
         }
       }
@@ -70,16 +73,16 @@ public class GetHomeRoute implements Route {
 
     //Makes a list of players and puts it, and the number of Players to the
     //home.ftl file.
-    List<Player> players = Arrays.asList(WebServer.PLAYER_LOBBY.playerArray());
+    List<Player> players = Arrays.asList(playerLobby.playerArray());
     vm.put("players", players);
     vm.put("numPlayers", players.size());
 
     //Displays a user error if the current Player chose a Player who's already
     //in a game. Otherwise it displaces the WELCOME_MSG.
-    if(WebServer.PLAYER_LOBBY.isChoseInGame()){
+    if(playerLobby.isChoseInGame()){
       Message inGame = Message.info("Error! This player is already in a game!");
       vm.put("message", inGame);
-      WebServer.PLAYER_LOBBY.notChoseInGame();
+      playerLobby.notChoseInGame();
     }
     else{
       vm.put("message", WELCOME_MSG);
