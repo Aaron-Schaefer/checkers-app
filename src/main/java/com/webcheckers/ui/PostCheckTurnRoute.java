@@ -60,18 +60,3 @@ public class PostCheckTurnRoute implements Route {
         return jsonMsg;
     }
 }
-
-//    Message message = Message.info("false");
-//        if(request.session().attribute("test") == null) {
-//            request.session().attribute("test", false);
-//        }
-//        boolean test = request.session().attribute("test");
-//        System.out.println(test);
-//        if (test) {
-//            message = Message.info("true");
-//            Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine));
-//        }
-////            WebServer.TEST = false;
-//        request.session().attribute("test", false);
-//        String jsonMsg = gson.toJson(message, Message.class);
-//        return jsonMsg;

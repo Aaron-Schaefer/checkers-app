@@ -10,9 +10,9 @@ import com.webcheckers.model.Player;
 import java.util.*;
 
 public class PlayerLobby {
-    //ArrayList of Players.
+    //ArrayList of all Players.
     private ArrayList<Player> players;
-    //ArrayList of Players in the game.
+    //ArrayList of Players in a game.
     private ArrayList<Player> gamePlayers;
     //The red Player.
     private Player redPlayer;
@@ -45,6 +45,10 @@ public class PlayerLobby {
         return false;
     }
 
+    /**
+     * Add a Player to the list of Players in a game.
+     * @param player the player to add.
+     */
     public void addGamePlayer(Player player){
         if(!gamePlayers.contains(player) && player != null){
             gamePlayers.add(player);
@@ -53,7 +57,7 @@ public class PlayerLobby {
 
     /**
      * Returns the list of players in a string array.
-     * @return  the players in a string array with their username,
+     * @return the players in a string array with their username,
      */
     public Player[] playerArray(){
         Player[] playerNames = new Player[players.size()];
@@ -63,16 +67,26 @@ public class PlayerLobby {
         return playerNames;
     }
 
+    /**
+     * Gets a Player based on a given name.
+     * @param name the name to check.
+     * @return the Player with the given name, or null if not found.
+     */
     public Player getPlayer(String name){
-        Player[] playerNames = this.playerArray();
-        for (Player playerName : playerNames) {
-            if (playerName.getName().equals(name)) {
-                return playerName;
+        Player[] playerArray = this.playerArray();
+        for (Player player : playerArray) {
+            if (player.getName().equals(name)) {
+                return player;
             }
         }
         return null;
     }
 
+    /**
+     * Checks if a Player is in a game.
+     * @param player the Player to check.
+     * @return True or False if the Player is in a game or not.
+     */
     public boolean isInGame(Player player){
         return gamePlayers.contains(player);
     }
