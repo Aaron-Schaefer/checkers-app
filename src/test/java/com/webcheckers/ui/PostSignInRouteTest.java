@@ -23,8 +23,14 @@ import static org.mockito.Mockito.when;
 @Tag("UI-tier")
 public class PostSignInRouteTest {
 
+    /**
+     * The class under test.
+     */
     private PostSignInRoute CuT;
 
+    /**
+     * Parameters used for initialization.
+     */
     private TemplateEngine templateEngine;
     private Request request;
     private Session session;
@@ -32,7 +38,7 @@ public class PostSignInRouteTest {
     private PlayerLobby playerLobby;
 
     /**
-     * Initialization.
+     * Initialization for route testers, standard accross all route testers.
      */
     @BeforeEach
     private void setup(){
@@ -48,7 +54,7 @@ public class PostSignInRouteTest {
     }
 
     /**
-     * Make sure the player was added correctly.
+     * Make sure the player was added correctly. This example used a player with name "h".
      */
     @Test
     public void testSignIn(){
