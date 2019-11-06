@@ -17,7 +17,7 @@ public class MoveTest {
     private Position start;
     private Position end;
     private MoveValidator.MoveValidation validState;
-    private MoveValidator.MoveValidation invalidState
+    private MoveValidator.MoveValidation invalidState;
     private Move CuT;
 
     /**
