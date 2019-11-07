@@ -128,9 +128,12 @@ with the WebCheckers application.
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The Application Tier package was originally unused until we started developing
+a game center and moved our PlayerLobby into it. Originally our code only focused
+on one game, now it can have multiple going on at once. The GameCenter class keeps
+games indexed by the players in the game in an array. The PlayerLobby was moved into
+the Application Tier it still behaves the same, managing the players in arrays and moving
+players in and out of games. As the project continues the Application teir will likely grow.
 
 
 ### Model Tier
@@ -153,7 +156,7 @@ it is empty and does nothing.
 
 The following is the Domain model for the Model Tier as a whole:
 
-![WebCheckers Model Tier Class Structure] (ModelClassStructure_S2.png)
+
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
