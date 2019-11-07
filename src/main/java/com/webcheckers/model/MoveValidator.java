@@ -88,11 +88,19 @@ public class MoveValidator {
         }
         else if(color.equals(Piece.Color.WHITE) && type.equals(Piece.Type.SINGLE)){
 
-            if(rowChange < 0 && rowChange > -2)
+            if(rowChange == -1)
                 return MoveValidation.VALID;
             else
                 return MoveValidation.TOOFAR;
 
+        }
+
+        else if(type.equals(Piece.Type.KING)){
+
+            if(rowChange == -1 || rowChange == 1)
+                return MoveValidation.VALID;
+            else
+                return MoveValidation.TOOFAR;
         }
         
        return MoveValidation.TOOFAR;
@@ -155,26 +163,27 @@ public class MoveValidator {
         if(forwardRow>7 || forwardRow<0) {
             return false;
         }
+        Position end;
+        Move move;
 
-        if(leftCell<8 && leftCell>0){
+        if(leftCell<8 && leftCell>0) {
 
-            Position end = new Position(forwardRow, leftCell);
-            Move move = new Move(pos, end);
+            end = new Position(forwardRow, leftCell);
+            move = new Move(pos, end);
 
-            if(checkSimpleJump(move,game, realMove, color)){
-                return checkSimpleJump(move,game, realMove, color);
+            if (checkSimpleJump(move, game, realMove, color)) {
+                return checkSimpleJump(move, game, realMove, color);
             }
-            else{
-                if(rightCell<8 && rightCell>0){
-
-                    end = new Position(forwardRow,rightCell);
-                    move = new Move(pos, end);
-
-                    return checkSimpleJump(move,game, realMove, color);
-                }
-            }
-
         }
+        else if(rightCell<8 && rightCell>0){
+
+                end = new Position(forwardRow,rightCell);
+                move = new Move(pos, end);
+
+                return checkSimpleJump(move,game, realMove, color);
+        }
+
+
 
         return false;
     }
