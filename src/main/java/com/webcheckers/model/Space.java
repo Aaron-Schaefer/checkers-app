@@ -8,8 +8,11 @@ import com.webcheckers.model.Piece;
  */
 
 public class Space {
+    //The column(Index) of the Space
     private int cellIdx;
+    //The piece on the space
     private Piece piece;
+    //The viability of the space
     private boolean isViable;
 
     /**

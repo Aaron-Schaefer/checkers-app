@@ -11,11 +11,17 @@ import java.util.List;
  */
 public class Board {
 
+    //The dimension of the board
     private static final int BOARD_SIZE = 8;
+    //The matrix of Spaces on the board
     private Space[][] boardArray;
+    //The white Player
     private Player whitePlayer;
+    //The red Player
     private Player redPlayer;
+    //The active color on the board
     private Piece.Color activeColor;
+    //The list of Positions where Pieces have been taken
     private List<Position> positionsTaken;
 
     /**
@@ -201,27 +207,51 @@ public class Board {
 
     }
 
+    /**
+     * Gets the piece at a certain row and column
+     * @param row the row the piece is at
+     * @param col the column the piece is at
+     * @return the piece at the specified row and column
+     */
     public Piece getPiece(int row, int col){
         Space space = this.getSpace(row, col);
         return space.getPiece();
     }
 
+    /**
+     * Changes thee active color
+     */
     public void changeActiveColor(){
         this.activeColor = (this.activeColor == Piece.Color.RED) ? Piece.Color.WHITE :Piece.Color.RED;
     }
 
+    /**
+     * Gets the active color
+     * @return the active color
+     */
     public Piece.Color getActiveColor(){
         return this.activeColor;
     }
 
+    /**
+     * Adds a taken position to the list of taken positions.
+     * @param position the position of the taken piece.
+     */
     public void addPositionTaken(Position position){
         positionsTaken.add(position);
     }
 
+    /**
+     * Clears the list of taken positions
+     */
     public void clearPositionsTaken(){
         positionsTaken.clear();
     }
 
+    /**
+     * Gets the list of taken positions
+     * @return the list of taken positions
+     */
     public List<Position> getPositionsTaken(){
         return this.positionsTaken;
     }

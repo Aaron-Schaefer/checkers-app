@@ -11,7 +11,9 @@ import java.util.Iterator;
  */
 
 public class Row implements Iterable{
+    //The index of the row
     private int index;
+    //The spaces in the row
     private ArrayList<Space> spaces;
 
     /**

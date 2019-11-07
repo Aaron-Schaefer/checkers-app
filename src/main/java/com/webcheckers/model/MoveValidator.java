@@ -163,25 +163,27 @@ public class MoveValidator {
         if(forwardRow>7 || forwardRow<0) {
             return false;
         }
-        Position end;
-        Move move;
+
 
         if(leftCell<8 && leftCell>0) {
 
-            end = new Position(forwardRow, leftCell);
-            move = new Move(pos, end);
+            Position end = new Position(forwardRow, leftCell);
+            Move move = new Move(pos, end);
 
             if (checkSimpleJump(move, game, realMove, color)) {
-                return checkSimpleJump(move, game, realMove, color);
+                return true;
             }
         }
-        else if(rightCell<8 && rightCell>0){
+        else{
+            if(rightCell<8 && rightCell>0){
 
-                end = new Position(forwardRow,rightCell);
-                move = new Move(pos, end);
+                Position end = new Position(forwardRow,rightCell);
+                Move move = new Move(pos, end);
 
                 return checkSimpleJump(move,game, realMove, color);
+            }
         }
+
 
 
 
