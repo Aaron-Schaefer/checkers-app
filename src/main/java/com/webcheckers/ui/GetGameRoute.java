@@ -41,7 +41,7 @@ public class GetGameRoute implements Route {
      *   the rendered HTML for the Game page
      */
     @Override
-    public Object handle(Request request, Response response){
+    public Object handle(Request request, Response response) {
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
 
@@ -53,7 +53,7 @@ public class GetGameRoute implements Route {
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
         Game game = gameCenter.getGame(currentPlayer);
-        if(game == null){
+        if (game == null) {
             game = new Game();
         }
 
@@ -66,59 +66,60 @@ public class GetGameRoute implements Route {
         //the White Player as the player who was selected on the home page. Adds both to
         //PlayerLobby.
         String name = request.queryParams("playerName");
-        if(redPlayer == null){
-            redPlayer = currentPlayer;
-            game.addToGame(redPlayer);
-            playerLobby.addGamePlayer(redPlayer);
-            whitePlayer = playerLobby.getPlayer(name);
-            game.addToGame(whitePlayer);
-            playerLobby.addGamePlayer(whitePlayer);
-        }
-        //Sets the boolean in PlayerLobby to true to display a message error if the current
-        //User selects a player who is already in a game.
-        else if(playerLobby.isInGame(playerLobby.getPlayer(name))){
+        if (playerLobby.isInGame(playerLobby.getPlayer(name))) {
             playerLobby.playerChoseInGame();
             response.redirect("/");
         }
-        else{
-            playerLobby.notChoseInGame();
-        }
-
-        if(!gameCenter.containsKey(currentPlayer) && whitePlayer != null){
-            game.initializeBoard();
-            gameCenter.addGame(game);
-        }
-
-        Board board = game.getBoard();
-
-        //Creates the BoardView.
-        BoardView boardView = new BoardView(board, currentPlayer);
-
-        //Sets the game to over by resignation from the opponent
-        if(WebServer.RESIGN_CHECK){
-            final Map<String, Object> modeOptions = new HashMap<>(2);
-            modeOptions.put("IsGameOver", true);
-            if (session.attribute("currentPlayer") == redPlayer) {
-                modeOptions.put("gameOverMessage", whitePlayer.getName() + " has resigned you win!");
-                vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        //Sets the boolean in PlayerLobby to true to display a message error if the current
+        //User selects a player who is already in a game.
+        else {
+            if (redPlayer == null) {
+                redPlayer = currentPlayer;
+                game.addToGame(redPlayer);
+                playerLobby.addGamePlayer(redPlayer);
+                whitePlayer = playerLobby.getPlayer(name);
+                game.addToGame(whitePlayer);
+                playerLobby.addGamePlayer(whitePlayer);
+            } else {
+                playerLobby.notChoseInGame();
             }
-            else if (session.attribute("currentPlayer") == whitePlayer){
-                modeOptions.put("gameOverMessage", redPlayer.getName() + " has resigned you win!");
-                vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+
+            if (!gameCenter.containsKey(currentPlayer) && whitePlayer != null) {
+                game.initializeBoard();
+                gameCenter.addGame(game);
             }
-            WebServer.RESIGN_CHECK = false;
+
+            Board board = game.getBoard();
+
+            //Creates the BoardView.
+            BoardView boardView = new BoardView(board, currentPlayer);
+
+            //Sets the game to over by resignation from the opponent
+            if (WebServer.RESIGN_CHECK) {
+                final Map<String, Object> modeOptions = new HashMap<>(2);
+                modeOptions.put("IsGameOver", true);
+                if (session.attribute("currentPlayer") == redPlayer) {
+                    modeOptions.put("gameOverMessage", whitePlayer.getName() + " has resigned you win!");
+                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+                } else if (session.attribute("currentPlayer") == whitePlayer) {
+                    modeOptions.put("gameOverMessage", redPlayer.getName() + " has resigned you win!");
+                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+                }
+                WebServer.RESIGN_CHECK = false;
+            }
+
+            //Uses view model to put to the variables to the game.ftl file.
+            vm.put("title", "Time to play!");
+            vm.put("viewMode", "PLAY");
+            vm.put("currentUser", currentPlayer);
+            vm.put("redPlayer", redPlayer);
+            vm.put("whitePlayer", whitePlayer);
+            vm.put("activeColor", board.getActiveColor());
+            vm.put("board", boardView);
+
+            //Renders the view.
+            return templateEngine.render(new ModelAndView(vm, "game.ftl"));
         }
-
-        //Uses view model to put to the variables to the game.ftl file.
-        vm.put("title", "Time to play!");
-        vm.put("viewMode", "PLAY");
-        vm.put("currentUser", currentPlayer);
-        vm.put("redPlayer", redPlayer);
-        vm.put("whitePlayer", whitePlayer);
-        vm.put("activeColor", board.getActiveColor());
-        vm.put("board", boardView);
-
-        //Renders the view.
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return "";
     }
 }

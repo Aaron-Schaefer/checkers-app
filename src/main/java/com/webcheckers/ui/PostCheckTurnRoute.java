@@ -51,11 +51,13 @@ public class PostCheckTurnRoute implements Route {
             Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
         }
         Message message = Message.info("false");
-        if (game.isTurnMade()) {
-            message = Message.info("true");
-            Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
+        if(game != null){
+            if (game.isTurnMade()) {
+                message = Message.info("true");
+                Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
+            }
+            game.setTurnMade(false);
         }
-        game.setTurnMade(false);
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
     }

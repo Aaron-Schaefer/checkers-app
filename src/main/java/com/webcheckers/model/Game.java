@@ -5,9 +5,11 @@ public class Game {
     private Player redPlayer;
     private Board board;
     private Move recentMove;
-    public boolean turnMade = false;
+    public boolean turnMade;
 
-    public Game(){}
+    public Game(){
+        this.turnMade = false;
+    }
 
     public void addToGame(Player player){
         if(redPlayer == null){
