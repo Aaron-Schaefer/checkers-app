@@ -79,7 +79,7 @@ This section describes the application architecture.
 
 The following Tiers/Layers model shows a high-level view of the webapp's architecture.
 
-![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
+![The Tiers & Layers of the Architecture](architecturetiers--and-layers.png)
 
 As a web application, the user interacts with the system using a
 browser.  The client-side of the UI is composed of HTML pages with
@@ -134,9 +134,26 @@ with the WebCheckers application.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The Model Tier package contains all of the classes relating to Board
+creation. The model tier has everything within it that a game needs.
+It has the game itself which speaks to the board which has fields 
+made up of many of the other classes. This includes Space, Player,
+Piece, and a List of Positions. The Space class represents a square 
+on the board, Player class represented a user playing a game, Piece class
+contains the piece objects that will populate the board when a game is started.
+Finally the list of positions is kept to keep track of the pieces that have been
+taken during the course of a game. Move is a new class that is responsible for 
+the moves the pieces will be making during a game. The Position class was recently made to 
+track the moves that were being made and help the MoveValidator class the position
+can track a piece's location in an individual space in a row on the board and its
+movement due to user interaction. The MoveValidator did exactly that it provided the logic
+of the piece movement, restricting pieces to move in on legal ways but also to create
+forceful taking of the opponent which is part of the MVP. Although there is a King Class
+it is empty and does nothing.
+
+The following is the Domain model for the Model Tier as a whole:
+
+![WebCheckers Model Tier Class Structure] (C:/Users/twint/IdeaProjects/team-project-2191-swen-261-12-c-dawgs-cats/docs/ModelClassStructure_S2.png)
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -147,7 +164,7 @@ with the WebCheckers application.
 > will also discuss the resutling metric measurements.  Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
-
+![]
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
