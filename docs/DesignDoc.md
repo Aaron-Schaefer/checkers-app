@@ -153,7 +153,7 @@ it is empty and does nothing.
 
 The following is the Domain model for the Model Tier as a whole:
 
-![WebCheckers Model Tier Class Structure] (C:/Users/twint/IdeaProjects/team-project-2191-swen-261-12-c-dawgs-cats/docs/ModelClassStructure_S2.png)
+![WebCheckers Model Tier Class Structure] (ModelClassStructure_S2.png)
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
