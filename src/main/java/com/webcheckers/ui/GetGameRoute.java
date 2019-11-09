@@ -105,8 +105,21 @@ public class GetGameRoute implements Route {
                     modeOptions.put("gameOverMessage", redPlayer.getName() + " has resigned you win!");
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
                 }
-                WebServer.RESIGN_CHECK = false;
             }
+            else if(game.isGameOver() && whitePlayer != null){
+                final Map<String, Object> modeOptions = new HashMap<>(2);
+                modeOptions.put("IsGameOver", true);
+                if (session.attribute("currentPlayer") == redPlayer) {
+                    modeOptions.put("gameOverMessage", redPlayer.getName() + " has captured all of the pieces!");
+                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+                } else if (session.attribute("currentPlayer") == whitePlayer) {
+                    modeOptions.put("gameOverMessage", whitePlayer.getName() + " has captured all of the pieces!");
+                    vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+                }
+            }
+                WebServer.RESIGN_CHECK = false;
+                System.out.println(game.isGameOver());
+                System.out.println(board.getPieces());
 
             //Uses view model to put to the variables to the game.ftl file.
             vm.put("title", "Time to play!");
