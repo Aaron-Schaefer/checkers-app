@@ -23,6 +23,11 @@ public class Board {
     private Piece.Color activeColor;
     //The list of Positions where Pieces have been taken
     private List<Position> positionsTaken;
+    //Number of white pieces on the board.
+    private int whitePieces;
+    //Number of red pieces on the board.
+    private int redPieces;
+
 
     /**
      * Constructor for the Board
@@ -193,17 +198,18 @@ public class Board {
      *Removes a piece from a specific space
      * @param row The row of the removed piece
      * @param col The column of the removed piece
-     * @return True if a piece was removed; False if not removed
      */
-    public boolean removePiece(int row, int col){
+    public void removePiece(int row, int col){
 
         if(boardArray[row][col] != null){
-
+            if(this.getPiece(row, col).getColor() == Piece.Color.RED){
+                this.redPieces--;
+            }
+            else{
+                this.whitePieces--;
+            }
             boardArray[row][col].addPiece(null);
-            return true;
         }
-        else
-            return false;
 
     }
 
@@ -254,5 +260,9 @@ public class Board {
      */
     public List<Position> getPositionsTaken(){
         return this.positionsTaken;
+    }
+
+    public boolean noPieces() {
+        return (this.whitePieces == 0 || this.redPieces == 0);
     }
 }

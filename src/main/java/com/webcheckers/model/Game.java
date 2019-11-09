@@ -76,4 +76,7 @@ public class Game {
         board.clearPositionsTaken();
     }
 
+    public boolean isGameOver(){
+        return this.board.noPieces();
+    }
 }
