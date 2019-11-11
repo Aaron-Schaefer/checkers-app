@@ -1,0 +1,5 @@
+
+To run mvn compile exec:java
+
+connect on localhost:4567 (you can do one normal tab and one incognito)
+
