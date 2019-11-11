@@ -133,7 +133,7 @@ public class MoveValidator {
             for(int c = 0; c < 8; c++){
 
                 if(model.getSpace(r,c).getPiece() != null && model.getSpace(r,c).getPiece().getColor().equals(color)){
-
+                //the line above contains many method calls in succession and does not adhere to the law of demeter
                     Position position = new Position(r,c);
 
                     if(pieceHasJump(position, game, color, false))
