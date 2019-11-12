@@ -202,17 +202,9 @@ public class Board {
      * @param col The column of the removed piece
      */
     public void removePiece(int row, int col){
-
         if(boardArray[row][col] != null){
-            if(this.getPiece(row, col).getColor() == Piece.Color.RED){
-                this.redPieces--;
-            }
-            else{
-                this.whitePieces--;
-            }
             boardArray[row][col].addPiece(null);
         }
-
     }
 
     /**
@@ -252,9 +244,7 @@ public class Board {
     /**
      * Clears the list of taken positions
      */
-    public void clearPositionsTaken(){
-        positionsTaken.clear();
-    }
+    public void clearPositionsTaken() { positionsTaken.clear(); }
 
     /**
      * Gets the list of taken positions
@@ -270,5 +260,15 @@ public class Board {
 
     public String getPieces(){
         return "White: " + this.whitePieces + "\nRed: " + this.redPieces;
+    }
+
+    public void decrementPieces(Piece piece){
+        Piece.Color color = piece.getColor();
+        if(color == Piece.Color.RED){
+            this.redPieces--;
+        }
+        else{
+            this.whitePieces--;
+        }
     }
 }

@@ -97,7 +97,7 @@ public class GetGameRoute implements Route {
             //Sets the game to over by resignation from the opponent
             if (WebServer.RESIGN_CHECK) {
                 final Map<String, Object> modeOptions = new HashMap<>(2);
-                modeOptions.put("IsGameOver", true);
+                modeOptions.put("isGameOver", true);
                 if (session.attribute("currentPlayer") == redPlayer) {
                     modeOptions.put("gameOverMessage", whitePlayer.getName() + " has resigned you win!");
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
@@ -108,7 +108,7 @@ public class GetGameRoute implements Route {
             }
             else if(game.isGameOver() && whitePlayer != null){
                 final Map<String, Object> modeOptions = new HashMap<>(2);
-                modeOptions.put("IsGameOver", true);
+                modeOptions.put("isGameOver", true);
                 if (session.attribute("currentPlayer") == redPlayer) {
                     modeOptions.put("gameOverMessage", redPlayer.getName() + " has captured all of the pieces!");
                     vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
@@ -118,8 +118,6 @@ public class GetGameRoute implements Route {
                 }
             }
                 WebServer.RESIGN_CHECK = false;
-                System.out.println(game.isGameOver());
-                System.out.println(board.getPieces());
 
             //Uses view model to put to the variables to the game.ftl file.
             vm.put("title", "Time to play!");

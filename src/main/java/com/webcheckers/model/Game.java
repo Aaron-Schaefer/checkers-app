@@ -71,7 +71,9 @@ public class Game {
     public void endTurn(){
         board.changeActiveColor();
         for(Position position : board.getPositionsTaken()){
+            Piece piece = board.getPiece(position.getRow(), position.getCell());
             board.removePiece(position.getRow(), position.getCell());
+            board.decrementPieces(piece);
         }
         board.clearPositionsTaken();
     }
