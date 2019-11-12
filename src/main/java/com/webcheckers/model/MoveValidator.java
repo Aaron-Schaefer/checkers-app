@@ -133,7 +133,7 @@ public class MoveValidator {
             for(int c = 0; c < 8; c++){
 
                 if(model.getSpace(r,c).getPiece() != null && model.getSpace(r,c).getPiece().getColor().equals(color)){
-
+                
                     Position position = new Position(r,c);
 
                     if(pieceHasJump(position, game, color, false))
