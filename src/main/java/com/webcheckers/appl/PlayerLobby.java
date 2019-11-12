@@ -67,13 +67,25 @@ public class PlayerLobby {
      * Returns the list of users in a string array.
      * @return the users in a string array with their username,
      */
-    public Player[] playerArray(){
-        Player[] playerNames = new Player[players.size()];
-        for(int i = 0; i < players.size(); i++){
-            playerNames[i] = players.get(i);
+    public Player[] playerArray(String mode){
+        ArrayList<Player> playerList;
+        if(mode.equals("PLAY")){
+            playerList = players;
+        }
+        else if(mode.equals("SPECTATOR")){
+            playerList = gamePlayers;
+        }
+        else{
+            playerList = users;
+        }
+        Player[] playerNames = new Player[playerList.size()];
+        for(int i = 0; i < playerList.size(); i++){
+            playerNames[i] = playerList.get(i);
         }
         return playerNames;
     }
+
+
 
     /**
      * Gets a Player based on a given name.
@@ -81,7 +93,7 @@ public class PlayerLobby {
      * @return the Player with the given name, or null if not found.
      */
     public Player getUser(String name){
-        Player[] playerArray = this.playerArray();
+        Player[] playerArray = this.playerArray("");
         for (Player player : playerArray) {
             if (player.getName().equals(name)) {
                 return player;

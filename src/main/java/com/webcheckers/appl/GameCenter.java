@@ -8,12 +8,15 @@ import java.util.*;
 public class GameCenter {
     //Map of all of the games.
     private Map<List<Player>, Game> games;
+    //List of all finished games
+    private List<Game> gamesOver;
 
     /**
      * Initializes the GameCenter.
      */
     public GameCenter(){
         this.games = new HashMap<>();
+        this.gamesOver = new ArrayList<>();
     }
 
     /**
@@ -25,6 +28,10 @@ public class GameCenter {
         Player whitePlayer = game.getWhitePlayer();
         List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
         games.put(playerList, game);
+    }
+
+    public void addGameOver(Game game){
+        gamesOver.add(game);
     }
 
     /**
@@ -55,5 +62,9 @@ public class GameCenter {
             }
         }
         return false;
+    }
+
+    public List<Game> getGamesOver(){
+        return gamesOver;
     }
 }

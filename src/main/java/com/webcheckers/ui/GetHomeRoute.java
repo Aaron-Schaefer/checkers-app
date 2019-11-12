@@ -58,7 +58,9 @@ public class GetHomeRoute implements Route {
     Session session = request.session();
     Player player = session.attribute("currentPlayer");
 
+    //Get the mode of the current player, and put it into the session.
     String mode = request.queryParams("mode");
+    session.attribute("mode", mode);
 
     PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
     GameCenter gameCenter = WebServer.GAME_CENTER;
@@ -80,16 +82,26 @@ public class GetHomeRoute implements Route {
       }
     }
 
-    if(mode != null){
+    List<Player> players = Arrays.asList(playerLobby.playerArray(""));
+
+    if(mode != null) {
+      System.out.println(mode);
       vm.put("mode", mode);
-      if(mode.equals("PLAY")){
+      if(mode.equals("PLAY")) {
         playerLobby.addPlayer(player);
       }
+      if(mode.equals("REPLAY")) {
+        List<Game> games = gameCenter.getGamesOver();
+        vm.put("games", games);
+        vm.put("numGames", games.size());
+      }
+
+      //Makes a list of players and puts it, and the number of Players to the
+      //home.ftl file.
+      players = Arrays.asList(playerLobby.playerArray(mode));
+      System.out.println(players.size());
     }
 
-    //Makes a list of players and puts it, and the number of Players to the
-    //home.ftl file.
-    List<Player> players = Arrays.asList(playerLobby.playerArray());
     vm.put("players", players);
     vm.put("numPlayers", players.size());
 

@@ -28,30 +28,42 @@
          <input type="radio" name="mode" value="PLAY">PLAY<br>
          <input type="radio" name="mode" value="SPECTATOR">SPECTATOR<br>
          <input type="radio" name="mode" value="REPLAY">REPLAY<br>
+         <input type="radio" name="mode" value="AI">AI<br>
          <button type='submit'>SELECT MODE</button>
     </#if>
 
     <#if currentUser?? && mode??>
-        <#if mode == "PLAY">
+        <#if mode == "PLAY" || mode = "SPECTATOR">
             </br>
           <form action="/game" method="GET">
-            <#list players as player>
+            <#if numPlayers lt 2>
+                There are no<#if mode == "PLAY"> other players available to play
+                <#else> players to spectate</#if> at this time.
+            <#else>
+              <#list players as player>
                 <#if currentUser.name != player.name>
-                        <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
-                <#else>
-                    <#if numPlayers lt 2>
-                        There are no other players available to play at this time.
-                    </#if>
+                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
                 </#if>
-            </#list>
+              </#list>
+            </#if>
               <#if numPlayers gt 1>
-                <button type='submit'>PLAY GAME</button>
+                <button type='submit'><#if mode == "PLAY">PLAY GAME<#else>SPECTATE GAME</#if></button>
               </#if>
           </form>
-      </#if>
+        <#elseif mode == "REPLAY">
+            </br>
+            <#if numGames == 0>
+                There are no finished games to replay at this time.
+            <#else>
+                <#list games as game>
+                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
+                </#list>
+                <button type='submit'><#if mode == "PLAY">PLAY GAME<#else>SPECTATE GAME</#if></button>
+            </#if>
+        </#if>
    <#elseif !currentUser??>
        <p>There <#if numPlayers == 1> is<#else> are</#if> currently
-       ${numPlayers} Player<#if numPlayers != 1>s</#if> signed in.
+       ${numPlayers} User<#if numPlayers != 1>s</#if> signed in.
     </#if>
 
 

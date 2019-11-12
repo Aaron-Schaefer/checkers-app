@@ -107,6 +107,7 @@ public class GetGameRoute implements Route {
                 }
             }
             else if(game.isGameOver() && whitePlayer != null){
+                gameCenter.addGameOver(game);
                 final Map<String, Object> modeOptions = new HashMap<>(2);
                 modeOptions.put("isGameOver", true);
                 if (session.attribute("currentPlayer") == redPlayer) {
