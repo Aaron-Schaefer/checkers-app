@@ -22,25 +22,36 @@
 
     <h2>Players Online</h2>
 
-    <#if currentUser??>
-        </br>
-      <form action="/game" method="GET">
-        <#list players as player>
-            <#if currentUser.name != player.name>
-                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
-            <#else>
-                <#if numPlayers lt 2>
-                    There are no other players available to play at this time.
+    <#if currentUser?? && !mode??>
+        Select a mode to play<br>
+        <form action="/" method="GET">
+         <input type="radio" name="mode" value="PLAY">PLAY<br>
+         <input type="radio" name="mode" value="SPECTATOR">SPECTATOR<br>
+         <input type="radio" name="mode" value="REPLAY">REPLAY<br>
+         <button type='submit'>SELECT MODE</button>
+    </#if>
+
+    <#if currentUser?? && mode??>
+        <#if mode == "PLAY">
+            </br>
+          <form action="/game" method="GET">
+            <#list players as player>
+                <#if currentUser.name != player.name>
+                        <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
+                <#else>
+                    <#if numPlayers lt 2>
+                        There are no other players available to play at this time.
+                    </#if>
                 </#if>
-            </#if>
-        </#list>
-          <#if numPlayers gt 1>
-            <button type='submit'>Play Game</button>
-          </#if>
-      </form>
-    <#else>
-        <p>There <#if numPlayers == 1> is<#else> are</#if> currently
-        ${numPlayers} Player<#if numPlayers != 1>s</#if> signed in.
+            </#list>
+              <#if numPlayers gt 1>
+                <button type='submit'>PLAY GAME</button>
+              </#if>
+          </form>
+      </#if>
+   <#elseif !currentUser??>
+       <p>There <#if numPlayers == 1> is<#else> are</#if> currently
+       ${numPlayers} Player<#if numPlayers != 1>s</#if> signed in.
     </#if>
 
 

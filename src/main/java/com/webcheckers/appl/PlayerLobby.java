@@ -10,9 +10,10 @@ import com.webcheckers.model.Player;
 import java.util.*;
 
 public class PlayerLobby {
-    //ArrayList of all Players.
+    //ArrayList of all users.
+    private ArrayList<Player> users;
     private ArrayList<Player> players;
-    //ArrayList of Players in a game.
+    //ArrayList of users in a game.
     private ArrayList<Player> gamePlayers;
     //The red Player.
     private Player redPlayer;
@@ -25,6 +26,7 @@ public class PlayerLobby {
      *Initializes a new player lobby.
      */
     public PlayerLobby(){
+        users = new ArrayList<>();
         players = new ArrayList<>();
         gamePlayers = new ArrayList<>();
         choseInGame = false;
@@ -35,18 +37,24 @@ public class PlayerLobby {
      * @param player the player to add.
      * @return true if successful, false otherwise.
      */
-    public boolean addPlayer(Player player){
-        if(!players.contains(player) && player != null){
+    public boolean addUser(Player player){
+        if(!users.contains(player) && player != null){
 
-            players.add(player);
+            users.add(player);
             return true;
 
         }
         return false;
     }
 
+    public void addPlayer(Player player){
+        if(!players.contains(player) && player != null){
+            players.add(player);
+        }
+    }
+
     /**
-     * Add a Player to the list of Players in a game.
+     * Add a Player to the list of users in a game.
      * @param player the player to add.
      */
     public void addGamePlayer(Player player){
@@ -56,8 +64,8 @@ public class PlayerLobby {
     }
 
     /**
-     * Returns the list of players in a string array.
-     * @return the players in a string array with their username,
+     * Returns the list of users in a string array.
+     * @return the users in a string array with their username,
      */
     public Player[] playerArray(){
         Player[] playerNames = new Player[players.size()];
@@ -72,7 +80,7 @@ public class PlayerLobby {
      * @param name the name to check.
      * @return the Player with the given name, or null if not found.
      */
-    public Player getPlayer(String name){
+    public Player getUser(String name){
         Player[] playerArray = this.playerArray();
         for (Player player : playerArray) {
             if (player.getName().equals(name)) {
@@ -96,7 +104,7 @@ public class PlayerLobby {
      * @param player the player removed.
      */
     public void remove(Player player){
-        players.remove(player);
+        users.remove(player);
     }
 
     /**

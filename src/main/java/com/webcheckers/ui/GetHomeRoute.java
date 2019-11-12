@@ -58,13 +58,15 @@ public class GetHomeRoute implements Route {
     Session session = request.session();
     Player player = session.attribute("currentPlayer");
 
+    String mode = request.queryParams("mode");
+
     PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
     GameCenter gameCenter = WebServer.GAME_CENTER;
 
     Game game = gameCenter.getGame(player);
 
     //Sets the current User as the current Player if not already set.
-    if(player!=null){
+    if(player != null){
       vm.put("currentUser", player);
 
       //Redirects the current Player to the /game URL if the current Player
@@ -75,6 +77,13 @@ public class GetHomeRoute implements Route {
             response.redirect("/game");
           }
         }
+      }
+    }
+
+    if(mode != null){
+      vm.put("mode", mode);
+      if(mode.equals("PLAY")){
+        playerLobby.addPlayer(player);
       }
     }
 

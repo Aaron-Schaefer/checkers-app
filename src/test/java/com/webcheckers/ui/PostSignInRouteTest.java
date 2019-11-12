@@ -73,7 +73,7 @@ public class PostSignInRouteTest {
         CuT.handle(request,response);
 
         Player player = new Player("h");
-        assertNotNull(playerLobby.getPlayer("h")!= null);
+        assertNotNull(playerLobby.getUser("h")!= null);
 
     }
 

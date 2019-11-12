@@ -66,7 +66,7 @@ public class GetGameRoute implements Route {
         //the White Player as the player who was selected on the home page. Adds both to
         //PlayerLobby.
         String name = request.queryParams("playerName");
-        if (playerLobby.isInGame(playerLobby.getPlayer(name))) {
+        if (playerLobby.isInGame(playerLobby.getUser(name))) {
             playerLobby.playerChoseInGame();
             response.redirect("/");
         }
@@ -77,7 +77,7 @@ public class GetGameRoute implements Route {
                 redPlayer = currentPlayer;
                 game.addToGame(redPlayer);
                 playerLobby.addGamePlayer(redPlayer);
-                whitePlayer = playerLobby.getPlayer(name);
+                whitePlayer = playerLobby.getUser(name);
                 game.addToGame(whitePlayer);
                 playerLobby.addGamePlayer(whitePlayer);
             } else {

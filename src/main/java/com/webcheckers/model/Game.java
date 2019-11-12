@@ -1,13 +1,17 @@
 package com.webcheckers.model;
 
+import java.util.*;
+
 public class Game {
     private Player whitePlayer;
     private Player redPlayer;
     private Board board;
     private Move recentMove;
+    private Map<Integer, Move> allMoves;
     public boolean turnMade;
 
     public Game(){
+        this.allMoves = new HashMap<Integer, Move>();
         this.turnMade = false;
     }
 
@@ -80,5 +84,10 @@ public class Game {
 
     public boolean isGameOver(){
         return this.board.noPieces();
+    }
+
+    public void addMove(Move move){
+        System.out.println(allMoves.size());
+        allMoves.put(allMoves.size(), move);
     }
 }
