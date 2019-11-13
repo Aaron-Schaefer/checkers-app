@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import java.util.logging.Logger;
+
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
@@ -9,8 +11,10 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class GetGameRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     private final TemplateEngine templateEngine;
 
@@ -42,19 +46,34 @@ public class GetGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        LOG.info("Handling GetGameRoute");
+
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
 
         //Get current session, and get the current Player from the session.
         Session session = request.session();
+        Set<String> params = request.queryParams();
+        LOG.info("all params for GetGameRoute:");
+        for (String param : params) {
+            LOG.info("\t'" + param + "' is: '" + request.queryParams(param) + "'");
+        }
+
+
         Player currentPlayer = session.attribute("currentPlayer");
+
+        LOG.info("Current player name is: " + currentPlayer.getName());
 
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
         Game game = gameCenter.getGame(currentPlayer);
+
         if (game == null) {
+            LOG.info ("game was null, craete a new one!");
             game = new Game();
+        } else {
+            LOG.info("game was not null!");
         }
 
         //Set the Red Player and the White player as the Red Player and White Player
@@ -66,13 +85,18 @@ public class GetGameRoute implements Route {
         //the White Player as the player who was selected on the home page. Adds both to
         //PlayerLobby.
         String name = request.queryParams("playerName");
+        LOG.info("queried playername from request, name is: " + name);
+
         if (playerLobby.isInGame(playerLobby.getUser(name))) {
+            LOG.info("player is in game, redirecting to '/'");
             playerLobby.playerChoseInGame();
             response.redirect("/");
         }
         //Sets the boolean in PlayerLobby to true to display a message error if the current
         //User selects a player who is already in a game.
         else {
+            LOG.info("red player is: " + redPlayer + ", white player is: " + whitePlayer);
+
             if (redPlayer == null) {
                 redPlayer = currentPlayer;
                 game.addToGame(redPlayer);
