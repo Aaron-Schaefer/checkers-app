@@ -13,6 +13,7 @@ public class Game {
     public Game(){
         this.allMoves = new HashMap<Integer, Move>();
         this.turnMade = false;
+
     }
 
     public void addToGame(Player player){

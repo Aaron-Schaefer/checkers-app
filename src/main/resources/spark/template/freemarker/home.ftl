@@ -56,7 +56,8 @@
                 There are no finished games to replay at this time.
             <#else>
                 <#list games as game>
-                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
+                    <input type="radio" name="game" value=game>
+                    Red: ${game.redPlayer.name}<br>White: ${game.whitePlayer.name}</br>
                 </#list>
                 <button type='submit'><#if mode == "PLAY">PLAY GAME<#else>SPECTATE GAME</#if></button>
             </#if>
