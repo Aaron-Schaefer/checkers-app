@@ -41,7 +41,8 @@ public class GetReplayGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        //Game game = request.queryParams("game");
+        String gameID = request.queryParams("gameID");
+        System.out.println(gameID);
         return null;
     }
 }

@@ -52,15 +52,17 @@
           </form>
         <#elseif mode == "REPLAY">
             </br>
-            <#if numGames == 0>
-                There are no finished games to replay at this time.
-            <#else>
-                <#list games as game>
-                    <input type="radio" name="game" value=game>
-                    Red: ${game.redPlayer.name}<br>White: ${game.whitePlayer.name}</br>
-                </#list>
-                <button type='submit'><#if mode == "PLAY">PLAY GAME<#else>SPECTATE GAME</#if></button>
-            </#if>
+            <form action="/replay/game" method="GET">
+                <#if numGames == 0>
+                    There are no finished games to replay at this time.
+                <#else>
+                    <#list games as game>
+                        <input type="radio" name="game" value=game>
+                        Red: ${game.redPlayer.name}  White: ${game.whitePlayer.name}</br>
+                    </#list>
+                    <button type='submit'>REPLAY GAME</button>
+                </#if>
+             </form>
         </#if>
    <#elseif !currentUser??>
        <p>There <#if numPlayers == 1> is<#else> are</#if> currently

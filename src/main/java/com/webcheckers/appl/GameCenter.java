@@ -34,7 +34,8 @@ public class GameCenter {
     }
 
     public void addGameOver(Game game){
-        gamesOver.add(game);
+        if(!gamesOver.contains(game))
+            gamesOver.add(game);
     }
 
     /**
