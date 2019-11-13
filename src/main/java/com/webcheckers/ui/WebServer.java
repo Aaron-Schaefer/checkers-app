@@ -90,8 +90,6 @@ public class WebServer {
 
   public static GameCenter GAME_CENTER = new GameCenter();
 
-  public static boolean RESIGN_CHECK = false;
-
 
   //
   // Attributes

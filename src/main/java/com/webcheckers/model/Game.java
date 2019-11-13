@@ -9,12 +9,13 @@ public class Game {
     private Move recentMove;
     private Map<Integer, Move> allMoves;
     private boolean turnMade;
+    private boolean resigned;
     private int gameID;
 
     public Game(){
         this.allMoves = new HashMap<Integer, Move>();
         this.turnMade = false;
-
+        this.resigned = false;
     }
 
     public void addToGame(Player player){
@@ -60,6 +61,14 @@ public class Game {
 
     public boolean isTurnMade() {
         return turnMade;
+    }
+
+    public void makeResigned(){
+        this.resigned = true;
+    }
+
+    public boolean isResigned(){
+        return this.resigned;
     }
 
     public void updateBoard(Move move){
