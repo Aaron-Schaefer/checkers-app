@@ -7,16 +7,18 @@ import java.util.*;
 
 public class GameCenter {
     //Map of all of the games.
-    private Map<List<Player>, Game> games;
+    private Map<List<Player>, Game> Activegames;
     //List of all finished games
     private List<Game> gamesOver;
-
+    //Tracker for gameID, number of games.
+    private int numOfGames;
     /**
      * Initializes the GameCenter.
      */
     public GameCenter(){
-        this.games = new HashMap<>();
+        this.Activegames = new HashMap<>();
         this.gamesOver = new ArrayList<>();
+        this.numOfGames = 0;
     }
 
     /**
@@ -27,7 +29,8 @@ public class GameCenter {
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
         List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
-        games.put(playerList, game);
+        Activegames.put(playerList, game);
+        this.numOfGames++;
     }
 
     public void addGameOver(Game game){
@@ -41,9 +44,9 @@ public class GameCenter {
      * isn't in any of the games.
      */
     public Game getGame(Player player){
-        for(List<Player> players : games.keySet()){
+        for(List<Player> players : Activegames.keySet()){
             if(players.contains(player)){
-                return games.get(players);
+                return Activegames.get(players);
             }
         }
         return null;
@@ -56,7 +59,7 @@ public class GameCenter {
      * of the games.
      */
     public boolean containsKey(Player player) {
-        for (List<Player> players : games.keySet()) {
+        for (List<Player> players : Activegames.keySet()) {
             if (players.contains(player)) {
                 return true;
             }
@@ -67,4 +70,10 @@ public class GameCenter {
     public List<Game> getGamesOver(){
         return gamesOver;
     }
+
+    public int getNumOfGames(){
+        return this.numOfGames;
+    }
+
+
 }

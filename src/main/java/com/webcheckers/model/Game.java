@@ -8,7 +8,8 @@ public class Game {
     private Board board;
     private Move recentMove;
     private Map<Integer, Move> allMoves;
-    public boolean turnMade;
+    private boolean turnMade;
+    private int gameID;
 
     public Game(){
         this.allMoves = new HashMap<Integer, Move>();
@@ -90,5 +91,17 @@ public class Game {
     public void addMove(Move move){
         System.out.println(allMoves.size());
         allMoves.put(allMoves.size(), move);
+    }
+
+    /**
+     * Returns the unique game ID.
+     * @return
+     */
+    public int getGameID(){
+        return this.gameID;
+    }
+
+    public void setGameID(int ID){
+        this.gameID = ID;
     }
 }

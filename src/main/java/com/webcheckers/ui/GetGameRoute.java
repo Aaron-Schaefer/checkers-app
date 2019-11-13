@@ -86,7 +86,10 @@ public class GetGameRoute implements Route {
 
             if (!gameCenter.containsKey(currentPlayer) && whitePlayer != null) {
                 game.initializeBoard();
+                game.setGameID(gameCenter.getNumOfGames());
+                vm.put("gameID",gameCenter.getNumOfGames());
                 gameCenter.addGame(game);
+
             }
 
             Board board = game.getBoard();
@@ -128,6 +131,7 @@ public class GetGameRoute implements Route {
             vm.put("whitePlayer", whitePlayer);
             vm.put("activeColor", board.getActiveColor());
             vm.put("board", boardView);
+
 
             //Renders the view.
             return templateEngine.render(new ModelAndView(vm, "game.ftl"));
