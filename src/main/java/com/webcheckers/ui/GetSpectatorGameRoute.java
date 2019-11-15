@@ -52,8 +52,22 @@ public class GetSpectatorGameRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
-        //Will need to get game by the gameid
+        //Will need to get game by the player the currentuser decides to spectate
+        String playerName = request.queryParams("playerName");
+        Player player = playerLobby.getUser(playerName);
+        Game game =gameCenter.getGame(player);
+        Player redPlayer = game.getRedPlayer();
+        Player whitePlayer = game.getWhitePlayer();
+        Board board = game.getBoard();
+        BoardView boardView = new BoardView(board, currentPlayer);
 
+        vm.put("title", "How do you like my box tickets to the checkers match of the century!");
+        vm.put("viewMode", "PLAY");
+        vm.put("currentUser", currentPlayer);
+        vm.put("redPlayer", redPlayer);
+        vm.put("whitePlayer", whitePlayer);
+        vm.put("activeColor", board.getActiveColor());
+        vm.put("board", boardView);
 
 
 
