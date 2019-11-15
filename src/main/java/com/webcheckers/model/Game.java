@@ -44,7 +44,7 @@ public class Game {
 
     /**
      * Gets the white Player
-     * @return the white Playere
+     * @return the white Player
      */
     public Player getWhitePlayer() {
         return this.whitePlayer;
@@ -166,7 +166,6 @@ public class Game {
      * @param move the move made
      */
     public void addMove(Move move){
-        System.out.println(allMoves.size());
         allMoves.put(allMoves.size(), move);
     }
 }

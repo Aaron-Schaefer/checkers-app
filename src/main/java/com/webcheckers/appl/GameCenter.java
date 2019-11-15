@@ -40,7 +40,7 @@ public class GameCenter {
      * @param game The game that's over
      */
     public void addGameOver(Game game){
-        activeGames.remove(game.playerList());
+//        activeGames.remove(game.playerList());
         if(!gamesOver.contains(game))
             gamesOver.add(game);
     }
@@ -55,6 +55,21 @@ public class GameCenter {
         for(List<Player> players : activeGames.keySet()){
             if(players.contains(player)){
                 return activeGames.get(players);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets a game given the game's ID
+     * @param gameID the game's ID
+     * @return the Game with that game ID, or null if no Game has
+     * the given game ID
+     */
+    public Game getGame(int gameID){
+        for(Game game : gamesOver){
+            if(game.getGameID() == gameID){
+                return game;
             }
         }
         return null;
