@@ -22,18 +22,25 @@ public class GameCenter {
     }
 
     /**
-     * Adds the given game to the Map of games.
-//     * @param game the given game to add.
+     * Makes a new Game and adds it to the list
+     * @param redPlayer The red Player
+     * @param whitePlayer The white Player
+     * @return The new Game
      */
     public Game makeGame(Player redPlayer, Player whitePlayer){
         this.numOfGames++;
         Game game = new Game(redPlayer, whitePlayer, this.numOfGames);
-        List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
-        activeGames.put(playerList, game);
+        activeGames.put(game.playerList(), game);
         return game;
     }
 
+    /**
+     * Adds a finished game to the list of finished games, and removes
+     * it from the list of active games.
+     * @param game The game that's over
+     */
     public void addGameOver(Game game){
+        activeGames.remove(game.playerList());
         if(!gamesOver.contains(game))
             gamesOver.add(game);
     }
@@ -68,10 +75,18 @@ public class GameCenter {
         return false;
     }
 
+    /**
+     * Gets a list of the finished games
+     * @return the list of finished games
+     */
     public List<Game> getGamesOver(){
         return gamesOver;
     }
 
+    /**
+     * Gets the total number of games
+     * @return The total number of games
+     */
     public int getNumOfGames(){
         return this.numOfGames;
     }
