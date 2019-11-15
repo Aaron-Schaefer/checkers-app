@@ -12,28 +12,17 @@ public class Game {
     private boolean resigned;
     private int gameID;
 
-    public Game(){
+    public Game(Player redPlayer, Player whitePlayer, int gameID){
+        this.redPlayer = redPlayer;
+        this.whitePlayer = whitePlayer;
+        this.board = new Board(redPlayer, whitePlayer);
+        this.gameID = gameID;
         this.allMoves = new HashMap<Integer, Move>();
         this.turnMade = false;
         this.resigned = false;
     }
 
-    public void addToGame(Player player){
-        if(redPlayer == null){
-            redPlayer = player;
-        }
-        else{
-            whitePlayer = player;
-        }
-    }
-
-    public void initializeBoard(){
-        this.board = new Board(redPlayer, whitePlayer);
-    }
-
-    public Player getRedPlayer() {
-        return redPlayer;
-    }
+    public Player getRedPlayer() { return redPlayer; }
 
     public Player getWhitePlayer() {
         return whitePlayer;
@@ -108,9 +97,5 @@ public class Game {
      */
     public int getGameID(){
         return this.gameID;
-    }
-
-    public void setGameID(int ID){
-        this.gameID = ID;
     }
 }

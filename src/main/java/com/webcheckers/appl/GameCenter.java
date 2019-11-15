@@ -7,7 +7,7 @@ import java.util.*;
 
 public class GameCenter {
     //Map of all of the games.
-    private Map<List<Player>, Game> Activegames;
+    private Map<List<Player>, Game> activeGames;
     //List of all finished games
     private List<Game> gamesOver;
     //Tracker for gameID, number of games.
@@ -16,21 +16,21 @@ public class GameCenter {
      * Initializes the GameCenter.
      */
     public GameCenter(){
-        this.Activegames = new HashMap<>();
+        this.activeGames = new HashMap<>();
         this.gamesOver = new ArrayList<>();
         this.numOfGames = 0;
     }
 
     /**
      * Adds the given game to the Map of games.
-     * @param game the given game to add.
+//     * @param game the given game to add.
      */
-    public void addGame(Game game){
-        Player redPlayer = game.getRedPlayer();
-        Player whitePlayer = game.getWhitePlayer();
-        List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
-        Activegames.put(playerList, game);
+    public Game makeGame(Player redPlayer, Player whitePlayer){
         this.numOfGames++;
+        Game game = new Game(redPlayer, whitePlayer, this.numOfGames);
+        List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
+        activeGames.put(playerList, game);
+        return game;
     }
 
     public void addGameOver(Game game){
@@ -45,9 +45,9 @@ public class GameCenter {
      * isn't in any of the games.
      */
     public Game getGame(Player player){
-        for(List<Player> players : Activegames.keySet()){
+        for(List<Player> players : activeGames.keySet()){
             if(players.contains(player)){
-                return Activegames.get(players);
+                return activeGames.get(players);
             }
         }
         return null;
@@ -60,7 +60,7 @@ public class GameCenter {
      * of the games.
      */
     public boolean containsKey(Player player) {
-        for (List<Player> players : Activegames.keySet()) {
+        for (List<Player> players : activeGames.keySet()) {
             if (players.contains(player)) {
                 return true;
             }
