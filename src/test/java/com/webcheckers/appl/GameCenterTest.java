@@ -28,20 +28,33 @@ public class GameCenterTest {
         redPlayer = mock(Player.class);
         whitePlayer = mock(Player.class);
         Cut = new GameCenter();
-
+        Cut.makeGame(redPlayer,whitePlayer);
 
     }
 
     /**
-     * Test if MakeGame makes the game correctly.
+     * Test if makeGame makes the game correctly.
      */
     @Test
     public void testMakeGame(){
 
-        Cut.makeGame(redPlayer,whitePlayer);
         assertEquals(Cut.getNumOfGames(), 1);
         assertTrue(Cut.containsKey(redPlayer));
         assertTrue(Cut.containsKey(whitePlayer));
 
     }
+
+    /**
+     * Test if addGameOver removes the game correctly and see if it gets it into the list of gamesOver.
+     */
+    @Test
+    public void testAddGameOver(){
+
+        Cut.addGameOver(Cut.getGame(redPlayer));
+        assertEquals(Cut.getNumOfGames(),0);
+        assertEquals(Cut.getGamesOver().size(),1);
+
+    }
+
+
 }
