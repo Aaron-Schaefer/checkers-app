@@ -45,6 +45,8 @@ public class GetReplayGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
 
+        Session session = request.session();
+
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
         String gameID = request.queryParams("game");
@@ -53,11 +55,17 @@ public class GetReplayGameRoute implements Route {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Game game = gameCenter.getGame(Integer.parseInt(gameID));
 
-        Player currentPlayer = request.session().attribute("currentPlayer");
+        Player currentPlayer = session.attribute("currentPlayer");
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
 
-        Board board = game.getBoard();
+        if(session.attribute("replayBoard") == null){
+            Board board = new Board(game.getRedPlayer(), game.getWhitePlayer());
+            session.attribute("replayBoard", board);
+        }
+
+        Board board = session.attribute("replayBoard");
+
         BoardView boardView = new BoardView(board, redPlayer);
 
 

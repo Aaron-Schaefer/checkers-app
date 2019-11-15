@@ -31,7 +31,7 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.board = new Board(redPlayer, whitePlayer);
         this.gameID = gameID;
-        this.allMoves = new HashMap<Integer, Move>();
+        this.allMoves = new HashMap<>();
         this.turnMade = false;
         this.resigned = false;
     }
@@ -121,23 +121,7 @@ public class Game {
         return new ArrayList<>(Arrays.asList(this.redPlayer, this.whitePlayer));
     }
 
-    /**
-     * Updates the game board when a move has been made. This takes account
-     * of the new move changes the piece to a king piece if it reaches the
-     * end of the board
-     * @param move The move made
-     */
-    public void updateBoard(Move move){
-        Position start = move.getStart();
-        Position end = move.getEnd();
-        Piece piece = board.getPiece(start.getRow(), start.getCell());
-        board.removePiece(start.getRow(), start.getCell());
-        if((end.getRow() == 0 && piece.getColor() == Piece.Color.RED)
-                || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
-            piece.setTypeKing();
-        }
-        board.addPiece(end.getRow(), end.getCell(), piece);
-    }
+
 
     /**
      * Ends the turn by switching the active color and removes the taken
@@ -167,5 +151,13 @@ public class Game {
      */
     public void addMove(Move move){
         allMoves.put(allMoves.size(), move);
+    }
+
+    public int getNumMoves(){
+        return allMoves.size();
+    }
+
+    public Move getMove(int numMove){
+        return allMoves.get(numMove);
     }
 }

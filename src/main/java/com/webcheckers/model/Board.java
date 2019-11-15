@@ -255,7 +255,7 @@ public class Board {
     }
 
     public boolean noPieces() {
-        return (this.whitePieces == 12 || this.redPieces == 12);
+        return (this.whitePieces == 10 || this.redPieces == 10);
     }
 
     public String getPieces(){
@@ -270,5 +270,23 @@ public class Board {
         else{
             this.whitePieces--;
         }
+    }
+
+    /**
+     * Updates the game board when a move has been made. This takes account
+     * of the new move changes the piece to a king piece if it reaches the
+     * end of the board
+     * @param move The move made
+     */
+    public void updateBoard(Move move){
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        Piece piece = this.getPiece(start.getRow(), start.getCell());
+        this.removePiece(start.getRow(), start.getCell());
+        if((end.getRow() == 0 && piece.getColor() == Piece.Color.RED)
+                || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
+            piece.setTypeKing();
+        }
+        this.addPiece(end.getRow(), end.getCell(), piece);
     }
 }
