@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("appl-tier")
 public class GameCenterTest {
 
+    /**
+     * Fields used for game center testing.
+     */
     private GameCenter Cut;
     private Player redPlayer;
     private Player whitePlayer;
