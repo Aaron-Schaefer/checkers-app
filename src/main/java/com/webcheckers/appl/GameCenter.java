@@ -7,7 +7,7 @@ import java.util.*;
 
 public class GameCenter {
     //Map of all of the games.
-    private Map<List<Player>, Game> Activegames;
+    private Map<List<Player>, Game> activeGames;
     //List of all finished games
     private List<Game> gamesOver;
     //Tracker for gameID, number of games.
@@ -16,24 +16,31 @@ public class GameCenter {
      * Initializes the GameCenter.
      */
     public GameCenter(){
-        this.Activegames = new HashMap<>();
+        this.activeGames = new HashMap<>();
         this.gamesOver = new ArrayList<>();
         this.numOfGames = 0;
     }
 
     /**
-     * Adds the given game to the Map of games.
-     * @param game the given game to add.
+     * Makes a new Game and adds it to the list
+     * @param redPlayer The red Player
+     * @param whitePlayer The white Player
+     * @return The new Game
      */
-    public void addGame(Game game){
-        Player redPlayer = game.getRedPlayer();
-        Player whitePlayer = game.getWhitePlayer();
-        List<Player> playerList = new ArrayList<>(Arrays.asList(redPlayer, whitePlayer));
-        Activegames.put(playerList, game);
+    public Game makeGame(Player redPlayer, Player whitePlayer){
         this.numOfGames++;
+        Game game = new Game(redPlayer, whitePlayer, this.numOfGames);
+        activeGames.put(game.playerList(), game);
+        return game;
     }
 
+    /**
+     * Adds a finished game to the list of finished games, and removes
+     * it from the list of active games.
+     * @param game The game that's over
+     */
     public void addGameOver(Game game){
+        activeGames.remove(game.playerList());
         if(!gamesOver.contains(game))
             gamesOver.add(game);
     }
@@ -45,9 +52,9 @@ public class GameCenter {
      * isn't in any of the games.
      */
     public Game getGame(Player player){
-        for(List<Player> players : Activegames.keySet()){
+        for(List<Player> players : activeGames.keySet()){
             if(players.contains(player)){
-                return Activegames.get(players);
+                return activeGames.get(players);
             }
         }
         return null;
@@ -60,7 +67,7 @@ public class GameCenter {
      * of the games.
      */
     public boolean containsKey(Player player) {
-        for (List<Player> players : Activegames.keySet()) {
+        for (List<Player> players : activeGames.keySet()) {
             if (players.contains(player)) {
                 return true;
             }
@@ -68,10 +75,18 @@ public class GameCenter {
         return false;
     }
 
+    /**
+     * Gets a list of the finished games
+     * @return the list of finished games
+     */
     public List<Game> getGamesOver(){
         return gamesOver;
     }
 
+    /**
+     * Gets the total number of games
+     * @return The total number of games
+     */
     public int getNumOfGames(){
         return this.numOfGames;
     }
