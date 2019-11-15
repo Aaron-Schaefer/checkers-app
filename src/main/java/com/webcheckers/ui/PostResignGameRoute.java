@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import freemarker.template.Template;
@@ -43,9 +44,11 @@ public class PostResignGameRoute implements Route {
 
         Message gameover = Message.error("Error! Game is already over you cannot Resign");
         Session session = request.session();
+        Player currentPlayer = session.attribute("currentPlayer");
+        Game game = WebServer.GAME_CENTER.getGame(currentPlayer);
 
 
-        WebServer.RESIGN_CHECK = true;
+        game.makeResigned();
         Message message = Message.info("Resign");
         String jsonMsg = gson.toJson(message, Message.class);
 

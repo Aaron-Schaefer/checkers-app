@@ -228,7 +228,7 @@ public class MoveValidator {
                 }
                 else {
                     if(realMove)
-                        game.addPositionTaken(taken);
+                        model.addPositionTaken(taken);
                     return true;
                 }
             }

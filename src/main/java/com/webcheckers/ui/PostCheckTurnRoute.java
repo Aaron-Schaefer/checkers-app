@@ -47,13 +47,16 @@ public class PostCheckTurnRoute implements Route {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
         Game game = gameCenter.getGame(currentPlayer);
-        if(WebServer.RESIGN_CHECK){
-            Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
-        }
         Message message = Message.info("false");
         if(game != null){
-            if (game.isTurnMade()) {
+            if(game.isResigned()){
+                LOG.info("1");
+                Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
+//                Spark.get(WebServer.HOME_URL, new GetHomeRoute(templateEngine));
+            }
+            else if (game.isTurnMade()) {
                 message = Message.info("true");
+                LOG.info("2");
                 Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
             }
             game.setTurnMade(false);
