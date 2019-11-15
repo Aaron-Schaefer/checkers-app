@@ -67,8 +67,9 @@ public class PostValidateMoveRoute implements Route {
                 break;
 
             case VALIDJUMP:
-                if(MoveValidator.pieceHasJump(move.getEnd(), game, board.getSpace(move.getStart().getRow(),
-                        move.getStart().getCell()).getPiece().getColor(), false)){
+
+                Piece piece = board.getSpace(move.getStart().getRow(), move.getStart().getCell()).getPiece();
+                if(MoveValidator.pieceHasJump(move.getEnd(), game, piece.getColor(), piece.getType(),false)){
                     move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
                     message = Message.info(VALID_JUMP_MOVE);
                 }

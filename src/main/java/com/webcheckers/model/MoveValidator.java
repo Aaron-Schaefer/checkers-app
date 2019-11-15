@@ -108,8 +108,8 @@ public class MoveValidator {
 
 
     private static MoveValidation validateJumpMove(Game game, Space start, Move move){
-        
-        if(checkSimpleJump(move, game, true, null, start.getPiece().getType())){
+
+        if(checkSimpleJump(move, game, true, start.getPiece().getColor(), start.getPiece().getType())){
 
             return MoveValidation.VALIDJUMP;
         }
@@ -202,8 +202,18 @@ public class MoveValidator {
         Position start = move.getStart();
         Position end = move.getEnd();
 
-        int rowdif = Math.abs(start.getRow()- end.getRow());
+        int rowdif = start.getRow()- end.getRow();
         int coldif = Math.abs(start.getCell() - end.getCell());
+
+        System.out.println("rowdif: " + rowdif);
+
+        if(rowdif > 0 && type == Piece.Type.SINGLE && color == Piece.Color.WHITE)
+            return false;
+
+        if(rowdif < 0 && type == Piece.Type.SINGLE && color == Piece.Color.RED)
+            return false;
+
+        rowdif = Math.abs(rowdif);
 
         if(coldif ==2 && rowdif ==2){
 
@@ -234,7 +244,6 @@ public class MoveValidator {
             }
             return false;
         }
-
         return false;
     }
 
