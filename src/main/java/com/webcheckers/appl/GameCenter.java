@@ -40,7 +40,8 @@ public class GameCenter {
      * @param game The game that's over
      */
     public void addGameOver(Game game){
-        activeGames.remove(game.playerList());
+        if(activeGames.containsValue(game))
+            activeGames.remove(game.playerList());
         if(!gamesOver.contains(game))
             gamesOver.add(game);
     }

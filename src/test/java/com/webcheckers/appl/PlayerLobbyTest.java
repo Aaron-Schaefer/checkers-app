@@ -75,14 +75,18 @@ public class PlayerLobbyTest {
         CuT.addPlayer(player1);
         CuT.addPlayer(player2);
         CuT.addPlayer(player3);
-        CuT.remove(player1);
-        CuT.remove(player2);
-        CuT.remove(player3);
+        CuT.removeUser(player1);
+        CuT.removeUser(player2);
+        CuT.removeUser(player3);
+        CuT.removePlayer(player1);
+        CuT.removePlayer(player2);
+        CuT.removePlayer(player3);
+        CuT.removeGamePlayer(player1);
+        CuT.removeGamePlayer(player2);
+        CuT.removeGamePlayer(player3);
         assertNull(CuT.getUser(player1.getName()));
         assertNull(CuT.getUser(player2.getName()));
         assertNull(CuT.getUser(player3.getName()));
-
-
     }
 
     /**

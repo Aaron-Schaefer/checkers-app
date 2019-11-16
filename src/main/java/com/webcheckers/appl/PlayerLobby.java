@@ -12,6 +12,7 @@ import java.util.*;
 public class PlayerLobby {
     //ArrayList of all users.
     private ArrayList<Player> users;
+    //ArrayList of active Players.
     private ArrayList<Player> players;
     //ArrayList of users in a game.
     private ArrayList<Player> gamePlayers;
@@ -112,23 +113,25 @@ public class PlayerLobby {
      * @param player the Player to check.
      * @return True or False if the Player is in a game or not.
      */
-    public boolean isInGame(Player player){
-
-        return gamePlayers.contains(player);
-
-    }
+    public boolean isInGame(Player player){ return gamePlayers.contains(player); }
 
     /**
-     * Removes a player.
-     * @param player the player removed.
+     * Removes an active User.
+     * @param player the User removed.
      */
-    public void remove(Player player){
+    public void removeUser(Player player){ users.remove(player); }
 
-        users.remove(player);
-        players.remove(player);
-        gamePlayers.remove(player);
+    /**
+     * Removes an active Player.
+     * @param player the Player removed.
+     */
+    public void removePlayer(Player player){ players.remove(player); }
 
-    }
+    /**
+     * Removes a Player in a Game.
+     * @param player the Player removed.
+     */
+    public void removeGamePlayer(Player player){ gamePlayers.remove(player); }
 
     /**
      * Sets choseInGame to true.
