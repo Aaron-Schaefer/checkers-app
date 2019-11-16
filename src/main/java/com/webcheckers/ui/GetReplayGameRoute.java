@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -19,14 +21,17 @@ public class GetReplayGameRoute implements Route {
     //The template engine for spark.
     private final TemplateEngine templateEngine;
 
+    private Gson gson;
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /signin} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetReplayGameRoute(final TemplateEngine templateEngine) {
+    public GetReplayGameRoute(final TemplateEngine templateEngine, Gson gson) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+        this.gson = gson;
         //
         LOG.config("GetSignInRoute is initialized.");
     }
@@ -49,11 +54,15 @@ public class GetReplayGameRoute implements Route {
 
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
-        String gameID = request.queryParams("game");
-        System.out.println(gameID);
 
         GameCenter gameCenter = WebServer.GAME_CENTER;
-        Game game = gameCenter.getGame(Integer.parseInt(gameID));
+        if(session.attribute("replayGame") == null){
+            String gameID = request.queryParams("game");
+            Game game = gameCenter.getGame(Integer.parseInt(gameID));
+            session.attribute("replayGame", game);
+        }
+
+        Game game = session.attribute("replayGame");
 
         Player currentPlayer = session.attribute("currentPlayer");
         Player redPlayer = game.getRedPlayer();
@@ -68,10 +77,30 @@ public class GetReplayGameRoute implements Route {
 
         BoardView boardView = new BoardView(board, redPlayer);
 
+        if(session.attribute("numMove") == null){
+            int numMove = 0;
+            session.attribute("numMove", numMove);
+        }
+        int numMove = session.attribute("numMove");
+
+        boolean hasPrevious = false;
+        boolean hasNext = false;
+        if(numMove > 0){
+            hasPrevious = true;
+        }
+        if(numMove < game.getNumMoves()) {
+            hasNext = true;
+            System.out.println("hasNext: " + true);
+        }
+
+        final Map<String, Object> modeOptions = new HashMap<>(2);
+        modeOptions.put("hasPrevious", hasPrevious);
+        modeOptions.put("hasNext", hasNext);
 
         vm.put("title", "Replay the game!");
         vm.put("gameID", game.getGameID());
         vm.put("viewMode", "REPLAY");
+        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
         vm.put("currentUser", currentPlayer);
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);

@@ -217,7 +217,7 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine, gson));
 
     //Display the a finished game for the player to replay it.
-    get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine));
+    get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gson));
 
     //Returns the User back to the Home page.
     get(REPLAY_STOP_WATCHING, new GetReplayStopWatchingRoute(templateEngine, gson));

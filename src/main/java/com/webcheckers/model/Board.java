@@ -255,7 +255,7 @@ public class Board {
     }
 
     public boolean noPieces() {
-        return (this.whitePieces == 10 || this.redPieces == 10);
+        return (this.whitePieces == 11 || this.redPieces == 11);
     }
 
     public String getPieces(){

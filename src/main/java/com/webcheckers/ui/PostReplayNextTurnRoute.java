@@ -50,18 +50,9 @@ public class PostReplayNextTurnRoute implements Route {
 
         Session session = request.session();
 
-        String gameID = request.queryParams("game");
-        System.out.println(gameID);
-
-        GameCenter gameCenter = WebServer.GAME_CENTER;
-        Game game = gameCenter.getGame(Integer.parseInt(gameID));
+        Game game = session.attribute("replayGame");
 
         Board board = session.attribute("replayBoard");
-
-        if(session.attribute("numMove") == null){
-            int numMove = 0;
-            session.attribute("numMove", numMove);
-        }
 
         int numMove = session.attribute("numMove");
 
@@ -69,11 +60,21 @@ public class PostReplayNextTurnRoute implements Route {
 
         board.updateBoard(move);
 
+        Message message = Message.info("false");;
+
+        System.out.println("NumMoves: " + game.getNumMoves());
+
         if(numMove < game.getNumMoves()) {
             session.attribute("numMove", numMove + 1);
+            message = Message.info("true");
+            session.attribute("hasNext", true);
+            System.out.println("hasNext: " + true);
+        }
+        else{
+            session.attribute("hasNext", false);
+            System.out.println("hasNext: " + false);
         }
 
-        Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
     }
