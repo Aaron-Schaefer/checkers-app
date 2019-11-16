@@ -70,14 +70,19 @@ public class PlayerLobby {
     public Player[] playerArray(String mode){
         ArrayList<Player> playerList;
         if(mode.equals("PLAY")){
+
             playerList = players;
-        }
-        else if(mode.equals("SPECTATOR")){
+
+        } else if(mode.equals("SPECTATOR")){
+
             playerList = gamePlayers;
-        }
-        else{
+
+        } else{
+
             playerList = users;
+
         }
+
         Player[] playerNames = new Player[playerList.size()];
         for(int i = 0; i < playerList.size(); i++){
             playerNames[i] = playerList.get(i);
@@ -108,7 +113,9 @@ public class PlayerLobby {
      * @return True or False if the Player is in a game or not.
      */
     public boolean isInGame(Player player){
+
         return gamePlayers.contains(player);
+
     }
 
     /**
@@ -116,7 +123,11 @@ public class PlayerLobby {
      * @param player the player removed.
      */
     public void remove(Player player){
+
         users.remove(player);
+        players.remove(player);
+        gamePlayers.remove(player);
+
     }
 
     /**

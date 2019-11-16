@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class to test the GameCenter
@@ -36,14 +37,69 @@ public class PlayerLobbyTest {
     }
 
     /**
-     * Test if the players have been added correctly.
+     * Test if the players have been added correctly to the user list. Uses getUser() to verify the result.
      */
     @Test
-    public void testAddUsesr(){
+    public void testAddUsers(){
+
+        CuT.addUser(player1);
+        CuT.addUser(player2);
+        CuT.addUser(player3);
+        assertNotNull(CuT.getUser(player1.getName()));
+        assertNotNull(CuT.getUser(player2.getName()));
+        assertNotNull(CuT.getUser(player3.getName()));
+
+    }
+
+    /**
+     * Test if the player has been added correctly to the player list. Uses isInGame() to verify the result.
+     */
+    @Test
+    public void testAddPlayer(){
 
         CuT.addPlayer(player1);
         CuT.addPlayer(player2);
         CuT.addPlayer(player3);
+        assertFalse(CuT.isInGame(player1));
+        assertFalse(CuT.isInGame(player2));
+        assertFalse(CuT.isInGame(player3));
+
+    }
+
+    /**
+     * Test if a player is removed properly from the player list.
+     */
+    @Test
+    public void testRemovePlayer(){
+
+        CuT.addPlayer(player1);
+        CuT.addPlayer(player2);
+        CuT.addPlayer(player3);
+        CuT.remove(player1);
+        CuT.remove(player2);
+        CuT.remove(player3);
+        assertNull(CuT.getUser(player1.getName()));
+        assertNull(CuT.getUser(player2.getName()));
+        assertNull(CuT.getUser(player3.getName()));
+
+
+    }
+
+    /**
+     * Test if a player is properly added to the inGame list
+     */
+    @Test
+    public void testAddGamePlayer(){
+
+        CuT.addPlayer(player1);
+        CuT.addPlayer(player2);
+        CuT.addPlayer(player3);
+        CuT.addGamePlayer(player1);
+        CuT.addGamePlayer(player2);
+        CuT.addGamePlayer(player3);
+        assertTrue(CuT.isInGame(player1));
+        assertTrue(CuT.isInGame(player2));
+        assertTrue(CuT.isInGame(player3));
 
     }
 
