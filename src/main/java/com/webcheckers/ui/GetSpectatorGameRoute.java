@@ -70,7 +70,7 @@ public class GetSpectatorGameRoute implements Route {
         vm.put("board", boardView);
 
 
-
+        //return templateEngine.render(new ModelAndView(vm,"game.ftl"));
         return null;
     }
 }
