@@ -4,31 +4,37 @@ import java.util.*;
 
 public class AI {
     private Piece.Color AIColor = Piece.Color.WHITE;
+    Game game;
     Board board;
     private Move decideMove(Game game) {
-        board = game.getBoard();
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
-        if (board.getActiveColor() == Piece.Color.WHITE) {
-            for (int r = 0; r < 8; r++) {
-                for (int c = 0; c < 8; c++) {
-                    for (int rinc = -2; rinc < 3; rinc++) {
-                        for (int cinc = -2; cinc < 3; cinc++) {
-                            if (rinc != 0 && cinc != 0) {
-                                Move testMove = new Move(new Position(r, c), new Position(r+rinc, c+cinc));
-                                MoveValidator.MoveValidation isValidMove = new MoveValidator().validateMove(game, testMove);
-                                if (isValidMove == MoveValidator.MoveValidation.VALID
-                                    || isValidMove == MoveValidator.MoveValidation.VALIDJUMP) {
-                                    possibleMoves.append(testMove);
-                                }
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                for (int rinc = -2; rinc < 3; rinc++) {
+                    for (int cinc = -2; cinc < 3; cinc++) {
+                        if (rinc != 0 && cinc != 0 && (rinc+cinc)%2 == 0) {
+                            Move testMove = new Move(new Position(r, c), new Position(r+rinc, c+cinc));
+                            MoveValidator.MoveValidation isValidMove = new MoveValidator().validateMove(game, testMove);
+                            if (isValidMove == MoveValidator.MoveValidation.VALID
+                                || isValidMove == MoveValidator.MoveValidation.VALIDJUMP) {
+                                possibleMoves.append(testMove);
                             }
                         }
                     }
                 }
             }
-            return possibleMoves.get(Random.nextInt(possibleMoves.size()));
         }
-        else {
-            return null;
+        return possibleMoves.get(Random.nextInt(possibleMoves.size()));
+    }
+
+    private void doTurn(Game game) {
+        if (board.getActiveColor() == Piece.Color.WHITE) {
+            game.updateBoard(decideMove(game));
         }
+    }
+
+    public AI(Game inGame) {
+        game = inGame;
+        board = game.getBoard();
     }
 }
