@@ -83,12 +83,12 @@ public class WebServer {
 
   public static final String CHECK_TURN_URL = "/checkTurn";
 
+  public static final String REPLAY_GAME_URL = "/replay/game";
+
   //Initializes the Games PlayerLobby.
   public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
 
   public static GameCenter GAME_CENTER = new GameCenter();
-
-  public static boolean RESIGN_CHECK = false;
 
 
   //
@@ -178,6 +178,8 @@ public class WebServer {
 
     // Shows the Checkers game Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+
+    get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine));
 
     //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
     //Player gets added to player lobby.

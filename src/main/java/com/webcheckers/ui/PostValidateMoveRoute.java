@@ -59,7 +59,7 @@ public class PostValidateMoveRoute implements Route {
         Board board = game.getBoard();
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
-        Message message = Message.info("true");
+        Message message = Message.info("false");
         switch (MoveValidator.validateMove(game, move)){
             case VALID:
                 move.setValidState(MoveValidator.MoveValidation.VALID);
@@ -67,8 +67,8 @@ public class PostValidateMoveRoute implements Route {
                 break;
 
             case VALIDJUMP:
-                if(MoveValidator.pieceHasJump(move.getEnd(), game, board.getSpace(move.getStart().getRow(),
-                        move.getStart().getCell()).getPiece().getColor(), false)){
+                Piece piece = board.getPiece(move.getStart().getRow(), move.getStart().getCell());
+                if(MoveValidator.pieceHasJump(move.getEnd(), game, piece.getColor(), piece.getType(), false)){
                     move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
                     message = Message.info(VALID_JUMP_MOVE);
                 }
@@ -86,7 +86,7 @@ public class PostValidateMoveRoute implements Route {
 
             case OCCUPIED:
                 move.setValidState(MoveValidator.MoveValidation.OCCUPIED);
-                message = Message.info(OCCUPIED_SPACE);
+                message = Message.error(OCCUPIED_SPACE);
                 Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
                 break;
 

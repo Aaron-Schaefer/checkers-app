@@ -51,14 +51,17 @@ public class PostSubmitTurnRoute implements Route {
         game.setTurnMade(true);
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
+        LOG.info("3");
         Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
         Move move = game.getRecentMove();
         if (move.getValidState() == MoveValidator.MoveValidation.VALIDJUMP) {
             game.updateBoard(move);
+            game.addMove(move);
             Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
         }
         else if(move.getValidState() == MoveValidator.MoveValidation.VALID) {
             game.updateBoard(move);
+            game.addMove(move);
             game.endTurn();
         }
         return jsonMsg;

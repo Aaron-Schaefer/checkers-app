@@ -10,9 +10,11 @@ import com.webcheckers.model.Player;
 import java.util.*;
 
 public class PlayerLobby {
-    //ArrayList of all Players.
+    //ArrayList of all users.
+    private ArrayList<Player> users;
+    //ArrayList of active Players.
     private ArrayList<Player> players;
-    //ArrayList of Players in a game.
+    //ArrayList of users in a game.
     private ArrayList<Player> gamePlayers;
     //The red Player.
     private Player redPlayer;
@@ -25,6 +27,7 @@ public class PlayerLobby {
      *Initializes a new player lobby.
      */
     public PlayerLobby(){
+        users = new ArrayList<>();
         players = new ArrayList<>();
         gamePlayers = new ArrayList<>();
         choseInGame = false;
@@ -35,18 +38,24 @@ public class PlayerLobby {
      * @param player the player to add.
      * @return true if successful, false otherwise.
      */
-    public boolean addPlayer(Player player){
-        if(!players.contains(player) && player != null){
+    public boolean addUser(Player player){
+        if(!users.contains(player) && player != null){
 
-            players.add(player);
+            users.add(player);
             return true;
 
         }
         return false;
     }
 
+    public void addPlayer(Player player){
+        if(!players.contains(player) && player != null){
+            players.add(player);
+        }
+    }
+
     /**
-     * Add a Player to the list of Players in a game.
+     * Add a Player to the list of users in a game.
      * @param player the player to add.
      */
     public void addGamePlayer(Player player){
@@ -56,24 +65,41 @@ public class PlayerLobby {
     }
 
     /**
-     * Returns the list of players in a string array.
-     * @return the players in a string array with their username,
+     * Returns the list of users in a string array.
+     * @return the users in a string array with their username,
      */
-    public Player[] playerArray(){
-        Player[] playerNames = new Player[players.size()];
-        for(int i = 0; i < players.size(); i++){
-            playerNames[i] = players.get(i);
+    public Player[] playerArray(String mode){
+        ArrayList<Player> playerList;
+        if(mode.equals("PLAY")){
+
+            playerList = players;
+
+        } else if(mode.equals("SPECTATOR")){
+
+            playerList = gamePlayers;
+
+        } else{
+
+            playerList = users;
+
+        }
+
+        Player[] playerNames = new Player[playerList.size()];
+        for(int i = 0; i < playerList.size(); i++){
+            playerNames[i] = playerList.get(i);
         }
         return playerNames;
     }
+
+
 
     /**
      * Gets a Player based on a given name.
      * @param name the name to check.
      * @return the Player with the given name, or null if not found.
      */
-    public Player getPlayer(String name){
-        Player[] playerArray = this.playerArray();
+    public Player getUser(String name){
+        Player[] playerArray = this.playerArray("");
         for (Player player : playerArray) {
             if (player.getName().equals(name)) {
                 return player;
@@ -87,17 +113,25 @@ public class PlayerLobby {
      * @param player the Player to check.
      * @return True or False if the Player is in a game or not.
      */
-    public boolean isInGame(Player player){
-        return gamePlayers.contains(player);
-    }
+    public boolean isInGame(Player player){ return gamePlayers.contains(player); }
 
     /**
-     * Removes a player.
-     * @param player the player removed.
+     * Removes an active User.
+     * @param player the User removed.
      */
-    public void remove(Player player){
-        players.remove(player);
-    }
+    public void removeUser(Player player){ users.remove(player); }
+
+    /**
+     * Removes an active Player.
+     * @param player the Player removed.
+     */
+    public void removePlayer(Player player){ players.remove(player); }
+
+    /**
+     * Removes a Player in a Game.
+     * @param player the Player removed.
+     */
+    public void removeGamePlayer(Player player){ gamePlayers.remove(player); }
 
     /**
      * Sets choseInGame to true.

@@ -23,6 +23,11 @@ public class Board {
     private Piece.Color activeColor;
     //The list of Positions where Pieces have been taken
     private List<Position> positionsTaken;
+    //Number of white pieces on the board.
+    private int whitePieces;
+    //Number of red pieces on the board.
+    private int redPieces;
+
 
     /**
      * Constructor for the Board
@@ -36,9 +41,9 @@ public class Board {
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
         this.positionsTaken = new ArrayList<>();
+        this.whitePieces = 12;
+        this.redPieces = 12;
         initializeSpaces();
-        //putPieces();
-        //print();
 
     }
 
@@ -193,18 +198,11 @@ public class Board {
      *Removes a piece from a specific space
      * @param row The row of the removed piece
      * @param col The column of the removed piece
-     * @return True if a piece was removed; False if not removed
      */
-    public boolean removePiece(int row, int col){
-
+    public void removePiece(int row, int col){
         if(boardArray[row][col] != null){
-
             boardArray[row][col].addPiece(null);
-            return true;
         }
-        else
-            return false;
-
     }
 
     /**
@@ -244,9 +242,7 @@ public class Board {
     /**
      * Clears the list of taken positions
      */
-    public void clearPositionsTaken(){
-        positionsTaken.clear();
-    }
+    public void clearPositionsTaken() { positionsTaken.clear(); }
 
     /**
      * Gets the list of taken positions
@@ -254,5 +250,27 @@ public class Board {
      */
     public List<Position> getPositionsTaken(){
         return this.positionsTaken;
+    }
+
+    /**
+     * Checks if one of the Players has no Pieces left
+     * @return if a Player has no Pieces
+     */
+    public boolean noPieces() {
+        return (this.whitePieces == 0 || this.redPieces == 0);
+    }
+
+    /**
+     * Decrements the amount of pieces of the given Piece's color
+     * @param piece the given Piece
+     */
+    public void decrementPieces(Piece piece){
+        Piece.Color color = piece.getColor();
+        if(color == Piece.Color.RED){
+            this.redPieces--;
+        }
+        else{
+            this.whitePieces--;
+        }
     }
 }

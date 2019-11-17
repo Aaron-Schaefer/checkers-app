@@ -15,8 +15,6 @@ import spark.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -73,7 +71,7 @@ public class PostSignInRouteTest {
         CuT.handle(request,response);
 
         Player player = new Player("h");
-        assertNotNull(playerLobby.getPlayer("h")!= null);
+        assertNotNull(playerLobby.getUser("h")!= null);
 
     }
 

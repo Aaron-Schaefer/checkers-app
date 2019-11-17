@@ -56,7 +56,7 @@ public class MoveValidator {
         }
 
 
-        return MoveValidation.VALID;
+        return MoveValidation.TOOFAR;
 
     }
 
@@ -109,12 +109,7 @@ public class MoveValidator {
 
     private static MoveValidation validateJumpMove(Game game, Space start, Move move){
 
-        /*if(!teamHasJump(model, start.getPiece().getColor())) {
-            System.out.println("team has jump");
-            return MoveValidation.TOOFAR;
-        }*/
-
-        if(checkSimpleJump(move, game, true, null)){
+        if(checkSimpleJump(move, game, true, start.getPiece().getColor(), start.getPiece().getType())){
 
             return MoveValidation.VALIDJUMP;
         }
@@ -133,10 +128,10 @@ public class MoveValidator {
             for(int c = 0; c < 8; c++){
 
                 if(model.getSpace(r,c).getPiece() != null && model.getSpace(r,c).getPiece().getColor().equals(color)){
-
+                    Piece.Type type = model.getPiece(r,c).getType();
                     Position position = new Position(r,c);
 
-                    if(pieceHasJump(position, game, color, false))
+                    if(pieceHasJump(position, game, color,type, false))
                         return true;
                 }
 
@@ -146,7 +141,7 @@ public class MoveValidator {
         return false;
     }
 
-    public static boolean pieceHasJump( Position pos, Game game, Piece.Color color, boolean realMove){
+    public static boolean pieceHasJump( Position pos, Game game, Piece.Color color, Piece.Type type, boolean realMove){
 
         Board model = game.getBoard();
 
@@ -159,46 +154,65 @@ public class MoveValidator {
         int rightCell = pos.getCell() +2;
 
         int forwardRow = pos.getRow() +2*teamOffset;
+        int backRow = pos.getRow() -2*teamOffset;
 
-        if(forwardRow>7 || forwardRow<0) {
+        if (forwardRow > 7 || forwardRow < 0 && type != Piece.Type.KING) {
             return false;
         }
 
 
-        if(leftCell<8 && leftCell>0) {
+        if(leftCell<8 && leftCell>=0) {
 
             Position end = new Position(forwardRow, leftCell);
+            Position kingEnd = new Position(backRow, leftCell);
             Move move = new Move(pos, end);
+            Move kingMove = new Move(pos, kingEnd);
 
-            if (checkSimpleJump(move, game, realMove, color)) {
+            if (checkSimpleJump(move, game, realMove, color, type)) {
                 return true;
+            }
+            if(type == Piece.Type.KING && checkSimpleJump(kingMove, game, realMove, color, type) ){
+                    return true;
             }
         }
         else{
-            if(rightCell<8 && rightCell>0){
+            if(rightCell<8 && rightCell>=0){
 
                 Position end = new Position(forwardRow,rightCell);
+                Position kingEnd = new Position(backRow, leftCell);
                 Move move = new Move(pos, end);
+                Move kingMove = new Move(pos, kingEnd);
 
-                return checkSimpleJump(move,game, realMove, color);
+                if(checkSimpleJump(move, game, realMove, color, type)){
+                    return true;
+                }
+                if(type == Piece.Type.KING && checkSimpleJump(kingMove, game, realMove, color, type) )
+                    return true;
             }
         }
-
-
-
 
         return false;
     }
 
-    private static boolean checkSimpleJump(Move move, Game game, boolean realMove, Piece.Color color){
+    private static boolean checkSimpleJump(Move move, Game game, boolean realMove, Piece.Color color, Piece.Type type){
 
         Board model = game.getBoard();
 
         Position start = move.getStart();
         Position end = move.getEnd();
 
-        int rowdif = Math.abs(start.getRow()- end.getRow());
+        int rowdif = start.getRow()- end.getRow();
         int coldif = Math.abs(start.getCell() - end.getCell());
+
+        System.out.println("rowdif: " + rowdif);
+
+        if(rowdif > 0 && type == Piece.Type.SINGLE && color == Piece.Color.WHITE)
+            return false;
+
+        if(rowdif < 0 && type == Piece.Type.SINGLE && color == Piece.Color.RED)
+            return false;
+
+        rowdif = Math.abs(rowdif);
 
         if(coldif ==2 && rowdif ==2){
 
@@ -223,13 +237,12 @@ public class MoveValidator {
                 }
                 else {
                     if(realMove)
-                        game.addPositionTaken(taken);
+                        model.addPositionTaken(taken);
                     return true;
                 }
             }
             return false;
         }
-
         return false;
     }
 

@@ -74,7 +74,7 @@ public class PostSignInRoute implements Route {
         session.attribute("currentPlayer", player);
 
         //Get if the player add oepration is successful.
-        boolean success = WebServer.PLAYER_LOBBY.addPlayer(player);
+        boolean success = WebServer.PLAYER_LOBBY.addUser(player);
         if (!success){
             vm.put("message", nameTaken);
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));

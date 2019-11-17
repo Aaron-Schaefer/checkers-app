@@ -1,61 +1,150 @@
 package com.webcheckers.model;
 
+import java.util.*;
+
 public class Game {
-    private Player whitePlayer;
+    //The red Player
     private Player redPlayer;
+    //The white Player
+    private Player whitePlayer;
+    //The winner
+    private Player winner;
+    //The game board
     private Board board;
+    //The most recent move
     private Move recentMove;
-    public boolean turnMade;
+    //The game's ID
+    private int gameID;
+    //A map of all the moves made in the game
+    private Map<Integer, Move> allMoves;
+    //Boolean value for if a turn was made
+    private boolean turnMade;
+    //Boolean value for if the game was resigned
+    private boolean resigned;
 
-    public Game(){
-        this.turnMade = false;
-    }
-
-    public void addToGame(Player player){
-        if(redPlayer == null){
-            redPlayer = player;
-        }
-        else{
-            whitePlayer = player;
-        }
-    }
-
-    public void initializeBoard(){
+    /**
+     * Initializes a game
+     * @param redPlayer The red Player
+     * @param whitePlayer The white Player
+     * @param gameID The game's ID
+     */
+    public Game(Player redPlayer, Player whitePlayer, int gameID){
+        this.redPlayer = redPlayer;
+        this.whitePlayer = whitePlayer;
+        this.winner = null;
         this.board = new Board(redPlayer, whitePlayer);
+        this.gameID = gameID;
+        this.allMoves = new HashMap<Integer, Move>();
+        this.turnMade = false;
+        this.resigned = false;
     }
 
-    public Player getRedPlayer() {
-        return redPlayer;
-    }
+    /**
+     * Gets the red Player
+     * @return the red Player
+     */
+    public Player getRedPlayer() { return this.redPlayer; }
 
+    /**
+     * Gets the white Player
+     * @return the white Player
+     */
     public Player getWhitePlayer() {
-        return whitePlayer;
+        return this.whitePlayer;
     }
 
+    /**
+     * Sets the winner to the given Player
+     * @param winner the winner
+     */
+    public Player setWinner(Player winner){
+        this.winner = winner;
+        return this.winner;
+    }
+
+    /**
+     * Gets the winner of the game.
+     * @return the winner
+     */
+    public Player getWinner(){ return this.winner; }
+
+    /**
+     * Sets the most recent move to the given move
+     * @param move the recent move
+     */
     public void setRecentMove(Move move){
         this.recentMove = move;
     }
 
+    /**
+     * Gets the recent move
+     * @return the recent move
+     */
     public Move getRecentMove(){
         return this.recentMove;
     }
 
+    /**
+     * Gets the game board
+     * @return the game board
+     */
     public Board getBoard(){
         return this.board;
     }
 
-    public void addPositionTaken(Position taken){
-        board.addPositionTaken(taken);
+    /**
+     * Returns the unique game ID.
+     * @return the game ID
+     */
+    public int getGameID(){
+        return this.gameID;
     }
 
+    /**
+     * Sets if there was a turn made to true or false
+     * @param turnMade boolean value for if a turn was made
+     */
     public void setTurnMade(boolean turnMade){
         this.turnMade = turnMade;
     }
 
+    /**
+     * Checks if a turn was made
+     * @return if a turn was made
+     */
     public boolean isTurnMade() {
-        return turnMade;
+        return this.turnMade;
     }
 
+    /**
+     * Sets the resigned boolean to true
+     */
+    public void makeResigned(){
+        this.resigned = true;
+    }
+
+    /**
+     * Checks if the game has been resigned
+     * @return if the game has been resigned
+     */
+    public boolean isResigned(){
+        return this.resigned;
+    }
+
+    /**
+     * A helper function that makes a list of both players
+     * @return the player list
+     */
+    public List<Player> playerList(){
+        return new ArrayList<>(Arrays.asList(this.redPlayer, this.whitePlayer));
+    }
+
+    /**
+     * Updates the game board when a move has been made. This takes account
+     * of the new move changes the piece to a king piece if it reaches the
+     * end of the board
+     * @param move The move made
+     */
     public void updateBoard(Move move){
         Position start = move.getStart();
         Position end = move.getEnd();
@@ -68,12 +157,38 @@ public class Game {
         board.addPiece(end.getRow(), end.getCell(), piece);
     }
 
+    /**
+     * Ends the turn by switching the active color and removes the taken
+     * pieces from the board
+     */
     public void endTurn(){
         board.changeActiveColor();
         for(Position position : board.getPositionsTaken()){
+            Piece piece = board.getPiece(position.getRow(), position.getCell());
             board.removePiece(position.getRow(), position.getCell());
+            board.decrementPieces(piece);
         }
         board.clearPositionsTaken();
     }
 
+    /**
+     * Checks if the game is over
+     * @return if the game is over
+     */
+    public boolean isGameOver(){
+        return this.board.noPieces();
+    }
+
+    /**
+     * Adds a move to the map of moves
+     * @param move the move made
+     */
+    public void addMove(Move move){
+        System.out.println(allMoves.size());
+        allMoves.put(allMoves.size(), move);
+    }
+
+    public Player getOpponent(Player player){
+        return (player == this.redPlayer) ? this.whitePlayer : this.redPlayer;
+    }
 }
