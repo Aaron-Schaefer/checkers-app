@@ -154,18 +154,17 @@ public class MoveValidator {
         int rightCell = pos.getCell() +2;
 
         int forwardRow = pos.getRow() +2*teamOffset;
-        int  backrow = pos.getRow() -2*teamOffset;
+        int backRow = pos.getRow() -2*teamOffset;
 
-
-        if (forwardRow > 7 || forwardRow < 0) {
+        if (forwardRow > 7 || forwardRow < 0 && type != Piece.Type.KING) {
             return false;
         }
 
 
-        if(leftCell<8 && leftCell>0) {
+        if(leftCell<8 && leftCell>=0) {
 
             Position end = new Position(forwardRow, leftCell);
-            Position kingEnd = new Position(backrow, leftCell);
+            Position kingEnd = new Position(backRow, leftCell);
             Move move = new Move(pos, end);
             Move kingMove = new Move(pos, kingEnd);
 
@@ -177,20 +176,20 @@ public class MoveValidator {
             }
         }
         else{
-            if(rightCell<8 && rightCell>0){
+            if(rightCell<8 && rightCell>=0){
 
                 Position end = new Position(forwardRow,rightCell);
-                Position kingEnd = new Position(backrow, leftCell);
+                Position kingEnd = new Position(backRow, leftCell);
                 Move move = new Move(pos, end);
                 Move kingMove = new Move(pos, kingEnd);
 
-                if(checkSimpleJump(move,game, realMove, color, type)){
+                if(checkSimpleJump(move, game, realMove, color, type)){
                     return true;
                 }
-                return type == Piece.Type.KING && checkSimpleJump(kingMove, game, realMove, color, type);
+                if(type == Piece.Type.KING && checkSimpleJump(kingMove, game, realMove, color, type) )
+                    return true;
             }
         }
-
 
         return false;
     }
