@@ -39,7 +39,8 @@ public class GetReplayStopWatchingRoute implements Route {
      *   the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
-        Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
+//        Spark.get(WebServer.HOME_URL, new GetHomeRoute(templateEngine));
+        response.redirect("/");
         return null;
     }
 }
