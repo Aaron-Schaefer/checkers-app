@@ -20,26 +20,31 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
-    <h2>Players Online</h2>
 
     <#if currentUser?? && !mode??>
+        <h2>Mode Options</h2>
         Select a mode to play<br>
         <form action="/" method="GET">
-         <input type="radio" name="mode" value="PLAY">PLAY<br>
-         <input type="radio" name="mode" value="SPECTATOR">SPECTATOR<br>
-         <input type="radio" name="mode" value="REPLAY">REPLAY<br>
-         <input type="radio" name="mode" value="AI">AI<br>
+         <input type="radio" name="mode" value="PLAY">PLAY: Play against other Players
+            (${numInPlay} active Player<#if numInPlay != 1>s</#if>)<br>
+         <input type="radio" name="mode" value="SPECTATOR">SPECTATOR: Spectate an active Player<br>
+         <input type="radio" name="mode" value="REPLAY">REPLAY: Replay finished games<br>
+         <input type="radio" name="mode" value="AI">AI: Play against an AI<br>
          <button type='submit'>SELECT MODE</button>
+        </form>
     </#if>
 
     <#if currentUser?? && mode??>
         <#if mode == "PLAY" || mode = "SPECTATOR">
-            </br>
+            <#if mode == "PLAY"><h2>Players Online</h2>
+            <#else> <h2>Players To Spectate</h2></#if><br>
           <form action="/game" method="GET">
             <#if numPlayers lt 2>
                 There are no<#if mode == "PLAY"> other players available to play
                 <#else> players to spectate</#if> at this time.
             <#else>
+              <#if mode == "PLAY"> Select an opponent:
+              <#else> Select a Player to spectate: </#if><br>
               <#list players as player>
                 <#if currentUser.name != player.name>
                     <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
@@ -51,11 +56,12 @@
               </#if>
           </form>
         <#elseif mode == "REPLAY">
-            </br>
+            <h2>Games To Replay</h2><br>
             <form action="/replay/game" method="GET">
                 <#if numGames == 0>
                     There are no finished games to replay at this time.
                 <#else>
+                    Select a game to Replay:<br>
                     <#list games as game>
                         <input type="radio" name="game" value=game>
                         Red: ${game.redPlayer.name}  White: ${game.whitePlayer.name}</br>
@@ -65,6 +71,7 @@
              </form>
         </#if>
    <#elseif !currentUser??>
+      <h2>Users Online</h2>
        <p>There <#if numPlayers == 1> is<#else> are</#if> currently
        ${numPlayers} User<#if numPlayers != 1>s</#if> signed in.
     </#if>

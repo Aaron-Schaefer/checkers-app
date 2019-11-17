@@ -90,10 +90,13 @@ public class GetHomeRoute implements Route {
       if(mode.equals("PLAY")) {
         playerLobby.addPlayer(player);
       }
-      if(mode.equals("REPLAY")) {
-        List<Game> games = gameCenter.getGamesOver();
-        vm.put("games", games);
-        vm.put("numGames", games.size());
+      else{
+        playerLobby.removePlayer(player);
+        if(mode.equals("REPLAY")) {
+          List<Game> games = gameCenter.getGamesOver();
+          vm.put("games", games);
+          vm.put("numGames", games.size());
+        }
       }
 
       //Makes a list of players and puts it, and the number of Players to the
@@ -104,6 +107,7 @@ public class GetHomeRoute implements Route {
 
     vm.put("players", players);
     vm.put("numPlayers", players.size());
+    vm.put("numInPlay", Arrays.asList(playerLobby.playerArray("PLAY")).size());
 
     //Displays a user error if the current Player chose a Player who's already
     //in a game. Otherwise it displaces the WELCOME_MSG.

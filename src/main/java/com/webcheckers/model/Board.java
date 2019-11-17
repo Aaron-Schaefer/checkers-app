@@ -44,8 +44,6 @@ public class Board {
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
-        //putPieces();
-        //print();
 
     }
 
@@ -254,14 +252,18 @@ public class Board {
         return this.positionsTaken;
     }
 
+    /**
+     * Checks if one of the Players has no Pieces left
+     * @return if a Player has no Pieces
+     */
     public boolean noPieces() {
         return (this.whitePieces == 0 || this.redPieces == 0);
     }
 
-    public String getPieces(){
-        return "White: " + this.whitePieces + "\nRed: " + this.redPieces;
-    }
-
+    /**
+     * Decrements the amount of pieces of the given Piece's color
+     * @param piece the given Piece
+     */
     public void decrementPieces(Piece piece){
         Piece.Color color = piece.getColor();
         if(color == Piece.Color.RED){

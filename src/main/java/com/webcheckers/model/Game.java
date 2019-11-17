@@ -7,6 +7,8 @@ public class Game {
     private Player redPlayer;
     //The white Player
     private Player whitePlayer;
+    //The winner
+    private Player winner;
     //The game board
     private Board board;
     //The most recent move
@@ -29,6 +31,7 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameID){
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        this.winner = null;
         this.board = new Board(redPlayer, whitePlayer);
         this.gameID = gameID;
         this.allMoves = new HashMap<Integer, Move>();
@@ -44,11 +47,26 @@ public class Game {
 
     /**
      * Gets the white Player
-     * @return the white Playere
+     * @return the white Player
      */
     public Player getWhitePlayer() {
         return this.whitePlayer;
     }
+
+    /**
+     * Sets the winner to the given Player
+     * @param winner the winner
+     */
+    public Player setWinner(Player winner){
+        this.winner = winner;
+        return this.winner;
+    }
+
+    /**
+     * Gets the winner of the game.
+     * @return the winner
+     */
+    public Player getWinner(){ return this.winner; }
 
     /**
      * Sets the most recent move to the given move
@@ -168,5 +186,9 @@ public class Game {
     public void addMove(Move move){
         System.out.println(allMoves.size());
         allMoves.put(allMoves.size(), move);
+    }
+
+    public Player getOpponent(Player player){
+        return (player == this.redPlayer) ? this.whitePlayer : this.redPlayer;
     }
 }
