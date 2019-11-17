@@ -11,6 +11,7 @@ public class Move {
     private Position end;
     private Position takenPosition;
     private Piece takenPiece;
+    private Piece movedPiece;
     private MoveValidator.MoveValidation validState;
 
     public Move(Position start, Position end){
@@ -41,6 +42,14 @@ public class Move {
 
     public Piece getTakenPiece() {
         return takenPiece;
+    }
+
+    public void setMovedPiece(Piece movedPiece) {
+        this.movedPiece = movedPiece;
+    }
+
+    public Piece getMovedPiece() {
+        return movedPiece;
     }
 
     public void setValidState(MoveValidator.MoveValidation validState) {

@@ -122,11 +122,9 @@ public class Game {
     }
 
     /**
-     * Ends the turn by switching the active color and removes the taken
-     * pieces from the board
+     * Removes the taken piece from the board
      */
-    public void endTurn(){
-        board.changeActiveColor();
+    public void takePiece(){
         Position takenPosition = this.recentMove.getTakenPosition();
         if(takenPosition != null) {
             Piece piece = board.getPiece(takenPosition.getRow(), takenPosition.getCell());
