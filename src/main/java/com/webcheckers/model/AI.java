@@ -4,6 +4,7 @@ import java.util.*;
 
 public class AI {
     private Piece.Color AIColor = Piece.Color.WHITE;
+    Player cpu;
     Game game;
     Board board;
     private Move decideMove(Game game) {
@@ -27,14 +28,18 @@ public class AI {
         return possibleMoves.get(Random.nextInt(possibleMoves.size()));
     }
 
-    private void doTurn(Game game) {
+    private void doTurn() {
         if (board.getActiveColor() == Piece.Color.WHITE) {
             game.updateBoard(decideMove(game));
         }
     }
 
+    public Player getPlayer() {
+        return cpu;
+    }
     public AI(Game inGame) {
         game = inGame;
         board = game.getBoard();
+        cpu = new Player("Computer");
     }
 }
