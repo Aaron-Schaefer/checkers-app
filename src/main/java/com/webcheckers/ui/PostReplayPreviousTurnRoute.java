@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
+import com.webcheckers.model.Position;
+import com.webcheckers.util.Message;
+import spark.*;
 
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -43,6 +45,31 @@ public class PostReplayPreviousTurnRoute implements Route {
      *   the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
-        return null;
+
+        Session session = request.session();
+
+        Game game = session.attribute("replayGame");
+
+        Board board = session.attribute("replayBoard");
+
+        int numMove = session.attribute("numMove");
+
+        Move move = game.getMove(numMove -1);
+
+        if(move.getTakenPosition() != null){
+            Position position = move.getTakenPosition();
+            board.addPiece(position.getRow(), position.getCell(), move.getTakenPiece());
+        }
+
+        board.undoMove(move);
+
+        Message message = Message.info("false");
+
+        if(numMove > 0) {
+            session.attribute("numMove", numMove - 1);
+            message = Message.info("true");
+        }
+
+        return gson.toJson(message, Message.class);
     }
 }

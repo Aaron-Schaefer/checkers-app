@@ -5,6 +5,7 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
+import com.webcheckers.model.Position;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -58,24 +59,20 @@ public class PostReplayNextTurnRoute implements Route {
 
         Move move = game.getMove(numMove);
 
+        if(move.getTakenPosition() != null){
+            Position position = move.getTakenPosition();
+            board.removePiece(position.getRow(), position.getCell());
+        }
+
         board.updateBoard(move);
 
-        Message message = Message.info("false");;
-
-        System.out.println("NumMoves: " + game.getNumMoves());
+        Message message = Message.info("false");
 
         if(numMove < game.getNumMoves()) {
             session.attribute("numMove", numMove + 1);
             message = Message.info("true");
-            session.attribute("hasNext", true);
-            System.out.println("hasNext: " + true);
-        }
-        else{
-            session.attribute("hasNext", false);
-            System.out.println("hasNext: " + false);
         }
 
-        String jsonMsg = gson.toJson(message, Message.class);
-        return jsonMsg;
+        return gson.toJson(message, Message.class);
     }
 }

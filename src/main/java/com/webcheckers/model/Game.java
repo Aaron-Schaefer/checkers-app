@@ -121,20 +121,18 @@ public class Game {
         return new ArrayList<>(Arrays.asList(this.redPlayer, this.whitePlayer));
     }
 
-
-
     /**
      * Ends the turn by switching the active color and removes the taken
      * pieces from the board
      */
     public void endTurn(){
         board.changeActiveColor();
-        for(Position position : board.getPositionsTaken()){
-            Piece piece = board.getPiece(position.getRow(), position.getCell());
-            board.removePiece(position.getRow(), position.getCell());
+        Position takenPosition = this.recentMove.getTakenPosition();
+        if(takenPosition != null) {
+            Piece piece = board.getPiece(takenPosition.getRow(), takenPosition.getCell());
+            board.removePiece(takenPosition.getRow(), takenPosition.getCell());
             board.decrementPieces(piece);
         }
-        board.clearPositionsTaken();
     }
 
     /**

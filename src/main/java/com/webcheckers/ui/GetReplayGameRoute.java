@@ -90,7 +90,6 @@ public class GetReplayGameRoute implements Route {
         }
         if(numMove < game.getNumMoves()) {
             hasNext = true;
-            System.out.println("hasNext: " + true);
         }
 
         final Map<String, Object> modeOptions = new HashMap<>(2);

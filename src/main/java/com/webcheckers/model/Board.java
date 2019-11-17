@@ -21,8 +21,6 @@ public class Board {
     private Player redPlayer;
     //The active color on the board
     private Piece.Color activeColor;
-    //The list of Positions where Pieces have been taken
-    private List<Position> positionsTaken;
     //Number of white pieces on the board.
     private int whitePieces;
     //Number of red pieces on the board.
@@ -40,7 +38,6 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
-        this.positionsTaken = new ArrayList<>();
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
@@ -233,29 +230,8 @@ public class Board {
         return this.activeColor;
     }
 
-    /**
-     * Adds a taken position to the list of taken positions.
-     * @param position the position of the taken piece.
-     */
-    public void addPositionTaken(Position position){
-        positionsTaken.add(position);
-    }
-
-    /**
-     * Clears the list of taken positions
-     */
-    public void clearPositionsTaken() { positionsTaken.clear(); }
-
-    /**
-     * Gets the list of taken positions
-     * @return the list of taken positions
-     */
-    public List<Position> getPositionsTaken(){
-        return this.positionsTaken;
-    }
-
     public boolean noPieces() {
-        return (this.whitePieces == 11 || this.redPieces == 11);
+        return (this.whitePieces == 10 || this.redPieces == 10);
     }
 
     public String getPieces(){
@@ -287,6 +263,14 @@ public class Board {
                 || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
             piece.setTypeKing();
         }
+        this.addPiece(end.getRow(), end.getCell(), piece);
+    }
+
+    public void undoMove(Move move){
+        Position start = move.getEnd();
+        Position end = move.getStart();
+        Piece piece = this.getPiece(start.getRow(), start.getCell());
+        this.removePiece(start.getRow(), start.getCell());
         this.addPiece(end.getRow(), end.getCell(), piece);
     }
 }
