@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class GetSpectatorGameRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
-        //Will need to get game by the player the currentuser decides to spectate
+        //Will need to get game by the player the current user decides to spectate
         String playerName = request.queryParams("playerName");
         Player player = playerLobby.getUser(playerName);
         Game game =gameCenter.getGame(player);
@@ -61,10 +62,33 @@ public class GetSpectatorGameRoute implements Route {
         Board board = game.getBoard();
         BoardView boardView = new BoardView(board, currentPlayer);
 
+        Message ending = Message.info("");
         //End of game case will need win/loss message
         if (game.isGameOver()){
+
+            //Needs way to send message based on win/loss or normal/resigned end
+            //TODO: fix for both users end messages
+            //needs the loser's message
+
+            if (game.isResigned()){
+                if (playerLobby.isInGame(redPlayer)){
+                    ending.info(redPlayer + " won because " + whitePlayer + " resigned.");
+                }
+                if (playerLobby.isInGame(whitePlayer)) {
+                    ending.info(whitePlayer + " won because " + redPlayer + " resigned.");
+                }
+            }
+            else {
+                if (currentPlayer == redPlayer){
+                   ending.info(redPlayer + " won by taking all of " + whitePlayer + "'s pieces!");
+                }
+                if (currentPlayer == whitePlayer){
+                    ending.info(whitePlayer + " won by taking all of " + redPlayer + "'s pieces!");
+                }
+            }
             response.redirect("/");
         }
+
         vm.put("title", "How do you like my box tickets to the checkers match of the century!");
         vm.put("viewMode", "SPECTATOR");
         vm.put("currentUser", currentPlayer);
