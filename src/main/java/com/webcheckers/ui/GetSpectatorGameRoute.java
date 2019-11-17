@@ -61,8 +61,12 @@ public class GetSpectatorGameRoute implements Route {
         Board board = game.getBoard();
         BoardView boardView = new BoardView(board, currentPlayer);
 
+        //End of game case will need win/loss message
+        if (game.isGameOver()){
+            response.redirect("/");
+        }
         vm.put("title", "How do you like my box tickets to the checkers match of the century!");
-        vm.put("viewMode", "PLAY");
+        vm.put("viewMode", "SPECTATOR");
         vm.put("currentUser", currentPlayer);
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);

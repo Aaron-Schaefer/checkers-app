@@ -41,6 +41,8 @@ public class GetSpectatorstopWatchingRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        LOG.info("Handling GetSpectatorstopWatchingRoute");
+        response.redirect("/");
         return null;
     }
 }

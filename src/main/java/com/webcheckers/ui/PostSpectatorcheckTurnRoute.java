@@ -41,6 +41,15 @@ public class PostSpectatorcheckTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        LOG.info("Handling PostSpectatircheckTurnRoute");
+        Map<String, Object> vm = new HashMap<>();
+
+        Session session = request.session();
+        Player currentPlayer = session.attribute("currentPlayer");
+
+        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
+        GameCenter gameCenter = WebServer.GAME_CENTER;
+
         return null;
     }
 }
