@@ -56,7 +56,7 @@ public class MoveValidator {
         }
 
 
-        return MoveValidation.VALID;
+        return MoveValidation.TOOFAR;
 
     }
 
