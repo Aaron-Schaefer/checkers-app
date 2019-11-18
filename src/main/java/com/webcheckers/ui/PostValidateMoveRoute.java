@@ -55,6 +55,7 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
+        System.out.println(currentPlayer.getName() + " is in validate");
         Game game = gameCenter.getGame(currentPlayer);
         Board board = game.getBoard();
         final String moveJSON = request.queryParams("actionData");

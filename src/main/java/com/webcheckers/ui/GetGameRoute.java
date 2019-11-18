@@ -46,7 +46,7 @@ public class GetGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.info("Handling GetGameRoute");
+                LOG.info("Handling GetGameRoute");
 
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
@@ -54,6 +54,8 @@ public class GetGameRoute implements Route {
         //Get current session, and get the current Player from the session.
         Session session = request.session();
         Player currentPlayer = session.attribute("currentPlayer");
+
+        System.out.println(currentPlayer.getName() + " is in Game");
 
         //Get the PlayerLobby and GameCenter from the WebServer.
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
@@ -98,8 +100,9 @@ public class GetGameRoute implements Route {
 
         //Sets the game to over by resignation from the opponent
         if (game.isResigned()) {
-            Player winner = game.getOpponent(currentPlayer);
-            if(game.getWinner() == null) {
+            Player winner = game.getWinner();
+            if(winner == null) {
+                winner = game.getOpponent(currentPlayer);
                 game.setWinner(winner);
             }
             else{
