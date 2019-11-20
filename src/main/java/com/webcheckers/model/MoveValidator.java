@@ -143,6 +143,8 @@ public class MoveValidator {
 
     public static boolean pieceHasJump( Position pos, Game game, Piece.Color color, Piece.Type type, boolean realMove){
 
+        Board model = game.getBoard();
+
         int teamOffset = 1;
 
         if(color.equals(Piece.Color.RED))
@@ -235,8 +237,7 @@ public class MoveValidator {
                 }
                 else {
                     if(realMove)
-                        move.setTakenPosition(taken);
-                        move.setTakenPiece(takenPiece);
+                        model.addPositionTaken(taken);
                     return true;
                 }
             }
