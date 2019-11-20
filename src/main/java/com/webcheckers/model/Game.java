@@ -187,5 +187,6 @@ public class Game {
         this.addMove(move);
         this.takePiece();
         this.turnMade = true;
+        board.validateSpaces();
     }
 }

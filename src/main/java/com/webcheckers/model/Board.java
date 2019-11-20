@@ -41,6 +41,7 @@ public class Board {
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
+        this.validateSpaces();
 
     }
 
@@ -69,6 +70,23 @@ public class Board {
             }
         }
     }
+
+    public void validateSpaces(){
+        for(int r = 0; r< BOARD_SIZE; r++) {
+            for (int c = 0; c < BOARD_SIZE; c++) {
+                if((c+r)%2 == 0){
+                    this.getSpace(r, c).setViable(false);
+                }
+                if(this.getPiece(r, c) != null){
+                    this.getSpace(r, c).setViable(false);
+                }
+                if(((c+r)%2 != 0) && this.getPiece(r, c) == null){
+                    this.getSpace(r, c).setViable(true);
+                }
+            }
+        }
+    }
+
 
 //    /**
 //     * Puts a piece in a valid space
