@@ -40,7 +40,6 @@ public class MoveTest {
         assertNotNull(CuT);
         assertNotNull(CuT.getStart());
         assertNotNull(CuT.getEnd());
-        assertNotNull(CuT.getValidState());
     }
 
     @Test
