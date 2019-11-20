@@ -63,7 +63,7 @@
                 <#else>
                     Select a game to Replay:<br>
                     <#list games as game>
-                        <input type="radio" name="game" value=game>
+                        <input type="radio" name="game" value=${game.gameID}>
                         Red: ${game.redPlayer.name}  White: ${game.whitePlayer.name}</br>
                     </#list>
                     <button type='submit'>REPLAY GAME</button>

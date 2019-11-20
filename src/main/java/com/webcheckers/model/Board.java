@@ -21,8 +21,6 @@ public class Board {
     private Player redPlayer;
     //The active color on the board
     private Piece.Color activeColor;
-    //The list of Positions where Pieces have been taken
-    private List<Position> positionsTaken;
     //Number of white pieces on the board.
     private int whitePieces;
     //Number of red pieces on the board.
@@ -40,7 +38,6 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
-        this.positionsTaken = new ArrayList<>();
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
@@ -272,5 +269,31 @@ public class Board {
         else{
             this.whitePieces--;
         }
+    }
+
+    /**
+     * Updates the game board when a move has been made. This takes account
+     * of the new move changes the piece to a king piece if it reaches the
+     * end of the board
+     * @param move The move made
+     */
+    public void updateBoard(Move move){
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        Piece piece = this.getPiece(start.getRow(), start.getCell());
+        this.removePiece(start.getRow(), start.getCell());
+        if((end.getRow() == 0 && piece.getColor() == Piece.Color.RED)
+                || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
+            piece.setTypeKing();
+        }
+        this.addPiece(end.getRow(), end.getCell(), piece);
+    }
+
+    public void undoMove(Move move){
+        Position start = move.getEnd();
+        Position end = move.getStart();
+        Piece piece = this.getPiece(start.getRow(), start.getCell());
+        this.removePiece(start.getRow(), start.getCell());
+        this.addPiece(end.getRow(), end.getCell(), piece);
     }
 }

@@ -73,21 +73,55 @@ public class WebServer {
    */
   public static final String GAME_URL = "/game";
 
+  /**
+   * The URL pattern to request the Validate Move page.
+   */
   public static final String VALIDATE_MOVE_URL = "/validateMove";
 
+  /**
+   * The URL pattern to request the Submit Turn page.
+   */
   public static final String SUBMIT_TURN_URL = "/submitTurn";
 
+  /**
+   * The URL pattern to request the Backup Move page.
+   */
   public static final String BACKUP_MOVE_URL = "/backupMove";
 
+  /**
+   * The URL pattern to request the Resign Game page.
+   */
   public static final String RESIGN_GAME_URL = "/resignGame";
 
+  /**
+   * The URL pattern to request the Check Turn page.
+   */
   public static final String CHECK_TURN_URL = "/checkTurn";
 
+  /**
+   * The URL pattern to request the Replay Game page.
+   */
   public static final String REPLAY_GAME_URL = "/replay/game";
+
+  /**
+   * The URL pattern to request the Replay Stop Watching page.
+   */
+  public static final String REPLAY_STOP_WATCHING = "/replay/stopWatching";
+
+  /**
+   * The URL pattern to request the Replay Next Turn page.
+   */
+  public static final String REPLAY_NEXT_TURN = "/replay/nextTurn";
+
+  /**
+   * The URL pattern to request the Replay Previous Turn page.
+   */
+  public static final String REPLAY_PREVIOUS_TURN = "/replay/previousTurn";
 
   //Initializes the Games PlayerLobby.
   public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
 
+  //Initializes the Game Center.
   public static GameCenter GAME_CENTER = new GameCenter();
 
 
@@ -179,7 +213,14 @@ public class WebServer {
     // Shows the Checkers game Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
 
-    get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine));
+    //Display of the game for the player
+    get(GAME_URL, new GetGameRoute(templateEngine, gson));
+
+    //Display the a finished game for the player to replay it.
+    get(REPLAY_GAME_URL, new GetReplayGameRoute(templateEngine, gson));
+
+    //Returns the User back to the Home page.
+    get(REPLAY_STOP_WATCHING, new GetReplayStopWatchingRoute(templateEngine, gson));
 
     //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
     //Player gets added to player lobby.
@@ -188,18 +229,26 @@ public class WebServer {
     //Sign the player out and remove player from player lobby. Redirect back to home page.
     post(SIGN_OUT_URL, new PostSignOutRoute(templateEngine));
 
-    //Display of the game for the player
-    get(GAME_URL, new GetGameRoute(templateEngine, gson));
-
+    //Takes a move from the game and checks if it is valid.
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
 
+    //Takes the most recent move and submits it to the game board if it  is valid.
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gson));
 
+    //Removes the most recent move.
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine, gson));
 
+    //Resigns the Player from the game.
     post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gson));
 
+    //Checks to see if it is the Players turn. If it is it refreshes the
     post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gson));
+
+    //Checks if there's a next turn available while replaying a game.
+    post(REPLAY_NEXT_TURN, new PostReplayNextTurnRoute(templateEngine, gson));
+
+    //Checks if there's a next turn available while replaying a game.
+    post(REPLAY_PREVIOUS_TURN, new PostReplayPreviousTurnRoute(templateEngine, gson));
 
     //
     LOG.config("WebServer is initialized.");
