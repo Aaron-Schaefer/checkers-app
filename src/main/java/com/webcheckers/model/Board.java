@@ -231,7 +231,7 @@ public class Board {
     }
 
     public boolean noPieces() {
-        return (this.whitePieces == 10 || this.redPieces == 10);
+        return (this.whitePieces == 9 || this.redPieces == 9);
     }
 
     public String getPieces(){
@@ -258,14 +258,15 @@ public class Board {
         Position start = move.getStart();
         Position end = move.getEnd();
         Piece piece = this.getPiece(start.getRow(), start.getCell());
-        System.out.println("Move: " + piece.getType());
-        move.setMovedPiece(piece);
         this.removePiece(start.getRow(), start.getCell());
         if((end.getRow() == 0 && piece.getColor() == Piece.Color.RED)
                 || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
-            piece.setTypeKing();
+            Piece temp = new Piece(Piece.Type.KING, piece.getColor());
+            this.addPiece(end.getRow(), end.getCell(), temp);
         }
-        this.addPiece(end.getRow(), end.getCell(), piece);
+        else {
+            this.addPiece(end.getRow(), end.getCell(), piece);
+        }
     }
 
     public void undoMove(Move move){

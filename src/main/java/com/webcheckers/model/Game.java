@@ -156,4 +156,13 @@ public class Game {
     public Move getMove(int numMove){
         return allMoves.get(numMove);
     }
+
+    public void doTurn(Move move){
+        Piece piece = this.board.getPiece(move.getStart().getRow(), move.getStart().getCell());
+        move.setMovedPiece(piece);
+        board.updateBoard(move);
+        this.addMove(move);
+        this.takePiece();
+        this.turnMade = true;
+    }
 }

@@ -56,8 +56,6 @@ public class PostReplayPreviousTurnRoute implements Route {
 
         Move move = game.getMove(numMove -1);
 
-        System.out.println("Pre-Previous: " + move.getTakenPiece().getType());
-
         if(move.getTakenPosition() != null){
             Position position = move.getTakenPosition();
             board.addPiece(position.getRow(), position.getCell(), move.getTakenPiece());
