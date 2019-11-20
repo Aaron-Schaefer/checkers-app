@@ -97,6 +97,9 @@ public class GetHomeRoute implements Route {
           vm.put("games", games);
           vm.put("numGames", games.size());
         }
+        if(mode.equals("AI")){
+          response.redirect("/game");
+        }
       }
 
       //Makes a list of players and puts it, and the number of Players to the

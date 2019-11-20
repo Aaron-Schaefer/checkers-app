@@ -15,17 +15,18 @@ public class AI {
                     for (int cinc = -2; cinc < 3; cinc++) {
                         if (rinc != 0 && cinc != 0 && (rinc+cinc)%2 == 0) {
                             Move testMove = new Move(new Position(r, c), new Position(r+rinc, c+cinc));
-                            MoveValidator.MoveValidation isValidMove = new MoveValidator().validateMove(game, testMove);
+                            MoveValidator.MoveValidation isValidMove = MoveValidator.validateMove(game, testMove);
                             if (isValidMove == MoveValidator.MoveValidation.VALID
                                 || isValidMove == MoveValidator.MoveValidation.VALIDJUMP) {
-                                possibleMoves.append(testMove);
+                                possibleMoves.add(testMove);
                             }
                         }
                     }
                 }
             }
         }
-        return possibleMoves.get(Random.nextInt(possibleMoves.size()));
+        Random random = new Random();
+        return possibleMoves.get(random.nextInt(possibleMoves.size()));
     }
 
     private void doTurn() {
