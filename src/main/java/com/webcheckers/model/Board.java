@@ -38,7 +38,6 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
-        this.positionsTaken = new ArrayList<>();
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
@@ -234,7 +233,7 @@ public class Board {
      * @return if a Player has no Pieces
      */
     public boolean noPieces() {
-        return (this.whitePieces == 9 || this.redPieces == 9);
+        return (this.whitePieces == 0 || this.redPieces == 0);
     }
 
     /**
