@@ -140,35 +140,15 @@ public class Game {
     }
 
     /**
-     * Updates the game board when a move has been made. This takes account
-     * of the new move changes the piece to a king piece if it reaches the
-     * end of the board
-     * @param move The move made
+     * Removes the taken piece from the board
      */
-    public void updateBoard(Move move){
-        Position start = move.getStart();
-        Position end = move.getEnd();
-        Piece piece = board.getPiece(start.getRow(), start.getCell());
-        board.removePiece(start.getRow(), start.getCell());
-        if((end.getRow() == 0 && piece.getColor() == Piece.Color.RED)
-                || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
-            piece.setTypeKing();
-        }
-        board.addPiece(end.getRow(), end.getCell(), piece);
-    }
-
-    /**
-     * Ends the turn by switching the active color and removes the taken
-     * pieces from the board
-     */
-    public void endTurn(){
-        board.changeActiveColor();
-        for(Position position : board.getPositionsTaken()){
-            Piece piece = board.getPiece(position.getRow(), position.getCell());
-            board.removePiece(position.getRow(), position.getCell());
+    public void takePiece(){
+        Position takenPosition = this.recentMove.getTakenPosition();
+        if(takenPosition != null) {
+            Piece piece = board.getPiece(takenPosition.getRow(), takenPosition.getCell());
+            board.removePiece(takenPosition.getRow(), takenPosition.getCell());
             board.decrementPieces(piece);
         }
-        board.clearPositionsTaken();
     }
 
     /**
@@ -188,7 +168,25 @@ public class Game {
         allMoves.put(allMoves.size(), move);
     }
 
+    public int getNumMoves(){
+        return allMoves.size();
+    }
+
+    public Move getMove(int numMove) {
+        return allMoves.get(numMove);
+    }
+          
     public Player getOpponent(Player player){
         return (player == this.redPlayer) ? this.whitePlayer : this.redPlayer;
+    }
+
+    public void doTurn(Move move){
+        Piece piece = this.board.getPiece(move.getStart().getRow(), move.getStart().getCell());
+        move.setMovedPiece(piece);
+        board.updateBoard(move);
+        this.addMove(move);
+        this.takePiece();
+        this.turnMade = true;
+        board.validateSpaces();
     }
 }

@@ -42,6 +42,10 @@ public class Space {
         return isViable;
     }
 
+    public void setViable(boolean viable) {
+        isViable = viable;
+    }
+
     /**
      * Method to get a piece
      * @return the piece

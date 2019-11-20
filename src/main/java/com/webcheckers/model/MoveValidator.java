@@ -236,8 +236,10 @@ public class MoveValidator {
                     return false;
                 }
                 else {
-                    if(realMove)
-                        model.addPositionTaken(taken);
+                    if(realMove) {
+                        move.setTakenPosition(taken);
+                        move.setTakenPiece(takenPiece);
+                    }
                     return true;
                 }
             }
