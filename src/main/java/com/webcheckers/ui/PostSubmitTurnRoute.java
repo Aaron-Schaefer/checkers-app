@@ -49,21 +49,18 @@ public class PostSubmitTurnRoute implements Route {
         Player currentPlayer = request.session().attribute("currentPlayer");
         System.out.println(currentPlayer.getName() + " is in submit");
         Game game = gameCenter.getGame(currentPlayer);
-        game.setTurnMade(true);
+        Board board = game.getBoard();
         Message message = Message.info("true");
         String jsonMsg = gson.toJson(message, Message.class);
-        LOG.info("3");
         Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
         Move move = game.getRecentMove();
         if (move.getValidState() == MoveValidator.MoveValidation.VALIDJUMP) {
-            game.updateBoard(move);
-            game.addMove(move);
+            game.doTurn(move);
             Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
         }
         else if(move.getValidState() == MoveValidator.MoveValidation.VALID) {
-            game.updateBoard(move);
-            game.addMove(move);
-            game.endTurn();
+            game.doTurn(move);
+            board.changeActiveColor();
         }
         return jsonMsg;
     }
