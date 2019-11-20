@@ -171,8 +171,9 @@ public class Game {
         return allMoves.size();
     }
 
-    public Move getMove(int numMove){
+    public Move getMove(int numMove) {
         return allMoves.get(numMove);
+    }
 
     public Player getOpponent(Player player){
         return (player == this.redPlayer) ? this.whitePlayer : this.redPlayer;
