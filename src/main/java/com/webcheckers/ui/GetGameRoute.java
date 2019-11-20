@@ -46,7 +46,7 @@ public class GetGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.info("Handling GetGameRoute");
+                LOG.info("Handling GetGameRoute");
 
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
@@ -54,12 +54,8 @@ public class GetGameRoute implements Route {
         //Get current session, and get the current Player from the session.
         Session session = request.session();
         Player currentPlayer = session.attribute("currentPlayer");
-//        Set<String> params = request.queryParams();
-//        LOG.info("all params for GetGameRoute:");
-//        for (String param : params) {
-//            LOG.info("\t'" + param + "' is: '" + request.queryParams(param) + "'");
-//        }
-//        LOG.info("Current player name is: " + currentPlayer.getName());
+
+        System.out.println(currentPlayer.getName() + " is in Game");
 
         //Get the PlayerLobby and GameCenter from the WebServer.
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
@@ -72,27 +68,21 @@ public class GetGameRoute implements Route {
         //who selected to start a game. Sets the White Player as the player who was selected
         //on the home page. Adds both to PlayerLobby.
         if (game == null) {
-            LOG.info ("game was null, craete a new one!");
             String name = request.queryParams("playerName");
 
             //Checks if the current Player chose an opponent that's already in a game. If the
             //opponent is already in a game they're redirected to the home page.
             if (playerLobby.isInGame(playerLobby.getUser(name))) {
-                LOG.info("player is in game, redirecting to '/'");
                 playerLobby.playerChoseInGame();
                 response.redirect("/?mode=PLAY");
             }
             else {
                 playerLobby.notChoseInGame();
+                playerLobby.addGamePlayer(currentPlayer);
+                Player whitePlayer = playerLobby.getUser(name);
+                playerLobby.addGamePlayer(whitePlayer);
+                game = gameCenter.makeGame(currentPlayer, whitePlayer);
             }
-
-            playerLobby.addGamePlayer(currentPlayer);
-            Player whitePlayer = playerLobby.getUser(name);
-            playerLobby.addGamePlayer(whitePlayer);
-            game = gameCenter.makeGame(currentPlayer, whitePlayer);
-        } else {
-
-            LOG.info("game was not null!");
         }
 
         //Set the Red Player and the White player as the Red Player and White Player
@@ -100,39 +90,54 @@ public class GetGameRoute implements Route {
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
 
-        //Sets the boolean in PlayerLobby to true to display a message error if the current
-        //User selects a player who is already in a game.
-//        else {
-        LOG.info("red player is: " + redPlayer + ", white player is: " + whitePlayer);
-
         //The game Board.
         Board board = game.getBoard();
 
         //Creates the BoardView.
         BoardView boardView = new BoardView(board, currentPlayer);
 
+        final Map<String, Object> modeOptions = new HashMap<>(2);
+
         //Sets the game to over by resignation from the opponent
         if (game.isResigned()) {
-            final Map<String, Object> modeOptions = new HashMap<>(2);
+            Player winner = game.getWinner();
+            if(winner == null) {
+                winner = game.getOpponent(currentPlayer);
+                game.setWinner(winner);
+            }
+            else{
+                playerLobby.removePlayer(redPlayer);
+                playerLobby.removeGamePlayer(redPlayer);
+                playerLobby.removePlayer(whitePlayer);
+                playerLobby.removeGamePlayer(whitePlayer);
+                gameCenter.addGameOver(game);
+            }
             modeOptions.put("isGameOver", true);
-            if (session.attribute("currentPlayer") == redPlayer) {
-                modeOptions.put("gameOverMessage", whitePlayer.getName() + " has resigned you win!");
-                vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-            } else if (session.attribute("currentPlayer") == whitePlayer) {
-                modeOptions.put("gameOverMessage", redPlayer.getName() + " has resigned you win!");
-                vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+            if (currentPlayer == winner) {
+                modeOptions.put("gameOverMessage","You win! " + game.getOpponent(currentPlayer).getName() + " has resigned!");
+            }
+            else{
+                modeOptions.put("gameOverMessage", "You lose! You resigned the game!");
             }
         }
-        else if(game.isGameOver() && whitePlayer != null){
-            gameCenter.addGameOver(game);
-            final Map<String, Object> modeOptions = new HashMap<>(2);
+        else if(game.isGameOver()){
+            Player winner = game.getWinner();
+            if(winner == null){
+                winner = game.setWinner(currentPlayer);
+            }
+            else{
+                playerLobby.removePlayer(redPlayer);
+                playerLobby.removeGamePlayer(redPlayer);
+                playerLobby.removePlayer(whitePlayer);
+                playerLobby.removeGamePlayer(whitePlayer);
+                gameCenter.addGameOver(game);
+            }
             modeOptions.put("isGameOver", true);
-            if (session.attribute("currentPlayer") == redPlayer) {
-                modeOptions.put("gameOverMessage", redPlayer.getName() + " has captured all of the pieces!");
-                vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-            } else if (session.attribute("currentPlayer") == whitePlayer) {
-                modeOptions.put("gameOverMessage", whitePlayer.getName() + " has captured all of the pieces!");
-                vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+            if (currentPlayer == winner) {
+                modeOptions.put("gameOverMessage", "You win! You've captured all the pieces!");
+            }
+            else{
+                modeOptions.put("gameOverMessage", "You lose! " + winner.getName() + " has captured all of the pieces!");
             }
         }
 
@@ -140,6 +145,7 @@ public class GetGameRoute implements Route {
         vm.put("title", "Time to play!");
         vm.put("gameID", game.getGameID());
         vm.put("viewMode", "PLAY");
+        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
         vm.put("currentUser", currentPlayer);
         vm.put("redPlayer", redPlayer);
         vm.put("whitePlayer", whitePlayer);
