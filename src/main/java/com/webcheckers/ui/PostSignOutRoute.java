@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -43,8 +44,11 @@ public class PostSignOutRoute implements Route {
         LOG.finer("PostSignOutRoute is invoked.");
 
         //Gets the player, and remove him from the player lobby.
+        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         Player player = request.session().attribute("currentPlayer");
-        WebServer.PLAYER_LOBBY.remove(player);
+        playerLobby.removeUser(player);
+        playerLobby.removePlayer(player);
+        playerLobby.removeGamePlayer(player);
         request.session().invalidate();
 
         response.redirect("/");

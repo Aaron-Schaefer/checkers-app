@@ -41,8 +41,6 @@ public class Board {
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
-        //putPieces();
-        //print();
 
     }
 
@@ -230,14 +228,39 @@ public class Board {
         return this.activeColor;
     }
 
+    /**
+     * Adds a taken position to the list of taken positions.
+     * @param position the position of the taken piece.
+     */
+    public void addPositionTaken(Position position){
+        positionsTaken.add(position);
+    }
+
+    /**
+     * Clears the list of taken positions
+     */
+    public void clearPositionsTaken() { positionsTaken.clear(); }
+
+    /**
+     * Gets the list of taken positions
+     * @return the list of taken positions
+     */
+    public List<Position> getPositionsTaken(){
+        return this.positionsTaken;
+    }
+
+    /**
+     * Checks if one of the Players has no Pieces left
+     * @return if a Player has no Pieces
+     */
     public boolean noPieces() {
-        return (this.whitePieces == 12 || this.redPieces == 12);
+        return (this.whitePieces == 11 || this.redPieces == 11);
     }
 
-    public String getPieces(){
-        return "White: " + this.whitePieces + "\nRed: " + this.redPieces;
-    }
-
+    /**
+     * Decrements the amount of pieces of the given Piece's color
+     * @param piece the given Piece
+     */
     public void decrementPieces(Piece piece){
         Piece.Color color = piece.getColor();
         if(color == Piece.Color.RED){

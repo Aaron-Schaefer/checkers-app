@@ -55,6 +55,7 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
+        System.out.println(currentPlayer.getName() + " is in validate");
         Game game = gameCenter.getGame(currentPlayer);
         Board board = game.getBoard();
         final String moveJSON = request.queryParams("actionData");
@@ -67,8 +68,8 @@ public class PostValidateMoveRoute implements Route {
                 break;
 
             case VALIDJUMP:
-                if(MoveValidator.pieceHasJump(move.getEnd(), game, board.getSpace(move.getStart().getRow(),
-                        move.getStart().getCell()).getPiece().getColor(), false)){
+                Piece piece = board.getPiece(move.getStart().getRow(), move.getStart().getCell());
+                if(MoveValidator.pieceHasJump(move.getEnd(), game, piece.getColor(), piece.getType(), false)){
                     move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
                     message = Message.info(VALID_JUMP_MOVE);
                 }
