@@ -62,23 +62,22 @@ public class GetSpectatorGameRoute implements Route {
         Board board = game.getBoard();
         BoardView boardView = new BoardView(board, currentPlayer);
 
-        Message ending = Message.info("");
-        //End of game case will need win/loss message
+        //End of game cases win/loss message
         if (game.isGameOver()){
             if (game.isResigned()){
-                if (game.){
-                    ending.info(redPlayer + " won because " + whitePlayer + " resigned.");
+                if (game.getWinner() == redPlayer){
+                    Message.info(redPlayer + " won because " + whitePlayer + " resigned.");
                 }
-                if (playerLobby.isInGame(whitePlayer)) {
-                    ending.info(whitePlayer + " won because " + redPlayer + " resigned.");
+                if (game.getWinner() == whitePlayer) {
+                    Message.info(whitePlayer + " won because " + redPlayer + " resigned.");
                 }
             }
             else {
-                if (currentPlayer == redPlayer){
-                   ending.info(redPlayer + " won by taking all of " + whitePlayer + "'s pieces!");
+                if (game.getWinner() == redPlayer){
+                   Message.info(redPlayer + " won by taking all of " + whitePlayer + "'s pieces!");
                 }
-                if (currentPlayer == whitePlayer){
-                    ending.info(whitePlayer + " won by taking all of " + redPlayer + "'s pieces!");
+                if (game.getWinner() == whitePlayer){
+                    Message.info(whitePlayer + " won by taking all of " + redPlayer + "'s pieces!");
                 }
             }
             response.redirect("/");
@@ -93,7 +92,6 @@ public class GetSpectatorGameRoute implements Route {
         vm.put("board", boardView);
 
 
-        //return templateEngine.render(new ModelAndView(vm,"game.ftl"));
-        return null;
+        return templateEngine.render(new ModelAndView(vm,"game.ftl"));
     }
 }
