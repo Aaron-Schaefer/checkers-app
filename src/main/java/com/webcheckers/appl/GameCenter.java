@@ -62,21 +62,6 @@ public class GameCenter {
     }
 
     /**
-     * Gets a game given the game's ID
-     * @param gameID the game's ID
-     * @return the Game with that game ID, or null if no Game has
-     * the given game ID
-     */
-    public Game getGame(int gameID){
-        for(Game game : gamesOver){
-            if(game.getGameID() == gameID){
-                return game;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Checks if a Player is in any of the games
      * @param player the given Player.
      * @return True or False based on if the Player is in any
