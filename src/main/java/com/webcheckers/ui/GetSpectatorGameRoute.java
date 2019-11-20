@@ -65,13 +65,8 @@ public class GetSpectatorGameRoute implements Route {
         Message ending = Message.info("");
         //End of game case will need win/loss message
         if (game.isGameOver()){
-
-            //Needs way to send message based on win/loss or normal/resigned end
-            //TODO: fix for both users end messages
-            //needs the loser's message
-
             if (game.isResigned()){
-                if (playerLobby.isInGame(redPlayer)){
+                if (game.){
                     ending.info(redPlayer + " won because " + whitePlayer + " resigned.");
                 }
                 if (playerLobby.isInGame(whitePlayer)) {
