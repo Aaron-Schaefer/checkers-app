@@ -38,6 +38,7 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
+        this.positionsTaken = new ArrayList<>();
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();

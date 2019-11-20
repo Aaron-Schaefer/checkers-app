@@ -34,7 +34,7 @@ public class Game {
         this.winner = null;
         this.board = new Board(redPlayer, whitePlayer);
         this.gameID = gameID;
-        this.allMoves = new HashMap<>();
+        this.allMoves = new HashMap<Integer, Move>();
         this.turnMade = false;
         this.resigned = false;
     }
@@ -164,6 +164,7 @@ public class Game {
      * @param move the move made
      */
     public void addMove(Move move){
+        System.out.println(allMoves.size());
         allMoves.put(allMoves.size(), move);
     }
 
@@ -174,7 +175,7 @@ public class Game {
     public Move getMove(int numMove) {
         return allMoves.get(numMove);
     }
-
+          
     public Player getOpponent(Player player){
         return (player == this.redPlayer) ? this.whitePlayer : this.redPlayer;
     }

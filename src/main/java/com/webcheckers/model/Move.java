@@ -20,6 +20,12 @@ public class Move {
         this.validState = null;
     }
 
+    public Move(){
+        this.start = null;
+        this.end = null;
+        this.validState = null;
+    }
+
     public Position getStart() {
         return start;
     }
