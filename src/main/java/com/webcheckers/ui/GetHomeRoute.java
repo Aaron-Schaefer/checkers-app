@@ -69,6 +69,7 @@ public class GetHomeRoute implements Route {
 
     //Sets the current User as the current Player if not already set.
     if(player != null){
+      System.out.println(player.getName() + " is in Home");
       vm.put("currentUser", player);
 
       //Redirects the current Player to the /game URL if the current Player
@@ -85,25 +86,27 @@ public class GetHomeRoute implements Route {
     List<Player> players = Arrays.asList(playerLobby.playerArray(""));
 
     if(mode != null) {
-      System.out.println(mode);
       vm.put("mode", mode);
       if(mode.equals("PLAY")) {
         playerLobby.addPlayer(player);
       }
-      if(mode.equals("REPLAY")) {
-        List<Game> games = gameCenter.getGamesOver();
-        vm.put("games", games);
-        vm.put("numGames", games.size());
+      else{
+        playerLobby.removePlayer(player);
+        if(mode.equals("REPLAY")) {
+          List<Game> games = gameCenter.getGamesOver();
+          vm.put("games", games);
+          vm.put("numGames", games.size());
+        }
       }
 
       //Makes a list of players and puts it, and the number of Players to the
       //home.ftl file.
       players = Arrays.asList(playerLobby.playerArray(mode));
-      System.out.println(players.size());
     }
 
     vm.put("players", players);
     vm.put("numPlayers", players.size());
+    vm.put("numInPlay", Arrays.asList(playerLobby.playerArray("PLAY")).size());
 
     //Displays a user error if the current Player chose a Player who's already
     //in a game. Otherwise it displaces the WELCOME_MSG.
