@@ -39,6 +39,10 @@ public class GetReplayStopWatchingRoute implements Route {
      *   the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
+        Session session = request.session();
+        session.attribute("replayGame", null);
+        session.attribute("replayBoard", null);
+        session.attribute("numMove", null);
         response.redirect("/");
         return null;
     }

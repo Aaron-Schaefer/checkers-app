@@ -87,6 +87,13 @@ public class Board {
         }
     }
 
+    public void allValidSpaces() {
+        for (int r = 0; r < BOARD_SIZE; r++) {
+            for (int c = 0; c < BOARD_SIZE; c++) {
+                this.getSpace(r, c).setViable(true);
+            }
+        }
+    }
 
 //    /**
 //     * Puts a piece in a valid space
@@ -251,7 +258,7 @@ public class Board {
      * @return if a Player has no Pieces
      */
     public boolean noPieces() {
-        return (this.whitePieces == 0 || this.redPieces == 0);
+        return (this.whitePieces == 11 || this.redPieces == 11);
     }
 
     /**
