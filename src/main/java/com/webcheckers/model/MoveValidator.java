@@ -226,10 +226,14 @@ public class MoveValidator {
      */
     private static boolean checkSimpleJump(Move move, Game game, boolean realMove, Piece.Color color, Piece.Type type) {
 
+        
         Board model = game.getBoard();
 
         Position start = move.getStart();
         Position end = move.getEnd();
+
+        if(end.getRow() <0 || end.getRow() > 7)
+            return false;
 
         int rowdif = start.getRow() - end.getRow();
         int coldif = Math.abs(start.getCell() - end.getCell());
