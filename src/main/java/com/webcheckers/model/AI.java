@@ -29,7 +29,9 @@ public class AI {
         return possibleMoves.get(random.nextInt(possibleMoves.size()));
     }
 
-    private void doTurn() {
+    private void doTurn(Game inGame) {
+        game = inGame;
+        board = game.getBoard();
         if (board.getActiveColor() == Piece.Color.WHITE) {
             game.updateBoard(decideMove(game));
         }
@@ -38,9 +40,8 @@ public class AI {
     public Player getPlayer() {
         return cpu;
     }
-    public AI(Game inGame) {
-        game = inGame;
-        board = game.getBoard();
-        cpu = new Player("Computer");
+
+    public AI() {
+        cpu = new Player("CPU");
     }
 }

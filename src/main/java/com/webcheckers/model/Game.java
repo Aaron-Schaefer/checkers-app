@@ -169,6 +169,9 @@ public class Game {
             board.decrementPieces(piece);
         }
         board.clearPositionsTaken();
+        if (whitePlayer.getName() == "CPU") {
+
+        }
     }
 
     /**
