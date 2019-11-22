@@ -7,7 +7,7 @@ public class AI {
     Player cpu;
     Game game;
     Board board;
-    private Move decideMove(Game game) {
+    protected static Move decideMove(Game game) {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -27,14 +27,6 @@ public class AI {
         }
         Random random = new Random();
         return possibleMoves.get(random.nextInt(possibleMoves.size()));
-    }
-
-    private void doTurn(Game inGame) {
-        game = inGame;
-        board = game.getBoard();
-        if (board.getActiveColor() == Piece.Color.WHITE) {
-            game.updateBoard(decideMove(game));
-        }
     }
 
     public Player getPlayer() {

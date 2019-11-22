@@ -169,8 +169,11 @@ public class Game {
             board.decrementPieces(piece);
         }
         board.clearPositionsTaken();
-        if (whitePlayer.getName() == "CPU") {
-
+        if (whitePlayer.getName().equals("CPU")) {
+            Move move = AI.decideMove(this);
+            updateBoard(move);
+            addMove(move);
+            endTurn();
         }
     }
 
