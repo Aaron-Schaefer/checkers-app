@@ -13,7 +13,13 @@ public class AI {
             for (int c = 0; c < 8; c++) {
                 for (int rinc = -2; rinc < 3; rinc++) {
                     for (int cinc = -2; cinc < 3; cinc++) {
-                        if (rinc != 0 && cinc != 0 && (rinc+cinc)%2 == 0) {
+                        if (rinc != 0
+                                && cinc != 0
+                                && (rinc+cinc)%2 == 0
+                                && r+rinc >= 0
+                                && r+rinc < 9
+                                && c+cinc >= 0
+                                && c+cinc < 9) {
                             Move testMove = new Move(new Position(r, c), new Position(r+rinc, c+cinc));
                             MoveValidator.MoveValidation isValidMove = MoveValidator.validateMove(game, testMove);
                             if (isValidMove == MoveValidator.MoveValidation.VALID
