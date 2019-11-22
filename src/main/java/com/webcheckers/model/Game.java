@@ -169,7 +169,7 @@ public class Game {
             board.decrementPieces(piece);
         }
         board.clearPositionsTaken();
-        if (whitePlayer.getName().equals("CPU")) {
+        if (whitePlayer.getName().equals("CPU") && board.getActiveColor() == Piece.Color.WHITE) {
             Move move = AI.decideMove(this);
             updateBoard(move);
             addMove(move);
