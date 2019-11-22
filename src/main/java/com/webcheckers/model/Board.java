@@ -258,7 +258,7 @@ public class Board {
      * @return if a Player has no Pieces
      */
     public boolean noPieces() {
-        return (this.whitePieces == 11 || this.redPieces == 11);
+        return (this.whitePieces == 0 || this.redPieces == 0);
     }
 
     /**

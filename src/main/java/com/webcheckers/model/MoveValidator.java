@@ -226,7 +226,7 @@ public class MoveValidator {
      */
     private static boolean checkSimpleJump(Move move, Game game, boolean realMove, Piece.Color color, Piece.Type type) {
 
-        
+
         Board model = game.getBoard();
 
         Position start = move.getStart();
