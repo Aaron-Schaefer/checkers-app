@@ -17,9 +17,9 @@ public class AI {
                                 && cinc != 0
                                 && (rinc+cinc)%2 == 0
                                 && r+rinc >= 0
-                                && r+rinc < 9
+                                && r+rinc < 8
                                 && c+cinc >= 0
-                                && c+cinc < 9) {
+                                && c+cinc < 8) {
                             Move testMove = new Move(new Position(r, c), new Position(r+rinc, c+cinc));
                             MoveValidator.MoveValidation isValidMove = MoveValidator.validateMove(game, testMove);
                             if (isValidMove == MoveValidator.MoveValidation.VALID
