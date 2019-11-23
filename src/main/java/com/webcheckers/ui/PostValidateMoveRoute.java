@@ -18,7 +18,7 @@ public class PostValidateMoveRoute implements Route {
     private Gson gson;
 
     private static final String VALID_MOVE = "This is a valid move.";
-    private static final String VALID_JUMP_MOVE = "This is a valid move. You must jump again";
+    private static final String VALID_JUMP_MOVE = "This is a valid move. You must submit the move then jump again";
     private static final String JUMP_MOVE = "Invalid move! A jump move is required";
     private static final String OCCUPIED_SPACE = "Invalid move! This space is already occupied.";
     private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
@@ -55,6 +55,7 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
+        System.out.println(currentPlayer.getName() + " is in validate");
         Game game = gameCenter.getGame(currentPlayer);
         Board board = game.getBoard();
         final String moveJSON = request.queryParams("actionData");

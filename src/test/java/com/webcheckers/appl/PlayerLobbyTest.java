@@ -45,9 +45,10 @@ public class PlayerLobbyTest {
         CuT.addUser(player1);
         CuT.addUser(player2);
         CuT.addUser(player3);
-        assertNotNull(CuT.getUser(player1.getName()));
-        assertNotNull(CuT.getUser(player2.getName()));
-        assertNotNull(CuT.getUser(player3.getName()));
+        System.out.println(player1);
+        assertFalse(CuT.isInGame(player1));
+        assertFalse(CuT.isInGame(player2));
+        assertFalse(CuT.isInGame(player3));
 
     }
 

@@ -39,6 +39,6 @@ public class PieceTest {
      */
     @Test
     public void ctor_valid_toString() {
-        assert(CuT.toString() == ("" + color + ""));
+        assertEquals(CuT.toString(), ("" + color + ""));
     }
 }
