@@ -204,7 +204,7 @@ public class MoveValidator {
         int rowdif = start.getRow()- end.getRow();
         int coldif = Math.abs(start.getCell() - end.getCell());
 
-        System.out.println("rowdif: " + rowdif);
+        //System.out.println("rowdif: " + rowdif);
 
         if(rowdif > 0 && type == Piece.Type.SINGLE && color == Piece.Color.WHITE)
             return false;
