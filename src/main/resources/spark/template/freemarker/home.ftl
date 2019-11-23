@@ -38,7 +38,7 @@
         <#if mode == "PLAY" || mode = "SPECTATOR">
             <#if mode == "PLAY"><h2>Players Online</h2>
             <#else> <h2>Players To Spectate</h2></#if><br>
-          <form action="/game" method="GET">
+          <form <#if mode == "PLAY">action="/game"<#else>action="/spectator/game"</#if> method="GET">
             <#if numPlayers lt 2>
                 There are no<#if mode == "PLAY"> other players available to play
                 <#else> players to spectate</#if> at this time.
