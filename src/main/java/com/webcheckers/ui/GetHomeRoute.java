@@ -69,16 +69,22 @@ public class GetHomeRoute implements Route {
 
     //Sets the current User as the current Player if not already set.
     if(player != null){
-      System.out.println(player.getName() + " is in Home");
+//      System.out.println(player.getName() + " is in Home");
       vm.put("currentUser", player);
 
       //Redirects the current Player to the /game URL if the current Player
       //is the White Player.
       if(game != null) {
-        if (game.getWhitePlayer() != null){
+        if (game.getWhitePlayer() != null && playerLobby.isInGame(player)){
           if (player.equals(game.getWhitePlayer())) {
             response.redirect("/game");
           }
+        }
+      }
+      else{
+        if(playerLobby.isInGame(player)){
+          playerLobby.removeGamePlayer(player);
+          playerLobby.removePlayer(player);
         }
       }
     }
