@@ -47,7 +47,7 @@
               <#else> Select a Player to spectate: </#if><br>
               <#list players as player>
                 <#if currentUser.name != player.name>
-                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
+                    <input type="radio" name="playerName" checked value=${player.name}>${player.name} <br>
                 </#if>
               </#list>
             </#if>

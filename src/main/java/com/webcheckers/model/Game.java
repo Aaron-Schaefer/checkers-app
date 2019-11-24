@@ -159,7 +159,6 @@ public class Game {
      * @param move the move made
      */
     public void addMove(Move move){
-        System.out.println(allMoves.size());
         allMoves.put(allMoves.size(), move);
     }
 

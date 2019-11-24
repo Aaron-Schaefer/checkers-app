@@ -59,6 +59,9 @@ public class GetGameRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
+        System.out.println("Players: " + playerLobby.getPlayers().size());
+        System.out.println("GamePlayers: " + playerLobby.getGamePlayers().size());
+
         //The game the current Player is in.
         Game game = gameCenter.getGame(currentPlayer);
 
@@ -68,22 +71,24 @@ public class GetGameRoute implements Route {
         //on the home page. Adds both to PlayerLobby.
         if (game == null) {
             if(playerLobby.isInGame(currentPlayer)){
+                playerLobby.removeGamePlayer(currentPlayer);
+                playerLobby.removePlayer(currentPlayer);
                 response.redirect("/");
             }
-            String name = request.queryParams("playerName");
-
-            //Checks if the current Player chose an opponent that's already in a game. If the
-            //opponent is already in a game they're redirected to the home page.
-            if (playerLobby.isInGame(playerLobby.getUser(name))) {
-                playerLobby.playerChoseInGame();
-                response.redirect("/?mode=PLAY");
-            }
             else {
-                playerLobby.notChoseInGame();
-                playerLobby.addGamePlayer(currentPlayer);
-                Player whitePlayer = playerLobby.getUser(name);
-                playerLobby.addGamePlayer(whitePlayer);
-                game = gameCenter.makeGame(currentPlayer, whitePlayer);
+                String name = request.queryParams("playerName");
+
+                //Checks if the current Player chose an opponent that's already in a game. If the
+                //opponent is already in a game they're redirected to the home page.
+                if (playerLobby.isInGame(playerLobby.getUser(name))) {
+                    playerLobby.playerChoseInGame();
+                    response.redirect("/?mode=PLAY");
+                } else {
+                    playerLobby.notChoseInGame();
+                    playerLobby.addGamePlayer(currentPlayer);
+                    Player whitePlayer = playerLobby.getUser(name);
+                    game = gameCenter.makeGame(currentPlayer, whitePlayer);
+                }
             }
         }
 
@@ -119,11 +124,6 @@ public class GetGameRoute implements Route {
             Player winner = game.getWinner();
             if(winner == null){
                 winner = game.setWinner(currentPlayer);
-                playerLobby.removePlayer(currentPlayer);
-                playerLobby.removeGamePlayer(currentPlayer);
-            }
-            else{
-                gameCenter.addGameOver(game);
             }
             modeOptions.put("isGameOver", true);
             if (currentPlayer == winner) {
