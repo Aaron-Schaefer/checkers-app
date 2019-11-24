@@ -46,7 +46,6 @@ public class PostCheckTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
-        System.out.println(currentPlayer.getName() + " is in check");
         Game game = gameCenter.getGame(currentPlayer);
         Message message = Message.info("false");
         if(game != null){

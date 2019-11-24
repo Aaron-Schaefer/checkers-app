@@ -65,7 +65,10 @@ public class GetGameRoute implements Route {
         //The game the current Player is in.
         Game game = gameCenter.getGame(currentPlayer);
 
-
+        if(game != null){
+            Player whitePlayer = game.getWhitePlayer();
+            playerLobby.addGamePlayer(whitePlayer);
+        }
         //If the game is null, create a new one. Sets the Red Player as the current Player
         //who selected to start a game. Sets the White Player as the player who was selected
         //on the home page. Adds both to PlayerLobby.
