@@ -73,6 +73,7 @@ public class PostSubmitTurnRoute implements Route {
                     aiMove.setTakenPosition(new Position((startRow + endRow) / 2, (startCol + endCol) / 2));
                     aiMove.setTakenPiece(board.getPiece(aiMove.getTakenPosition().getRow(), aiMove.getTakenPosition().getCell()));
                 }
+                game.setRecentMove(aiMove);
                 game.doTurn(aiMove);
                 board.changeActiveColor();
             }
