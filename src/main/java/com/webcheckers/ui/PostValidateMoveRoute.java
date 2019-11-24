@@ -61,6 +61,12 @@ public class PostValidateMoveRoute implements Route {
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
         Message message = Message.info("false");
+
+        
+        if(board.getSpace(move.getStart().getRow(),move.getStart().getCell()).getPiece() == null){
+            move.setStart(game.getRecentMove().getStart());
+        }
+
         switch (MoveValidator.validateMove(game, move)){
             case VALID:
                 move.setValidState(MoveValidator.MoveValidation.VALID);

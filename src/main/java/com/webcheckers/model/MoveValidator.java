@@ -163,7 +163,6 @@ public class MoveValidator {
      */
     public static boolean pieceHasJump(Position pos, Game game, Piece.Color color, Piece.Type type, boolean realMove) {
 
-
         Board model = game.getBoard();
 
         int teamOffset = 1;
@@ -178,7 +177,6 @@ public class MoveValidator {
         int backRow = pos.getRow() - 2 * teamOffset;
 
         if ((forwardRow > 7 || forwardRow < 0) && type != Piece.Type.KING) {
-            System.out.println("error 1");
             return false;
         }
 
@@ -248,7 +246,6 @@ public class MoveValidator {
 
         int rowdif = start.getRow() - end.getRow();
         int coldif = Math.abs(start.getCell() - end.getCell());
-
 
 
         if (rowdif > 0 && type == Piece.Type.SINGLE && color == Piece.Color.WHITE)
