@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class PostSpectatorcheckTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        LOG.info("Handling PostSpectatircheckTurnRoute");
+        LOG.info("Handling PostSpectatorcheckTurnRoute");
 
         Map<String, Object> vm = new HashMap<>();
 
@@ -51,14 +52,23 @@ public class PostSpectatorcheckTurnRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
-        String playerName = request.queryParams("playerName");
-        Player player = playerLobby.getUser(playerName);
-        Game game =gameCenter.getGame(player);
-        Player redPlayer = game.getRedPlayer();
-        Player whitePlayer = game.getWhitePlayer();
-        Board board = game.getBoard();
-        BoardView boardView = new BoardView(board, currentPlayer);
+        String spectatedName = session.attribute("playerName");
 
-        return null;
+        if (spectatedName == null){
+            spectatedName = request.queryParams("playerName");
+            session.attribute("spectatorName", spectatedName);
+        }
+        System.out.println("Spectating Player: " + spectatedName);
+        Player player = playerLobby.getUser(spectatedName);
+        Game game = gameCenter.getGame(player);
+        Message message;
+        message = Message.info("false");
+
+        //Check if turn was made
+        if (game.isGameOver() || game.isResigned() || game.isTurnMade()){
+            message = Message.info("true");
+        }
+        String jsonMsg = gson.toJson(message, Message.class);
+        return jsonMsg;
     }
 }
