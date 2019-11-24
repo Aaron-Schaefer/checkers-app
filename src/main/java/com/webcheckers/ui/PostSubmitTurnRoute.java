@@ -61,6 +61,21 @@ public class PostSubmitTurnRoute implements Route {
         else if(move.getValidState() == MoveValidator.MoveValidation.VALID) {
             game.doTurn(move);
             board.changeActiveColor();
+            if (game.getWhitePlayer().getName().equals("CPU") && board.getActiveColor() == Piece.Color.WHITE) {
+                Move aiMove = AI.decideMove(game);
+                int startRow = aiMove.getStart().getRow();
+                int startCol = aiMove.getStart().getCell();
+                int endRow = aiMove.getEnd().getRow();
+                int endCol = aiMove.getEnd().getCell();
+                aiMove.setValidState(MoveValidator.validateMove(game, aiMove));
+                aiMove.setMovedPiece(board.getPiece(startRow, startCol));
+                if (((startRow + endRow) % 2) == 0) {
+                    aiMove.setTakenPosition(new Position((startRow + endRow) / 2, (startCol + endCol) / 2));
+                    aiMove.setTakenPiece(board.getPiece(aiMove.getTakenPosition().getRow(), aiMove.getTakenPosition().getCell()));
+                }
+                game.doTurn(aiMove);
+                board.changeActiveColor();
+            }
         }
         return jsonMsg;
     }

@@ -7,7 +7,7 @@ public class AI {
     Player cpu;
     Game game;
     Board board;
-    protected static Move decideMove(Game game) {
+    public static Move decideMove(Game game) {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -29,12 +29,12 @@ public class AI {
                                 || isValidMove == MoveValidator.MoveValidation.VALIDJUMP) {
                                 possibleMoves.add(testMove);
                             }
-                            System.out.println(possibleMoves.size());
                         }
                     }
                 }
             }
         }
+        System.out.println("Possible Moves: " + possibleMoves.size());
         Random random = new Random();
         int index = random.nextInt(possibleMoves.size());
         return possibleMoves.get(index);
