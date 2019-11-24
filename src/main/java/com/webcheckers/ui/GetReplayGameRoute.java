@@ -69,6 +69,7 @@ public class GetReplayGameRoute implements Route {
 
         if(session.attribute("replayBoard") == null){
             Board board = new Board(game.getRedPlayer(), game.getWhitePlayer());
+            board.allValidSpaces();
             session.attribute("replayBoard", board);
         }
 

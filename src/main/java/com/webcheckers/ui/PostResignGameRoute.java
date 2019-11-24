@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
@@ -39,10 +40,11 @@ public class PostResignGameRoute implements Route {
 
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
 
         Session session = request.session();
+        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         Player currentPlayer = session.attribute("currentPlayer");
         Game game = WebServer.GAME_CENTER.getGame(currentPlayer);
         Board board = game.getBoard();
@@ -53,8 +55,12 @@ public class PostResignGameRoute implements Route {
             message = Message.error("You can't resign. It's not your turn");
         }
         else{
-            game.makeResigned();
-            System.out.println(currentPlayer.getName() + " has resigned");
+//            game.makeResigned();
+//            session.attribute("resignPlayer", currentPlayer);
+//            Player resign = session.attribute("resignPlayer");
+            game.setResignPlayer(currentPlayer);
+            playerLobby.removePlayer(currentPlayer);
+            playerLobby.removeGamePlayer(currentPlayer);
             message = Message.info("You resigned");
         }
         String jsonMsg = gson.toJson(message, Message.class);

@@ -47,7 +47,7 @@
               <#else> Select a Player to spectate: </#if><br>
               <#list players as player>
                 <#if currentUser.name != player.name>
-                    <input type="radio" name="playerName" value=${player.name}>${player.name}<br>
+                    <input type="radio" name="playerName" checked value=${player.name}>${player.name} <br>
                 </#if>
               </#list>
             </#if>
@@ -64,7 +64,7 @@
                     Select a game to Replay:<br>
                     <#list games as game>
                         <input type="radio" name="game" value=${game.gameID}>
-                        Red: ${game.redPlayer.name}  White: ${game.whitePlayer.name}</br>
+                        Red: ${game.redPlayer.name}  White: ${game.whitePlayer.name}  Game: ${game.gameID}<br>
                     </#list>
                     <button type='submit'>REPLAY GAME</button>
                 </#if>

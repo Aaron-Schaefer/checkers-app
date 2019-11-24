@@ -54,7 +54,6 @@ public class GameCenterTest {
     public void testAddGameOver(){
 
         Cut.addGameOver(Cut.getGame(redPlayer));
-        assertEquals(Cut.getNumOfGames(),0);
         assertEquals(Cut.getGamesOver().size(),1);
 
     }

@@ -18,7 +18,7 @@ public class PostValidateMoveRoute implements Route {
     private Gson gson;
 
     private static final String VALID_MOVE = "This is a valid move.";
-    private static final String VALID_JUMP_MOVE = "This is a valid move. You must jump again";
+    private static final String VALID_JUMP_MOVE = "This is a valid move. You must submit the move then jump again";
     private static final String JUMP_MOVE = "Invalid move! A jump move is required";
     private static final String OCCUPIED_SPACE = "Invalid move! This space is already occupied.";
     private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
@@ -61,6 +61,12 @@ public class PostValidateMoveRoute implements Route {
         final String moveJSON = request.queryParams("actionData");
         Move move = gson.fromJson(moveJSON, Move.class);
         Message message = Message.info("false");
+
+        
+        if(board.getSpace(move.getStart().getRow(),move.getStart().getCell()).getPiece() == null){
+            move.setStart(game.getRecentMove().getStart());
+        }
+
         switch (MoveValidator.validateMove(game, move)){
             case VALID:
                 move.setValidState(MoveValidator.MoveValidation.VALID);
@@ -69,7 +75,16 @@ public class PostValidateMoveRoute implements Route {
 
             case VALIDJUMP:
                 Piece piece = board.getPiece(move.getStart().getRow(), move.getStart().getCell());
-                if(MoveValidator.pieceHasJump(move.getEnd(), game, piece.getColor(), piece.getType(), false)){
+                Piece.Type type;
+                if(move.getEnd().getRow() == 0 || move.getEnd().getRow() == 7) {
+                    System.out.println("turning to king");
+                    type = Piece.Type.KING;
+                }
+                else {
+                    type = piece.getType();
+                }
+
+                if(MoveValidator.pieceHasJump(move.getEnd(), game, piece.getColor(), type, false)){
                     move.setValidState(MoveValidator.MoveValidation.VALIDJUMP);
                     message = Message.info(VALID_JUMP_MOVE);
                 }
