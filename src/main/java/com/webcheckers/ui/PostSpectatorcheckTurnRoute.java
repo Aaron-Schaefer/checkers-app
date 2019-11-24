@@ -52,12 +52,8 @@ public class PostSpectatorcheckTurnRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
-        String spectatedName = session.attribute("playerName");
+        String spectatedName = session.attribute("spectatorName");
 
-        if (spectatedName == null){
-            spectatedName = request.queryParams("playerName");
-            session.attribute("spectatorName", spectatedName);
-        }
         System.out.println("Spectating Player: " + spectatedName);
         Player player = playerLobby.getUser(spectatedName);
         Game game = gameCenter.getGame(player);
@@ -65,7 +61,7 @@ public class PostSpectatorcheckTurnRoute implements Route {
         message = Message.info("false");
 
         //Check if turn was made
-        if (game.isGameOver() || game.isResigned() || game.isTurnMade()){
+        if (game.isGameOver() || game.getResignPlayer() != null || game.isTurnMade()){
             message = Message.info("true");
         }
         String jsonMsg = gson.toJson(message, Message.class);

@@ -54,17 +54,23 @@ public class GetSpectatorGameRoute implements Route {
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
         //Will need to get game by the player the current user decides to spectate
-        String playerName = request.queryParams("playerName");
-        Player player = playerLobby.getUser(playerName);
+
+        String spectatedName = session.attribute("spectatorName");
+        if (spectatedName == null){
+            spectatedName = request.queryParams("playerName");
+            session.attribute("spectatorName", spectatedName);
+        }
+        Player player = playerLobby.getUser(spectatedName);
         Game game = gameCenter.getGame(player);
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
         Board board = game.getBoard();
         BoardView boardView = new BoardView(board, player);
 
+
         //End of game cases win/loss message
         if (game.isGameOver()){
-            if (game.isResigned()){
+            if (game.getResignPlayer() != null){
                 if (game.getWinner() == redPlayer){
                     Message.info(redPlayer + " won because " + whitePlayer + " resigned.");
                 }
