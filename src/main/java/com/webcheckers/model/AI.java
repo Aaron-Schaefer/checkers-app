@@ -40,7 +40,7 @@ public class AI {
         return possibleMoves.get(index);
     }
 
-    public boolean jumpAvailable(Game game, Move move) {
+    public static boolean jumpAvailable(Game game, Move move) {
         Position start = move.getEnd();
         for (int rinc = -2; rinc < 3; rinc+=2) {
             for (int cinc = -2; cinc < 3; cinc+=2) {
