@@ -66,9 +66,9 @@ public class PostSubmitTurnRoute implements Route {
                 while (aiTurn) {
                     aiTurn = false;
                     Move aiMove = AI.decideMove(game);
-                    //if (MoveValidator.validateMove(game, aiMove) == MoveValidator.MoveValidation.VALIDJUMP) {
-                        //aiTurn = true;
-                    //}
+                    if (AI.jumpAvailable(game, aiMove)) {
+                        aiTurn = true;
+                    }
                     game.setRecentMove(aiMove);
                     game.doTurn(aiMove);
                 }

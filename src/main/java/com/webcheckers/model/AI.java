@@ -40,6 +40,22 @@ public class AI {
         return possibleMoves.get(index);
     }
 
+    public boolean jumpAvailable(Game game, Move move) {
+        Position start = move.getEnd();
+        for (int rinc = -2; rinc < 3; rinc+=2) {
+            for (int cinc = -2; cinc < 3; cinc+=2) {
+                if (rinc != 0 && cinc != 0) {
+                    Move testMove = new Move(start, new Position(start.getRow()+rinc, start.getCell()+cinc));
+                    MoveValidator.MoveValidation isValidMulitJump = MoveValidator.validateMove(game, testMove);
+                    if (isValidMulitJump == MoveValidator.MoveValidation.VALID
+                        || isValidMulitJump == MoveValidator.MoveValidation.VALIDJUMP) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     public Player getPlayer() {
         return cpu;
     }
