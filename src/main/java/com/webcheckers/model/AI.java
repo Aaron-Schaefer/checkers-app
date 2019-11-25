@@ -33,8 +33,13 @@ public class AI {
         }
         System.out.println("Possible Moves: " + possibleMoves.size());
         Random random = new Random();
-        int index = random.nextInt(possibleMoves.size());
-        return possibleMoves.get(index);
+        if (possibleMoves.size() > 0) {
+            int index = random.nextInt(possibleMoves.size());
+            return possibleMoves.get(index);
+        }
+        else {
+            return null;
+        }
     }
 
     public static boolean jumpAvailable(Game game, Position start) {
