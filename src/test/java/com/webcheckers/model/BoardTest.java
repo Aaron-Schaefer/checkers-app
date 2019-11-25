@@ -59,7 +59,9 @@ public class BoardTest {
             for(int c = 0; c< BOARD_SIZE; c++){
 
                 if(((c+r)%2) != 0){
-                    assertTrue(CuT.getSpace(r,c).isValid(), "White Space mismatch");
+                    if(CuT.getSpace(r,c).getPiece() == null) {
+                        assertTrue(CuT.getSpace(r, c).isValid(), "White Space mismatch");
+                    }
                     if(r<3){
 
                         assertSame(CuT.getSpace(r,c).getPiece().getType(), Piece.Type.SINGLE, "Piece type mismatch");

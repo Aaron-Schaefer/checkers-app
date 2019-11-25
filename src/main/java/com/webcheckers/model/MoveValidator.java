@@ -8,7 +8,6 @@ public class MoveValidator {
 
         VALID, TOOFAR, OCCUPIED, JUMPNEEDED, VALIDJUMP;
 
-
     }
 
     /**
@@ -147,7 +146,6 @@ public class MoveValidator {
                 }
 
             }
-
         }
         System.out.println("team does not have jump");
         return false;
@@ -164,7 +162,6 @@ public class MoveValidator {
      * @return Whether or not a piece has a jump move available
      */
     public static boolean pieceHasJump(Position pos, Game game, Piece.Color color, Piece.Type type, boolean realMove) {
-
 
         Board model = game.getBoard();
 
@@ -185,6 +182,10 @@ public class MoveValidator {
 
         if (leftCell < 8 && leftCell >= 0) {
 
+            if(type.equals(Piece.Type.KING)){
+                System.out.println("king check left");
+            }
+
             Position end = new Position(forwardRow, leftCell);
             Position kingEnd = new Position(backRow, leftCell);
             Move move = new Move(pos, end);
@@ -193,29 +194,34 @@ public class MoveValidator {
             if (checkSimpleJump(move, game, realMove, color, type)) {
                 return true;
             }
-            if (type == Piece.Type.KING && checkSimpleJump(kingMove, game, realMove, color, type)) {
+            if (type.equals(Piece.Type.KING) && checkSimpleJump(kingMove, game, realMove, color, type)) {
                 return true;
             }
         }
         if (rightCell < 8 && rightCell >= 0) {
 
+            if(type.equals(Piece.Type.KING)){
+                System.out.println("king check right");
+            }
+
             Position end = new Position(forwardRow, rightCell);
-            Position kingEnd = new Position(backRow, leftCell);
+            Position kingEnd = new Position(backRow, rightCell);
             Move move = new Move(pos, end);
-            Move kingMove = new Move(pos, kingEnd);
+            Move kingMove = new Move(pos,  kingEnd);
 
             if (checkSimpleJump(move, game, realMove, color, type)) {
                 return true;
             }
-            if (type == Piece.Type.KING && checkSimpleJump(kingMove, game, realMove, color, type))
+            if (type.equals(Piece.Type.KING) && checkSimpleJump(kingMove, game, realMove, color, type)) {
                 return true;
+            }
         }
 
         return false;
     }
 
     /**
-     * Determones if a move is a valid jump move
+     * Determines if a move is a valid jump move
      *
      * @param move The move trying to be made
      * @param game The current game
@@ -232,12 +238,14 @@ public class MoveValidator {
         Position start = move.getStart();
         Position end = move.getEnd();
 
-        if(end.getRow() <0 || end.getRow() > 7)
+        if(end.getRow() < 0 || end.getRow() > 7)
             return false;
+        if(end.getCell() < 0 || end.getCell() > 7)
+            return false;
+
 
         int rowdif = start.getRow() - end.getRow();
         int coldif = Math.abs(start.getCell() - end.getCell());
-
 
 
         if (rowdif > 0 && type == Piece.Type.SINGLE && color == Piece.Color.WHITE)

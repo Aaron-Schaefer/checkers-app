@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -45,7 +47,12 @@ public class PostSignOutRoute implements Route {
 
         //Gets the player, and remove him from the player lobby.
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
+        GameCenter gameCenter = WebServer.GAME_CENTER;
         Player player = request.session().attribute("currentPlayer");
+        Game game = gameCenter.getGame(player);
+        if(game != null){
+            game.setResignPlayer(player);
+        }
         playerLobby.removeUser(player);
         playerLobby.removePlayer(player);
         playerLobby.removeGamePlayer(player);

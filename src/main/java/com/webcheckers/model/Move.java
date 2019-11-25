@@ -34,6 +34,8 @@ public class Move {
         return end;
     }
 
+    public void setStart(Position start){ this.start = start;}
+
     public void setTakenPosition(Position taken) {
         this.takenPosition = taken;
     }

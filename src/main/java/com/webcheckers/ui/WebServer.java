@@ -118,6 +118,21 @@ public class WebServer {
    */
   public static final String REPLAY_PREVIOUS_TURN = "/replay/previousTurn";
 
+  /**
+   * The URL pattern to request the Spectator Page.
+   */
+  public static final String SPECTATOR_URL = "/spectator/game";
+
+  /**
+   * The URL pattern to request the Spectator stopWatching page.
+   */
+  public static final String SPECTATOR_STOP_WATCHING = "/spectator/stopWatching";
+
+  /**
+   * The URL pattern to request the Spectator Check turn page.
+   */
+  public static final String SPECTATOR_CHECK_TURN = "/spectator/checkTurn";
+
   //Initializes the Games PlayerLobby.
   public static PlayerLobby PLAYER_LOBBY = new PlayerLobby();
 
@@ -222,6 +237,12 @@ public class WebServer {
     //Returns the User back to the Home page.
     get(REPLAY_STOP_WATCHING, new GetReplayStopWatchingRoute(templateEngine, gson));
 
+    //Displays the game for the player who the spectator is spectating.
+    get(SPECTATOR_URL, new GetSpectatorGameRoute(templateEngine, gson));
+
+    //Returns the Spectator back to the Home page.
+    get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatchingRoute(templateEngine, gson));
+
     //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
     //Player gets added to player lobby.
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine));
@@ -252,6 +273,9 @@ public class WebServer {
 
     //Checks if there's a next turn available while replaying a game.
     post(REPLAY_PREVIOUS_TURN, new PostReplayPreviousTurnRoute(templateEngine, gson));
+
+    //Checks if there's been a new turn in the game that's being played.
+    post(SPECTATOR_CHECK_TURN, new PostSpectatorcheckTurnRoute(templateEngine, gson));
 
     //
     LOG.config("WebServer is initialized.");

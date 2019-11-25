@@ -9,6 +9,8 @@ public class Game {
     private Player whitePlayer;
     //The winner
     private Player winner;
+    //The resigned Player
+    private Player resignPlayer;
     //The game board
     private Board board;
     //The most recent move
@@ -19,8 +21,6 @@ public class Game {
     private Map<Integer, Move> allMoves;
     //Boolean value for if a turn was made
     private boolean turnMade;
-    //Boolean value for if the game was resigned
-    private boolean resigned;
 
     /**
      * Initializes a game
@@ -32,11 +32,11 @@ public class Game {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.winner = null;
+        this.resignPlayer = null;
         this.board = new Board(redPlayer, whitePlayer);
         this.gameID = gameID;
         this.allMoves = new HashMap<Integer, Move>();
         this.turnMade = false;
-        this.resigned = false;
     }
 
     /**
@@ -67,6 +67,15 @@ public class Game {
      * @return the winner
      */
     public Player getWinner(){ return this.winner; }
+
+    public void setResignPlayer(Player resignPlayer) {
+        this.resignPlayer = resignPlayer;
+    }
+
+
+    public Player getResignPlayer() {
+        return resignPlayer;
+    }
 
     /**
      * Sets the most recent move to the given move
@@ -116,20 +125,6 @@ public class Game {
         return this.turnMade;
     }
 
-    /**
-     * Sets the resigned boolean to true
-     */
-    public void makeResigned(){
-        this.resigned = true;
-    }
-
-    /**
-     * Checks if the game has been resigned
-     * @return if the game has been resigned
-     */
-    public boolean isResigned(){
-        return this.resigned;
-    }
 
     /**
      * A helper function that makes a list of both players
@@ -164,7 +159,6 @@ public class Game {
      * @param move the move made
      */
     public void addMove(Move move){
-        System.out.println(allMoves.size());
         allMoves.put(allMoves.size(), move);
     }
 

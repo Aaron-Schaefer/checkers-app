@@ -69,16 +69,37 @@ public class GetHomeRoute implements Route {
 
     //Sets the current User as the current Player if not already set.
     if(player != null){
-      System.out.println(player.getName() + " is in Home");
       vm.put("currentUser", player);
 
-      //Redirects the current Player to the /game URL if the current Player
-      //is the White Player.
+      //Handles players that are still in a game.
       if(game != null) {
+        //Handles when a Player is sent home when the game is over. This
+        //removes the Player from the list of players and adds the Game to
+        //the list of finished games.
+        if(game.isGameOver()){
+          playerLobby.removeGamePlayer(player);
+          playerLobby.removePlayer(player);
+          gameCenter.addGameOver(game);
+        }
+        //Resigns a Player that left an unfinished game.
+        if(playerLobby.isInGame(player)){
+          game.setResignPlayer(player);
+        }
+        //Redirects the white Player to a new game. Adds the Player to the list
+        //of in Game players.
         if (game.getWhitePlayer() != null){
           if (player.equals(game.getWhitePlayer())) {
+            playerLobby.addGamePlayer(player);
             response.redirect("/game");
           }
+        }
+      }
+      //Removes the Player from the list of Players if its in it, and is not
+      //in a game.
+      else{
+        if(playerLobby.isInGame(player)){
+          playerLobby.removeGamePlayer(player);
+          playerLobby.removePlayer(player);
         }
       }
     }
