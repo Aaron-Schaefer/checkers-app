@@ -66,11 +66,11 @@ public class PostSubmitTurnRoute implements Route {
                 while (aiTurn) {
                     aiTurn = false;
                     Move aiMove = AI.decideMove(game);
-                    if (AI.jumpAvailable(game, aiMove)) {
-                        aiTurn = true;
-                    }
                     game.setRecentMove(aiMove);
                     game.doTurn(aiMove);
+                    if (((aiMove.getStart().getRow() + aiMove.getEnd().getRow()) % 2) == 0 && AI.jumpAvailable(game, aiMove.getEnd())) {
+                        aiTurn = true;
+                    }
                 }
                 board.changeActiveColor();
             }

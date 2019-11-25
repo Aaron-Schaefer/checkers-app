@@ -16,10 +16,7 @@ public class AI {
                         if (       rinc != 0
                                 && cinc != 0
                                 && ((rinc+cinc)%2 == 0)
-                                && r+rinc >= 0
-                                && r+rinc < 8
-                                && c+cinc >= 0
-                                && c+cinc < 8
+                                && isInBounds(r, c, rinc, cinc)
                                 && (game.getBoard().getPiece(r, c) != null)
                                 && (game.getBoard().getPiece(r, c).getColor().equals(Piece.Color.WHITE))
                                 && (game.getBoard().getPiece(r+rinc,c+cinc) == null)) {
@@ -40,15 +37,20 @@ public class AI {
         return possibleMoves.get(index);
     }
 
-    public static boolean jumpAvailable(Game game, Move move) {
-        Position start = move.getEnd();
+    public static boolean jumpAvailable(Game game, Position start) {
         for (int rinc = -2; rinc < 3; rinc+=2) {
             for (int cinc = -2; cinc < 3; cinc+=2) {
-                if (rinc != 0 && cinc != 0) {
+                System.out.println(start.getRow());
+                System.out.println(start.getCell());
+                System.out.println(rinc);
+                System.out.println(cinc);
+                System.out.println("");
+                if (rinc != 0 && cinc != 0 && isInBounds(start.getRow(), start.getCell(), rinc, cinc)) {
+                    System.out.println("In here\n");
                     Move testMove = new Move(start, new Position(start.getRow()+rinc, start.getCell()+cinc));
-                    MoveValidator.MoveValidation isValidMulitJump = MoveValidator.validateMove(game, testMove);
-                    if (isValidMulitJump == MoveValidator.MoveValidation.VALID
-                        || isValidMulitJump == MoveValidator.MoveValidation.VALIDJUMP) {
+                    MoveValidator.MoveValidation isValidMultiJump = MoveValidator.validateMove(game, testMove);
+                    if (isValidMultiJump == MoveValidator.MoveValidation.VALID
+                        || isValidMultiJump == MoveValidator.MoveValidation.VALIDJUMP) {
                         return true;
                     }
                 }
@@ -56,6 +58,11 @@ public class AI {
         }
         return false;
     }
+
+    private static boolean isInBounds(int r, int c, int rinc, int cinc) {
+        return (r+rinc<8 && c+cinc<8 && r+rinc>=0 && c+cinc>=0);
+    }
+
     public Player getPlayer() {
         return cpu;
     }
