@@ -45,13 +45,7 @@ public class AI {
     public static boolean jumpAvailable(Game game, Position start) {
         for (int rinc = -2; rinc < 3; rinc+=2) {
             for (int cinc = -2; cinc < 3; cinc+=2) {
-                System.out.println(start.getRow());
-                System.out.println(start.getCell());
-                System.out.println(rinc);
-                System.out.println(cinc);
-                System.out.println("");
                 if (rinc != 0 && cinc != 0 && isInBounds(start.getRow(), start.getCell(), rinc, cinc)) {
-                    System.out.println("In here\n");
                     Move testMove = new Move(start, new Position(start.getRow()+rinc, start.getCell()+cinc));
                     MoveValidator.MoveValidation isValidMultiJump = MoveValidator.validateMove(game, testMove);
                     if (isValidMultiJump == MoveValidator.MoveValidation.VALID

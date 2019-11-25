@@ -89,8 +89,15 @@ public class GetGameRoute implements Route {
                 } else {
                     playerLobby.notChoseInGame();
                     playerLobby.addGamePlayer(currentPlayer);
-                    Player whitePlayer = playerLobby.getUser(name);
-                    game = gameCenter.makeGame(currentPlayer, whitePlayer);
+                    if (session.attribute("mode").equals("AI")) {
+                        AI computer = new AI();
+                        game = gameCenter.makeGame(currentPlayer, computer.getPlayer());
+                    }
+                    else {
+                        Player whitePlayer = playerLobby.getUser(name);
+                        playerLobby.addGamePlayer(whitePlayer);
+                        game = gameCenter.makeGame(currentPlayer, whitePlayer);
+                    }
                 }
             }
         }
