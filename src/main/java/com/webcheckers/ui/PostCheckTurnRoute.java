@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -51,11 +52,8 @@ public class PostCheckTurnRoute implements Route {
         if(game != null){
             if (game.isTurnMade() || game.getResignPlayer() != null) {
                 message = Message.info("true");
-                LOG.info("2");
-                System.out.println(currentPlayer.getName() + " made turn in check");
                 Spark.get(WebServer.GAME_URL, new GetGameRoute(templateEngine, gson));
             }
-            game.setTurnMade(false);
         }
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
