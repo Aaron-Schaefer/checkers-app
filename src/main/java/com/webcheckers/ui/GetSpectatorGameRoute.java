@@ -70,21 +70,20 @@ public class GetSpectatorGameRoute implements Route {
 
         //End of game cases win/loss message
         if (game.isGameOver()){
-            if (game.getResignPlayer() != null){
-                if (game.getWinner() == redPlayer){
-                    Message.info(redPlayer + " won because " + whitePlayer + " resigned.");
-                }
-                if (game.getWinner() == whitePlayer) {
-                    Message.info(whitePlayer + " won because " + redPlayer + " resigned.");
-                }
+            if (game.getWinner() == redPlayer){
+               Message.info(redPlayer + " won by taking all of " + whitePlayer + "'s pieces!");
             }
-            else {
-                if (game.getWinner() == redPlayer){
-                   Message.info(redPlayer + " won by taking all of " + whitePlayer + "'s pieces!");
-                }
-                if (game.getWinner() == whitePlayer){
-                    Message.info(whitePlayer + " won by taking all of " + redPlayer + "'s pieces!");
-                }
+            if (game.getWinner() == whitePlayer){
+                Message.info(whitePlayer + " won by taking all of " + redPlayer + "'s pieces!");
+            }
+            response.redirect("/");
+        }
+        else if (game.getResignPlayer() != null){
+            if (game.getWinner() == redPlayer){
+                Message.info(redPlayer + " won because " + whitePlayer + " resigned.");
+            }
+            if (game.getWinner() == whitePlayer) {
+                Message.info(whitePlayer + " won because " + redPlayer + " resigned.");
             }
             response.redirect("/");
         }

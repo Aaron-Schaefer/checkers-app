@@ -55,7 +55,6 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
-        System.out.println(currentPlayer.getName() + " is in validate");
         Game game = gameCenter.getGame(currentPlayer);
         Board board = game.getBoard();
         final String moveJSON = request.queryParams("actionData");
@@ -77,7 +76,6 @@ public class PostValidateMoveRoute implements Route {
                 Piece piece = board.getPiece(move.getStart().getRow(), move.getStart().getCell());
                 Piece.Type type;
                 if(move.getEnd().getRow() == 0 || move.getEnd().getRow() == 7) {
-                    System.out.println("turning to king");
                     type = Piece.Type.KING;
                 }
                 else {

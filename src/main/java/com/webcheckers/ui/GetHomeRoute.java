@@ -65,9 +65,6 @@ public class GetHomeRoute implements Route {
     PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
     GameCenter gameCenter = WebServer.GAME_CENTER;
 
-    System.out.println("HomePlayers: " + playerLobby.getPlayers().size());
-    System.out.println("HomeGamePlayers: " + playerLobby.getGamePlayers().size());
-
     Game game = gameCenter.getGame(player);
 
     //Sets the current User as the current Player if not already set.

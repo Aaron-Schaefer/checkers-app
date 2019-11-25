@@ -16,8 +16,8 @@ import java.util.Set;
 /**
  * The Route that will have a spectator stop watching a current game
  */
-public class GetSpectatorstopWatchingRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSpectatorstopWatchingRoute.class.getName());
+class GetSpectatorStopWatchingRoute implements Route {
+    private static final Logger LOG = Logger.getLogger(GetSpectatorStopWatchingRoute.class.getName());
     private final TemplateEngine templateEngine;
     private Gson gson;
 
@@ -26,7 +26,7 @@ public class GetSpectatorstopWatchingRoute implements Route {
      * @param templateEngine
      * @param gson
      */
-    GetSpectatorstopWatchingRoute(final TemplateEngine templateEngine, Gson gson){
+    GetSpectatorStopWatchingRoute(final TemplateEngine templateEngine, Gson gson){
         Objects.requireNonNull(templateEngine, "templateEngine is required");
         this.templateEngine = templateEngine;
         this.gson = gson;

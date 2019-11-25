@@ -62,9 +62,6 @@ public class GetGameRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
-        System.out.println("Players: " + playerLobby.getPlayers().size());
-        System.out.println("GamePlayers: " + playerLobby.getGamePlayers().size());
-
         //The game the current Player is in.
         Game game = gameCenter.getGame(currentPlayer);
 
@@ -115,7 +112,6 @@ public class GetGameRoute implements Route {
 
         //Sets the game to over by resignation from the opponent
         if (game.getResignPlayer() != null) {
-            System.out.println("resign");
             Player resigned = game.getResignPlayer();
             Player winner = game.getOpponent(resigned);
             gameCenter.addGameOver(game);
@@ -126,7 +122,6 @@ public class GetGameRoute implements Route {
             }
         }
         else if(game.isGameOver()){
-            System.out.println("Over");
             Player winner = game.getWinner();
             if(winner == null){
                 winner = game.setWinner(currentPlayer);

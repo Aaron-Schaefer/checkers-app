@@ -47,7 +47,6 @@ public class PostSubmitTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
-        System.out.println(currentPlayer.getName() + " is in submit");
         Game game = gameCenter.getGame(currentPlayer);
         Board board = game.getBoard();
         Message message = Message.info("true");

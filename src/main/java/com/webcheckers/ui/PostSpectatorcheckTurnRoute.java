@@ -54,15 +54,16 @@ public class PostSpectatorcheckTurnRoute implements Route {
 
         String spectatedName = session.attribute("spectatorName");
 
-        System.out.println("Spectating Player: " + spectatedName);
         Player player = playerLobby.getUser(spectatedName);
         Game game = gameCenter.getGame(player);
         Message message;
         message = Message.info("false");
 
         //Check if turn was made
-        if (game.isGameOver() || game.getResignPlayer() != null || game.isTurnMade()){
-            message = Message.info("true");
+        if(game != null) {
+            if (game.isGameOver() || game.getResignPlayer() != null || game.isTurnMade()) {
+                message = Message.info("true");
+            }
         }
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;

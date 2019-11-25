@@ -241,7 +241,7 @@ public class WebServer {
     get(SPECTATOR_URL, new GetSpectatorGameRoute(templateEngine, gson));
 
     //Returns the Spectator back to the Home page.
-    get(SPECTATOR_STOP_WATCHING, new GetSpectatorstopWatchingRoute(templateEngine, gson));
+    get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatchingRoute(templateEngine, gson));
 
     //Takes in the username, checks if its valid, if yes, sign in and redirect to home page.
     //Player gets added to player lobby.
