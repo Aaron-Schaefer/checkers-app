@@ -24,7 +24,7 @@ public class PostSpectatorcheckTurnRoute implements Route {
 
     /**
      * Creates the Spark Route to handle the POST/Spectator/checkTurn requests
-     * @param templateEngine
+     * @param templateEngine the HTML template rendering engine
      * @param gson
      */
     PostSpectatorcheckTurnRoute(final TemplateEngine templateEngine, Gson gson){
@@ -35,9 +35,9 @@ public class PostSpectatorcheckTurnRoute implements Route {
 
     /**
      * Renders the game page for the spectator after a turn has been made (refresh)
-     * @param request
-     * @param response
-     * @return
+     * @param request an HTTP request
+     * @param response an HTTP response
+     * @return the game pages re-rendered with the updated moves made by the players in the game
      * @throws Exception
      */
     @Override

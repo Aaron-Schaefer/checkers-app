@@ -24,7 +24,7 @@ public class GetSpectatorGameRoute implements Route {
 
     /**
      * Creates the Spark Route to handle the GET/Spectator/game requests
-     * @param templateEngine
+     * @param templateEngine the HTML template rendering engine
      * @param gson
      */
     GetSpectatorGameRoute(final TemplateEngine templateEngine, Gson gson){
@@ -37,9 +37,10 @@ public class GetSpectatorGameRoute implements Route {
     /**
      * Renders a spectator mode of a game being played by others (current user
      * will not be able to interact with pieces.
-     * @param request
-     * @param response
-     * @return
+     * @param request an HTTP request
+     * @param response an HTTP response
+     * @return Renders the game page of another user who is currently in a game, spectator will not be able
+     *          effect the state of the board in any way
      * @throws Exception
      */
     @Override
@@ -53,13 +54,13 @@ public class GetSpectatorGameRoute implements Route {
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
 
-        //Will need to get game by the player the current user decides to spectate
-
+        //if the spectator name doesn't exist yet set it as the player to get the game board
         String spectatedName = session.attribute("spectatorName");
         if (spectatedName == null){
             spectatedName = request.queryParams("playerName");
             session.attribute("spectatorName", spectatedName);
         }
+        //Use the player to get the state of the board
         Player player = playerLobby.getUser(spectatedName);
         Game game = gameCenter.getGame(player);
         Player redPlayer = game.getRedPlayer();
