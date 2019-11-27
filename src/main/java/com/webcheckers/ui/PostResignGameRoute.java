@@ -30,7 +30,11 @@ public class PostResignGameRoute implements Route {
 
     private Gson gson;
 
-
+    /**
+     *  Creates the Spark Route to handle the Post/resign requests
+     * @param templateEngine the HTML template rendering engine
+     * @param gson
+     */
     public PostResignGameRoute(final TemplateEngine templateEngine, Gson gson){
 
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
@@ -38,7 +42,13 @@ public class PostResignGameRoute implements Route {
         this.gson = gson;
     }
 
-
+    /**
+     * Returns a player back to the homepage and the other player gets prompted an exit
+     * @param request an HTTP request
+     * @param response an HTTP response
+     * @return the rendered home page for the user who clicks resign and an exit button on the game page
+     *          for the other player in the game
+     */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");

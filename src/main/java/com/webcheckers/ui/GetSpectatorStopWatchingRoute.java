@@ -23,7 +23,7 @@ class GetSpectatorStopWatchingRoute implements Route {
 
     /**
      * Creates the Spark Route to handle the GET/Spectator/stopWatching requests
-     * @param templateEngine
+     * @param templateEngine the HTML template rendering engine
      * @param gson
      */
     GetSpectatorStopWatchingRoute(final TemplateEngine templateEngine, Gson gson){
@@ -34,15 +34,16 @@ class GetSpectatorStopWatchingRoute implements Route {
 
     /**
      * Renders the page for the spectator who stops spectating
-     * @param request
-     * @param response
-     * @return
+     * @param request an HTTP request
+     * @param response an HTTP request
+     * @return the home page rendered
      * @throws Exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.info("Handling GetSpectatorstopWatchingRoute");
         Session session = request.session();
+        //Remove the spectator from the session and go back to homepage
         session.attribute("spectatorName", null);
         response.redirect("/");
         return null;
