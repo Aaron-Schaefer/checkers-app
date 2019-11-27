@@ -22,9 +22,6 @@ public class PostValidateMoveRoute implements Route {
     private static final String JUMP_MOVE = "Invalid move! A jump move is required";
     private static final String OCCUPIED_SPACE = "Invalid move! This space is already occupied.";
     private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
-    private static final String VERTICAL_MOVE = "Invalid move! Your move was vertical.";
-    private static final String HORIZONTAL_MOVE = "Invalid move! Your move was horizontal.";
-
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.

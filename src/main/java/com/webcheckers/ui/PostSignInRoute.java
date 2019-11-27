@@ -21,6 +21,11 @@ public class PostSignInRoute implements Route {
     //Template engine for spark.
     private final TemplateEngine templateEngine;
 
+    //Error messages, for no input, redundant player, and for AI name.
+    private static final Message EMPTY_USERNAME = Message.info("Error! You must type in a username with at least one character!");
+    private static final Message NAME_TAKEN = Message.info("Error! The username is already taken, try a different username!");
+    private static final Message NAME_CPU = Message.info("Error! The username CPU is used for the AI mode, try a different username!");
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /signin} HTTP requests.
      *
@@ -51,9 +56,7 @@ public class PostSignInRoute implements Route {
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
 
-        //Error messages, one for no input, other for redundant player.
-        Message emptyUsername = Message.info("Error! You must type in a username with at least one character!");
-        Message nameTaken = Message.info("Error! The username is already taken, try a different username!");
+
 
         //Get current session.
         Session session = request.session();
@@ -63,7 +66,7 @@ public class PostSignInRoute implements Route {
 
         //If the playername is empty, print error message and have them try again.
         if (name.equals("")){
-            vm.put("message", emptyUsername);
+            vm.put("message", EMPTY_USERNAME);
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
@@ -76,7 +79,13 @@ public class PostSignInRoute implements Route {
         //Get if the player add oepration is successful.
         boolean success = WebServer.PLAYER_LOBBY.addUser(player);
         if (!success){
-            vm.put("message", nameTaken);
+            vm.put("message", NAME_TAKEN);
+            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        }
+
+        //If the user enters in the username of the AI
+        if(name.equals("CPU")){
+            vm.put("message", NAME_CPU);
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 

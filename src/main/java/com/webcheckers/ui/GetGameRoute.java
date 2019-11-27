@@ -118,6 +118,10 @@ public class GetGameRoute implements Route {
         final Map<String, Object> modeOptions = new HashMap<>(2);
 
         //Sets the game to over by resignation from the opponent
+        System.out.println("Resigned: " + game.getResignPlayer());
+        if(game.getResignPlayer() != null){
+            System.out.println("Resigned: " + game.getResignPlayer().getName());
+        }
         if (game.getResignPlayer() != null) {
             Player resigned = game.getResignPlayer();
             Player winner = game.getOpponent(resigned);

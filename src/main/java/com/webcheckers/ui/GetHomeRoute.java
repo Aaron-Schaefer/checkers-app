@@ -81,10 +81,6 @@ public class GetHomeRoute implements Route {
           playerLobby.removePlayer(player);
           gameCenter.addGameOver(game);
         }
-        //Resigns a Player that left an unfinished game.
-        if(playerLobby.isInGame(player)){
-          game.setResignPlayer(player);
-        }
         //Redirects the white Player to a new game. Adds the Player to the list
         //of in Game players.
         if (game.getWhitePlayer() != null){

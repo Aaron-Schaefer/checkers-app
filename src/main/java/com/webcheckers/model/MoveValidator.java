@@ -147,7 +147,6 @@ public class MoveValidator {
 
             }
         }
-        System.out.println("team does not have jump");
         return false;
     }
 
@@ -162,8 +161,6 @@ public class MoveValidator {
      * @return Whether or not a piece has a jump move available
      */
     public static boolean pieceHasJump(Position pos, Game game, Piece.Color color, Piece.Type type, boolean realMove) {
-
-        Board model = game.getBoard();
 
         int teamOffset = 1;
 
@@ -182,10 +179,6 @@ public class MoveValidator {
 
         if (leftCell < 8 && leftCell >= 0) {
 
-            if(type.equals(Piece.Type.KING)){
-                System.out.println("king check left");
-            }
-
             Position end = new Position(forwardRow, leftCell);
             Position kingEnd = new Position(backRow, leftCell);
             Move move = new Move(pos, end);
@@ -199,10 +192,6 @@ public class MoveValidator {
             }
         }
         if (rightCell < 8 && rightCell >= 0) {
-
-            if(type.equals(Piece.Type.KING)){
-                System.out.println("king check right");
-            }
 
             Position end = new Position(forwardRow, rightCell);
             Position kingEnd = new Position(backRow, rightCell);

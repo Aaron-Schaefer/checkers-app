@@ -71,6 +71,11 @@ public class Board {
         }
     }
 
+    /**
+     * Validates the Spaces on the Board. This makes all White Spaces invalid,
+     * makes the Spaces with a Piece on it invalid, and makes the rest of the
+     * Spaces valid.
+     */
     public void validateSpaces(){
         for(int r = 0; r< BOARD_SIZE; r++) {
             for (int c = 0; c < BOARD_SIZE; c++) {
@@ -87,55 +92,15 @@ public class Board {
         }
     }
 
+    /**
+     * Makes every Space valid.
+     */
     public void allValidSpaces() {
         for (int r = 0; r < BOARD_SIZE; r++) {
             for (int c = 0; c < BOARD_SIZE; c++) {
                 this.getSpace(r, c).setViable(true);
             }
         }
-    }
-
-//    /**
-//     * Puts a piece in a valid space
-//     */
-//    private void putPieces(){
-//
-//        for(int r = 0; r<BOARD_SIZE; r++){
-//            for(int c= 0; c<BOARD_SIZE; c++){
-//                if(r < 2){
-//                    if(isSpaceValid(r,c)){
-//                        addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-//                        System.out.println("red piece added");
-//                    }
-//                }
-//                else if (r>5){
-//                    addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-//                    System.out.println("white piece added");
-//                }
-//            }
-//        }
-//    }
-
-
-    /**
-     * Test print of the board to standard output
-     *
-     */
-    public void print(){
-
-        for(int r = 0; r<BOARD_SIZE; r++){
-            for(int c =0; c<BOARD_SIZE; c++){
-
-                if(boardArray[r][c].getPiece() != null)
-                    System.out.print("["+ boardArray[r][c].getPiece().toString() +"]");
-
-                 else
-                    System.out.print("[ ]");
-            }
-            System.out.println();
-
-        }
-
     }
 
     /**
@@ -294,6 +259,11 @@ public class Board {
         this.addPiece(end.getRow(), end.getCell(), piece);
     }
 
+    /**
+     * Reverses a given moves start and end. It removes the Piece at the end
+     * Position, and adds the moved Piece to the start Position.
+     * @param move The given Move to undo.
+     */
     public void undoMove(Move move){
         Position start = move.getEnd();
         Position end = move.getStart();

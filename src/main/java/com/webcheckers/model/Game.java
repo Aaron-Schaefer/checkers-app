@@ -35,7 +35,7 @@ public class Game {
         this.resignPlayer = null;
         this.board = new Board(redPlayer, whitePlayer);
         this.gameID = gameID;
-        this.allMoves = new HashMap<Integer, Move>();
+        this.allMoves = new HashMap<>();
         this.turnMade = false;
     }
 
@@ -68,11 +68,18 @@ public class Game {
      */
     public Player getWinner(){ return this.winner; }
 
+    /**
+     * Sets the Game's resigned Player to the given Player
+     * @param resignPlayer The resigned Player
+     */
     public void setResignPlayer(Player resignPlayer) {
         this.resignPlayer = resignPlayer;
     }
 
-
+    /**
+     * Gets the resigned Player
+     * @return The resigned Player
+     */
     public Player getResignPlayer() {
         return resignPlayer;
     }
@@ -110,21 +117,12 @@ public class Game {
     }
 
     /**
-     * Sets if there was a turn made to true or false
-     * @param turnMade boolean value for if a turn was made
-     */
-    public void setTurnMade(boolean turnMade){
-        this.turnMade = turnMade;
-    }
-
-    /**
      * Checks if a turn was made
      * @return if a turn was made
      */
     public boolean isTurnMade() {
         return this.turnMade;
     }
-
 
     /**
      * A helper function that makes a list of both players
@@ -162,18 +160,36 @@ public class Game {
         allMoves.put(allMoves.size(), move);
     }
 
+    /**
+     * The number of Moves in the Game
+     * @return The number of Moves
+     */
     public int getNumMoves(){
         return allMoves.size();
     }
 
+    /**
+     * Gets a move in the list of Game moves based on a given Move number
+     * @param numMove The given Move number
+     * @return The requested Move
+     */
     public Move getMove(int numMove) {
         return allMoves.get(numMove);
     }
-          
+
+    /**
+     * Gets the Opponent of the given Player
+     * @param player The given Player
+     * @return The Player's Opponent
+     */
     public Player getOpponent(Player player){
         return (player == this.redPlayer) ? this.whitePlayer : this.redPlayer;
     }
 
+    /**
+     * Commits a turn. This takes a move and updates the Board accordingly.
+     * @param move The Move made.
+     */
     public void doTurn(Move move){
         Piece piece = this.board.getPiece(move.getStart().getRow(), move.getStart().getCell());
         move.setMovedPiece(piece);
