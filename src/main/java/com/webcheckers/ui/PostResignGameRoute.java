@@ -1,7 +1,10 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import freemarker.template.Template;
@@ -37,24 +40,30 @@ public class PostResignGameRoute implements Route {
 
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
 
-        Map<String, Object> vm = new HashMap<>();
-
-        Message gameover = Message.error("Error! Game is already over you cannot Resign");
         Session session = request.session();
+        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         Player currentPlayer = session.attribute("currentPlayer");
         Game game = WebServer.GAME_CENTER.getGame(currentPlayer);
+        Board board = game.getBoard();
+        Piece.Color color = (currentPlayer == game.getRedPlayer()) ? Piece.Color.RED : Piece.Color.WHITE;
 
-
-        game.makeResigned();
-        Message message = Message.info("Resign");
+        Message message;
+        if(color != board.getActiveColor()){
+            message = Message.error("You can't resign. It's not your turn");
+        }
+        else{
+//            game.makeResigned();
+//            session.attribute("resignPlayer", currentPlayer);
+//            Player resign = session.attribute("resignPlayer");
+            game.setResignPlayer(currentPlayer);
+            playerLobby.removePlayer(currentPlayer);
+            playerLobby.removeGamePlayer(currentPlayer);
+            message = Message.info("You resigned");
+        }
         String jsonMsg = gson.toJson(message, Message.class);
-
         return jsonMsg;
     }
-
-
-
 }

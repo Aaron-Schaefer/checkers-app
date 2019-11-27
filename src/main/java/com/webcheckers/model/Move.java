@@ -9,6 +9,9 @@ package com.webcheckers.model;
 public class Move {
     private Position start;
     private Position end;
+    private Position takenPosition;
+    private Piece takenPiece;
+    private Piece movedPiece;
     private MoveValidator.MoveValidation validState;
 
     public Move(Position start, Position end){
@@ -29,6 +32,32 @@ public class Move {
 
     public Position getEnd(){
         return end;
+    }
+
+    public void setStart(Position start){ this.start = start;}
+
+    public void setTakenPosition(Position taken) {
+        this.takenPosition = taken;
+    }
+
+    public Position getTakenPosition() {
+        return takenPosition;
+    }
+
+    public void setTakenPiece(Piece takenPiece) {
+        this.takenPiece = takenPiece;
+    }
+
+    public Piece getTakenPiece() {
+        return takenPiece;
+    }
+
+    public void setMovedPiece(Piece movedPiece) {
+        this.movedPiece = movedPiece;
+    }
+
+    public Piece getMovedPiece() {
+        return movedPiece;
     }
 
     public void setValidState(MoveValidator.MoveValidation validState) {

@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ *
+ */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
@@ -46,7 +49,7 @@ public class GetGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.info("Handling GetGameRoute");
+                LOG.info("Handling GetGameRoute");
 
         //Hash map for the view model.
         Map<String, Object> vm = new HashMap<>();
@@ -62,29 +65,46 @@ public class GetGameRoute implements Route {
         //The game the current Player is in.
         Game game = gameCenter.getGame(currentPlayer);
 
+        if(game != null){
+            Player whitePlayer = game.getWhitePlayer();
+            playerLobby.addGamePlayer(whitePlayer);
+        }
         //If the game is null, create a new one. Sets the Red Player as the current Player
         //who selected to start a game. Sets the White Player as the player who was selected
         //on the home page. Adds both to PlayerLobby.
         if (game == null) {
-            String name = request.queryParams("playerName");
-
-            //Checks if the current Player chose an opponent that's already in a game. If the
-            //opponent is already in a game they're redirected to the home page.
-            if (playerLobby.isInGame(playerLobby.getUser(name))) {
-                playerLobby.playerChoseInGame();
-                response.redirect("/?mode=PLAY");
+            if(playerLobby.isInGame(currentPlayer)){
+                playerLobby.removeGamePlayer(currentPlayer);
+                playerLobby.removePlayer(currentPlayer);
+                response.redirect("/");
             }
             else {
-                playerLobby.notChoseInGame();
-                playerLobby.addGamePlayer(currentPlayer);
-                Player whitePlayer = playerLobby.getUser(name);
-                playerLobby.addGamePlayer(whitePlayer);
-                game = gameCenter.makeGame(currentPlayer, whitePlayer);
+                String name = request.queryParams("playerName");
+
+                //Checks if the current Player chose an opponent that's already in a game. If the
+                //opponent is already in a game they're redirected to the home page.
+                if (playerLobby.isInGame(playerLobby.getUser(name))) {
+                    playerLobby.playerChoseInGame();
+                    response.redirect("/?mode=PLAY");
+                } else {
+                    playerLobby.notChoseInGame();
+                    playerLobby.addGamePlayer(currentPlayer);
+                    if (session.attribute("mode").equals("AI")) {
+                        AI computer = new AI();
+                        game = gameCenter.makeGame(currentPlayer, computer.getPlayer());
+                    }
+                    else {
+                        Player whitePlayer = playerLobby.getUser(name);
+                        playerLobby.addGamePlayer(whitePlayer);
+                        game = gameCenter.makeGame(currentPlayer, whitePlayer);
+                    }
+                }
             }
         }
 
         //Set the Red Player and the White player as the Red Player and White Player
         //given by the game.
+
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
 
@@ -94,40 +114,24 @@ public class GetGameRoute implements Route {
         //Creates the BoardView.
         BoardView boardView = new BoardView(board, currentPlayer);
 
+
         final Map<String, Object> modeOptions = new HashMap<>(2);
 
         //Sets the game to over by resignation from the opponent
-        if (game.isResigned()) {
-            Player winner = game.getOpponent(currentPlayer);
-            if(game.getWinner() == null) {
-                game.setWinner(winner);
-            }
-            else{
-                playerLobby.removePlayer(redPlayer);
-                playerLobby.removeGamePlayer(redPlayer);
-                playerLobby.removePlayer(whitePlayer);
-                playerLobby.removeGamePlayer(whitePlayer);
-                gameCenter.addGameOver(game);
-            }
+        if (game.getResignPlayer() != null) {
+            Player resigned = game.getResignPlayer();
+            Player winner = game.getOpponent(resigned);
+            gameCenter.addGameOver(game);
             modeOptions.put("isGameOver", true);
-            if (currentPlayer == winner) {
-                modeOptions.put("gameOverMessage","You win! " + game.getOpponent(currentPlayer).getName() + " has resigned!");
-            }
-            else{
-                modeOptions.put("gameOverMessage", "You lose! You resigned the game!");
+            if (currentPlayer.equals(winner)) {
+                modeOptions.put("gameOverMessage","You win! " + game.getOpponent(currentPlayer).getName()
+                        + " has resigned!");
             }
         }
         else if(game.isGameOver()){
             Player winner = game.getWinner();
             if(winner == null){
                 winner = game.setWinner(currentPlayer);
-            }
-            else{
-                playerLobby.removePlayer(redPlayer);
-                playerLobby.removeGamePlayer(redPlayer);
-                playerLobby.removePlayer(whitePlayer);
-                playerLobby.removeGamePlayer(whitePlayer);
-                gameCenter.addGameOver(game);
             }
             modeOptions.put("isGameOver", true);
             if (currentPlayer == winner) {

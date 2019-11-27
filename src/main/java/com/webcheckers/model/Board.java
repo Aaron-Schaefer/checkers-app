@@ -21,8 +21,6 @@ public class Board {
     private Player redPlayer;
     //The active color on the board
     private Piece.Color activeColor;
-    //The list of Positions where Pieces have been taken
-    private List<Position> positionsTaken;
     //Number of white pieces on the board.
     private int whitePieces;
     //Number of red pieces on the board.
@@ -40,10 +38,10 @@ public class Board {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
-        this.positionsTaken = new ArrayList<>();
         this.whitePieces = 12;
         this.redPieces = 12;
         initializeSpaces();
+        this.validateSpaces();
 
     }
 
@@ -69,6 +67,30 @@ public class Board {
                         addPiece(r,c,new Piece(Piece.Type.SINGLE, Piece.Color.RED));
 
                 }
+            }
+        }
+    }
+
+    public void validateSpaces(){
+        for(int r = 0; r< BOARD_SIZE; r++) {
+            for (int c = 0; c < BOARD_SIZE; c++) {
+                if((c+r)%2 == 0){
+                    this.getSpace(r, c).setViable(false);
+                }
+                if(this.getPiece(r, c) != null){
+                    this.getSpace(r, c).setViable(false);
+                }
+                if(((c+r)%2 != 0) && this.getPiece(r, c) == null){
+                    this.getSpace(r, c).setViable(true);
+                }
+            }
+        }
+    }
+
+    public void allValidSpaces() {
+        for (int r = 0; r < BOARD_SIZE; r++) {
+            for (int c = 0; c < BOARD_SIZE; c++) {
+                this.getSpace(r, c).setViable(true);
             }
         }
     }
@@ -232,27 +254,6 @@ public class Board {
     }
 
     /**
-     * Adds a taken position to the list of taken positions.
-     * @param position the position of the taken piece.
-     */
-    public void addPositionTaken(Position position){
-        positionsTaken.add(position);
-    }
-
-    /**
-     * Clears the list of taken positions
-     */
-    public void clearPositionsTaken() { positionsTaken.clear(); }
-
-    /**
-     * Gets the list of taken positions
-     * @return the list of taken positions
-     */
-    public List<Position> getPositionsTaken(){
-        return this.positionsTaken;
-    }
-
-    /**
      * Checks if one of the Players has no Pieces left
      * @return if a Player has no Pieces
      */
@@ -272,5 +273,32 @@ public class Board {
         else{
             this.whitePieces--;
         }
+    }
+
+    /**
+     * Updates the game board when a move has been made. This takes account
+     * of the new move changes the piece to a king piece if it reaches the
+     * end of the board
+     * @param move The move made
+     */
+    public void updateBoard(Move move){
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        Piece piece = this.getPiece(start.getRow(), start.getCell());
+        this.removePiece(start.getRow(), start.getCell());
+        if((end.getRow() == 0 && piece.getColor() == Piece.Color.RED)
+                || (end.getRow() == 7 && piece.getColor() == Piece.Color.WHITE)) {
+            Piece temp = new Piece(Piece.Type.KING, piece.getColor());
+            this.addPiece(end.getRow(), end.getCell(), temp);
+        }
+        this.addPiece(end.getRow(), end.getCell(), piece);
+    }
+
+    public void undoMove(Move move){
+        Position start = move.getEnd();
+        Position end = move.getStart();
+        Piece piece = move.getMovedPiece();
+        this.removePiece(start.getRow(), start.getCell());
+        this.addPiece(end.getRow(), end.getCell(), piece);
     }
 }
