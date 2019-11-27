@@ -2,11 +2,23 @@ package com.webcheckers.model;
 
 import java.util.*;
 
+/**
+ * Class that performs most of the operations for the CPU player
+ *
+ * @author Zachary Hahn
+ */
 public class AI {
     private Piece.Color AIColor = Piece.Color.WHITE;
     Player cpu;
     Game game;
     Board board;
+
+    /**
+     * Class that decides which move the CPU will choose to do
+     *
+     * @param game
+     * @return move that the cpu will perform
+     */
     public static Move decideMove(Game game) {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
         for (int r = 0; r < 8; r++) {
@@ -33,15 +45,22 @@ public class AI {
         }
         System.out.println("Possible Moves: " + possibleMoves.size());
         Random random = new Random();
-        if (possibleMoves.size() > 0) {
+        if (possibleMoves.size() > 0) { //if no possible moves return null
             int index = random.nextInt(possibleMoves.size());
-            return possibleMoves.get(index);
+            return possibleMoves.get(index); //cpu performs a random move from legal moves
         }
         else {
             return null;
         }
     }
 
+    /**
+     * Class to test if the CPU has a mutli jump available
+     *
+     * @param game
+     * @param start start position
+     * @return true if multi jump is available false otherwise
+     */
     public static boolean jumpAvailable(Game game, Position start) {
         for (int rinc = -2; rinc < 3; rinc+=2) {
             for (int cinc = -2; cinc < 3; cinc+=2) {
@@ -58,14 +77,30 @@ public class AI {
         return false;
     }
 
+    /**
+     * helper function to make sure a position is inbounds
+     * @param r row
+     * @param c column
+     * @param rinc row increment
+     * @param cinc column increment
+     * @return true if inbounds false if out of bounds
+     */
     private static boolean isInBounds(int r, int c, int rinc, int cinc) {
         return (r+rinc<8 && c+cinc<8 && r+rinc>=0 && c+cinc>=0);
     }
 
+    /**
+     * getter for player object
+     *
+     * @return player object CPU
+     */
     public Player getPlayer() {
         return cpu;
     }
 
+    /**
+     * Constructor for AI, makes player cpu
+     */
     public AI() {
         cpu = new Player("CPU");
     }
