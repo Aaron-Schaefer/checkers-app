@@ -47,7 +47,6 @@ public class PostSubmitTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         GameCenter gameCenter = WebServer.GAME_CENTER;
         Player currentPlayer = request.session().attribute("currentPlayer");
-        System.out.println(currentPlayer.getName() + " is in submit");
         Game game = gameCenter.getGame(currentPlayer);
         Board board = game.getBoard();
         Message message = Message.info("true");
@@ -61,6 +60,27 @@ public class PostSubmitTurnRoute implements Route {
         else if(move.getValidState() == MoveValidator.MoveValidation.VALID) {
             game.doTurn(move);
             board.changeActiveColor();
+            //If opponent is the AI player
+            if (game.getWhitePlayer().getName().equals("CPU") && board.getActiveColor() == Piece.Color.WHITE && game.getWinner() == null) {
+                boolean aiTurn = true;
+                while (aiTurn) {
+                    aiTurn = false;
+                    Move aiMove = AI.decideMove(game);
+                    //If no move is available then the AI loses
+                    if (aiMove != null) {
+                        game.setRecentMove(aiMove);
+                        game.doTurn(aiMove);
+                        //if a multi jump is available redirect to the AIs turn
+                        if (((aiMove.getStart().getRow() + aiMove.getEnd().getRow()) % 2) == 0 && AI.jumpAvailable(game, aiMove.getEnd())) {
+                            aiTurn = true;
+                        }
+                    }
+                    else {
+                        game.setWinner(game.getRedPlayer());
+                    }
+                }
+                board.changeActiveColor(); //switch back to the players turn
+            }
         }
         return jsonMsg;
     }

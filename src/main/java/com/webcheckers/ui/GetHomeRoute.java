@@ -69,44 +69,72 @@ public class GetHomeRoute implements Route {
 
     //Sets the current User as the current Player if not already set.
     if(player != null){
-      System.out.println(player.getName() + " is in Home");
       vm.put("currentUser", player);
 
-      //Redirects the current Player to the /game URL if the current Player
-      //is the White Player.
+      //Handles players that are still in a game.
       if(game != null) {
+        //Handles when a Player is sent home when the game is over. This
+        //removes the Player from the list of players and adds the Game to
+        //the list of finished games.
+        if(game.isGameOver()){
+          playerLobby.removeGamePlayer(player);
+          playerLobby.removePlayer(player);
+          gameCenter.addGameOver(game);
+        }
+        //Resigns a Player that left an unfinished game.
+        if(playerLobby.isInGame(player)){
+          game.setResignPlayer(player);
+        }
+        //Redirects the white Player to a new game. Adds the Player to the list
+        //of in Game players.
         if (game.getWhitePlayer() != null){
           if (player.equals(game.getWhitePlayer())) {
+            playerLobby.addGamePlayer(player);
             response.redirect("/game");
           }
         }
       }
+      //Removes the Player from the list of Players if its in it, and is not
+      //in a game.
+      else{
+        if(playerLobby.isInGame(player)){
+          playerLobby.removeGamePlayer(player);
+          playerLobby.removePlayer(player);
+        }
+      }
     }
 
-    List<Player> players = Arrays.asList(playerLobby.playerArray(""));
+    List<Player> players = Arrays.asList(playerLobby.playerArray(playerLobby.getUsers()));
 
     if(mode != null) {
       vm.put("mode", mode);
       if(mode.equals("PLAY")) {
         playerLobby.addPlayer(player);
+        players = Arrays.asList(playerLobby.playerArray(playerLobby.getPlayers()));
       }
       else{
         playerLobby.removePlayer(player);
+        if(mode.equals("SPECTATOR")) {
+          players = Arrays.asList(playerLobby.playerArray(playerLobby.getGamePlayers()));
+        }
         if(mode.equals("REPLAY")) {
           List<Game> games = gameCenter.getGamesOver();
           vm.put("games", games);
           vm.put("numGames", games.size());
         }
+        if(mode.equals("AI")){
+          response.redirect("/game");
+        }
       }
 
       //Makes a list of players and puts it, and the number of Players to the
       //home.ftl file.
-      players = Arrays.asList(playerLobby.playerArray(mode));
+//      players = Arrays.asList(playerLobby.playerArray(mode));
     }
 
     vm.put("players", players);
     vm.put("numPlayers", players.size());
-    vm.put("numInPlay", Arrays.asList(playerLobby.playerArray("PLAY")).size());
+    vm.put("numInPlay", Arrays.asList(playerLobby.playerArray(playerLobby.getPlayers())).size());
 
     //Displays a user error if the current Player chose a Player who's already
     //in a game. Otherwise it displaces the WELCOME_MSG.

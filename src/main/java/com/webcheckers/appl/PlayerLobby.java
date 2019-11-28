@@ -64,26 +64,23 @@ public class PlayerLobby {
         }
     }
 
+    public ArrayList<Player> getUsers() {
+        return users;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<Player> getGamePlayers() {
+        return gamePlayers;
+    }
+
     /**
      * Returns the list of users in a string array.
      * @return the users in a string array with their username,
      */
-    public Player[] playerArray(String mode){
-        ArrayList<Player> playerList;
-        if(mode.equals("PLAY")){
-
-            playerList = players;
-
-        } else if(mode.equals("SPECTATOR")){
-
-            playerList = gamePlayers;
-
-        } else{
-
-            playerList = users;
-
-        }
-
+    public Player[] playerArray(ArrayList<Player> playerList){
         Player[] playerNames = new Player[playerList.size()];
         for(int i = 0; i < playerList.size(); i++){
             playerNames[i] = playerList.get(i);
@@ -99,7 +96,7 @@ public class PlayerLobby {
      * @return the Player with the given name, or null if not found.
      */
     public Player getUser(String name){
-        Player[] playerArray = this.playerArray("");
+        Player[] playerArray = this.playerArray(this.users);
         for (Player player : playerArray) {
             if (player.getName().equals(name)) {
                 return player;
