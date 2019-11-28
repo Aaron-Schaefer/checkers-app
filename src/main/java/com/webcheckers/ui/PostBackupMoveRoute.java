@@ -12,6 +12,11 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of the backup Move.
+ */
 public class PostBackupMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -20,7 +25,7 @@ public class PostBackupMoveRoute implements Route {
     private Gson gson;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /backupMove} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -33,7 +38,7 @@ public class PostBackupMoveRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Post information from the Game page about the BackUp Move
      *
      * @param request
      *   the HTTP request
@@ -41,7 +46,7 @@ public class PostBackupMoveRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   The JSON for the information about the BackUp Move
      */
     @Override
     public Object handle(Request request, Response response) {

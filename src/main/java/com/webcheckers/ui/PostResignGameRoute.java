@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 /**
  * Language: Java
- * Author: Ries Scerbin
+ * Author: Ries Scerbin and Gavin Burris
  * A class to get resign route
  */
 public class PostResignGameRoute implements Route {

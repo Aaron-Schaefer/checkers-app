@@ -11,6 +11,12 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of the previous Move
+ * made in the replayed Game.
+ */
 public class PostReplayPreviousTurnRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(PostReplayPreviousTurnRoute.class.getName());
@@ -20,7 +26,7 @@ public class PostReplayPreviousTurnRoute implements Route {
     private Gson gson;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /replay/previousTurn} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -34,7 +40,8 @@ public class PostReplayPreviousTurnRoute implements Route {
 
 
     /**
-     * Render the WebCheckers SignIn page.
+     * Posts information from the Replay Game page about the previous
+     * turn of the Replay Game.
      *
      * @param request
      *   the HTTP request
@@ -42,7 +49,8 @@ public class PostReplayPreviousTurnRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   The JSON for the information about the previous turn of the
+     *   Replay Game
      */
     public Object handle(Request request, Response response) {
 

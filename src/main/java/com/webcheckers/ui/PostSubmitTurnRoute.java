@@ -12,6 +12,13 @@ import java.util.logging.Logger;
 import static spark.route.HttpMethod.get;
 import static spark.route.HttpMethod.post;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of the submitted turn,
+ * as to whether it has been submitted, and also updates the Game with submitted
+ * Move.
+ */
 public class PostSubmitTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 

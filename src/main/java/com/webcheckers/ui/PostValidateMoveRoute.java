@@ -10,6 +10,12 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of the Move
+ * validation and sets the validation state of the Move.
+ */
 public class PostValidateMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -24,7 +30,7 @@ public class PostValidateMoveRoute implements Route {
     private static final String MOVED_TOO_FAR = "Invalid move! You have moved too many spaces.";
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /validateMove} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -38,7 +44,7 @@ public class PostValidateMoveRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Posts information from the Game page about the validated Move
      *
      * @param request
      *   the HTTP request
@@ -46,7 +52,7 @@ public class PostValidateMoveRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   The JSON for the information about the validated Move
      */
     @Override
     public Object handle(Request request, Response response) {

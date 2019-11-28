@@ -14,7 +14,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- *
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI controller to get the Game all of the Players to render the
+ * Game page for every given state the Game is in.
  */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());

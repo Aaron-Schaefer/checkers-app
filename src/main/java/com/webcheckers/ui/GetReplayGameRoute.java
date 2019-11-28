@@ -13,6 +13,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI controller to get the Replay Game Page
+ */
 public class GetReplayGameRoute implements Route {
     //The LOG for GetSignInRoute.
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
@@ -23,7 +28,7 @@ public class GetReplayGameRoute implements Route {
     private Gson gson;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /signin} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /replay/game} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -32,11 +37,11 @@ public class GetReplayGameRoute implements Route {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         this.gson = gson;
         //
-        LOG.config("GetSignInRoute is initialized.");
+        LOG.config("GetReplayGameRoute is initialized.");
     }
 
     /**
-     * Render the WebCheckers SignIn page.
+     * Render the WebCheckers Replay Game page.
      *
      * @param request
      *   the HTTP request
@@ -44,7 +49,7 @@ public class GetReplayGameRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   the rendered HTML for the ReplayGame page
      */
     @Override
     public Object handle(Request request, Response response) {

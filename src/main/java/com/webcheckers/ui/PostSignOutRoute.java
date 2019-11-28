@@ -19,7 +19,7 @@ public class PostSignOutRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /signout} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -27,12 +27,13 @@ public class PostSignOutRoute implements Route {
     public PostSignOutRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
-        LOG.config("PostSignInRoute is initialized.");
+        LOG.config("PostSignOutRoute is initialized.");
     }
 
 
     /**
-     * Render the WebCheckers SignIn page.
+     * Post information from the current page about the current User
+     * that is signing out
      *
      * @param request
      *   the HTTP request

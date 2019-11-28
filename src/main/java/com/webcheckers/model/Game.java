@@ -2,6 +2,12 @@ package com.webcheckers.model;
 
 import java.util.*;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: Class that represents a Game, its properties,
+ * Board, Players, and Moves.
+ */
 public class Game {
     //The red Player
     private Player redPlayer;

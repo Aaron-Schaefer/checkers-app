@@ -12,6 +12,12 @@ import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of if a
+ * turn was made.
+ */
 public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -20,7 +26,7 @@ public class PostCheckTurnRoute implements Route {
     private Gson gson;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /checkTurn} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -33,7 +39,7 @@ public class PostCheckTurnRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Posts information from the Game page about the checked turn
      *
      * @param request
      *   the HTTP request
@@ -41,7 +47,7 @@ public class PostCheckTurnRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   The JSON for the information about the checked turn
      */
     @Override
     public Object handle(Request request, Response response) {

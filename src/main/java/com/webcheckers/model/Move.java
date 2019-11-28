@@ -4,7 +4,7 @@ package com.webcheckers.model;
  * Purpose: The move class responsible for
  *
  *
- * @author Aaron Schaefer
+ * @author Aaron Schaefer and Gavin Burris
  */
 public class Move {
     //The start Position

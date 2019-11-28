@@ -5,6 +5,11 @@ import com.webcheckers.model.Player;
 
 import java.util.*;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: Class that records the played Games.
+ */
 public class GameCenter {
     //Map of all of the games.
     private Map<List<Player>, Game> activeGames;
