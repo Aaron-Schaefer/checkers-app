@@ -1,5 +1,10 @@
 package com.webcheckers.model;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: Class the represents a Position on the Game Board.
+ */
 public class Position {
     //The row index
     private int row;

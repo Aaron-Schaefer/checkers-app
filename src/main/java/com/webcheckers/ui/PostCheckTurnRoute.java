@@ -12,6 +12,12 @@ import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of if a
+ * turn was made.
+ */
 public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
@@ -20,7 +26,7 @@ public class PostCheckTurnRoute implements Route {
     private Gson gson;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /checkTurn} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -33,7 +39,7 @@ public class PostCheckTurnRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Posts information from the Game page about the checked turn
      *
      * @param request
      *   the HTTP request
@@ -41,13 +47,21 @@ public class PostCheckTurnRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   The JSON for the information about the checked turn
      */
     @Override
     public Object handle(Request request, Response response) {
-        GameCenter gameCenter = WebServer.GAME_CENTER;
+
+        //The current Player from the session.
         Player currentPlayer = request.session().attribute("currentPlayer");
+
+        //The GameCenter, and the Game retrieved from the GameCenter.
+        GameCenter gameCenter = WebServer.GAME_CENTER;
         Game game = gameCenter.getGame(currentPlayer);
+
+        //Sets a Message to false. If a turn is made, or if the Game is resigned, the
+        //message is set to true, and the Game page is refreshed. The Message is then
+        //turned into a JSON.
         Message message = Message.info("false");
         if(game != null){
             if (game.isTurnMade() || game.getResignPlayer() != null) {

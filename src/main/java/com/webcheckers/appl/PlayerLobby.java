@@ -40,14 +40,16 @@ public class PlayerLobby {
      */
     public boolean addUser(Player player){
         if(!users.contains(player) && player != null){
-
             users.add(player);
             return true;
-
         }
         return false;
     }
 
+    /**
+     * Adds a Players to the list of Players in Play Mode.
+     * @param player the player to add.
+     */
     public void addPlayer(Player player){
         if(!players.contains(player) && player != null){
             players.add(player);
@@ -64,14 +66,26 @@ public class PlayerLobby {
         }
     }
 
+    /**
+     * Gets the list of Users in the playerLobby.
+     * @return The list of Users.
+     */
     public ArrayList<Player> getUsers() {
         return users;
     }
 
+    /**
+     * Gets the list of Players that are in Play Mode.
+     * @return The list of Players.
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Gets the list of Players that are in an active Game.
+     * @return The list of Players in an active Game.
+     */
     public ArrayList<Player> getGamePlayers() {
         return gamePlayers;
     }

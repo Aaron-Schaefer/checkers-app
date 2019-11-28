@@ -12,6 +12,12 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Language: Java
+ * @Author: Gavin Burris.
+ * Purpose: The UI Controller to POST the information of the next Move
+ * made in the replayed Game.
+ */
 public class PostReplayNextTurnRoute implements Route {
 
     //The log for PostSingInRoute.
@@ -23,7 +29,7 @@ public class PostReplayNextTurnRoute implements Route {
     private Gson gson;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code POST /signin} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code POST /replay/nextTurn} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -45,29 +51,41 @@ public class PostReplayNextTurnRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the SignIn page
+     *   The JSON for the information about the next turn of the
+     *   Replay Game
      */
     public Object handle(Request request, Response response) {
 
+        //The request's session.
         Session session = request.session();
 
+        //The replayed Game from the session.
         Game game = session.attribute("replayGame");
 
+        //The replayed Board from the session.
         Board board = session.attribute("replayBoard");
 
+        //The current number move from the session.
         int numMove = session.attribute("numMove");
 
+        //The current move retrieved from the Move number.
         Move move = game.getMove(numMove);
 
+        //If a piece was taken during the current Move then remove the taken
+        //Piece from the Board.
         if(move.getTakenPosition() != null){
             Position position = move.getTakenPosition();
             board.removePiece(position.getRow(), position.getCell());
         }
 
+        //Update the replay Board.
         board.updateBoard(move);
 
+        //Initializes the message to false.
         Message message = Message.info("false");
 
+        //If there is a next Move then the numMove is incremented, and the
+        // message is set to true.
         if(numMove < game.getNumMoves()) {
             session.attribute("numMove", numMove + 1);
             message = Message.info("true");

@@ -14,7 +14,7 @@ import com.webcheckers.util.Message;
 /**
  * The UI Controller to GET the Home page.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a> and Gavin Burris
  */
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
@@ -81,10 +81,6 @@ public class GetHomeRoute implements Route {
           playerLobby.removePlayer(player);
           gameCenter.addGameOver(game);
         }
-        //Resigns a Player that left an unfinished game.
-        if(playerLobby.isInGame(player)){
-          game.setResignPlayer(player);
-        }
         //Redirects the white Player to a new game. Adds the Player to the list
         //of in Game players.
         if (game.getWhitePlayer() != null){
@@ -104,8 +100,10 @@ public class GetHomeRoute implements Route {
       }
     }
 
+    //The list of players used to list out on the home page. Different for different modes.
     List<Player> players = Arrays.asList(playerLobby.playerArray(playerLobby.getUsers()));
 
+    //Different actions for each mode, once chosen from the mode options list.
     if(mode != null) {
       vm.put("mode", mode);
       if(mode.equals("PLAY")) {

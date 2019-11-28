@@ -17,11 +17,8 @@ import java.util.Iterator;
 
 public class BoardView implements Iterable {
 
-    private static final int BOARD_SIZE = 8;
+    //An ArrayList of the rows on the Board.
     private ArrayList<Row> rows;
-    private Piece.Color activeColor;
-    private Player redPlayer;
-    private Player whitePlayer;
 
     /**
      *Constructor for the boardview
@@ -47,12 +44,6 @@ public class BoardView implements Iterable {
     }
 
     /**
-     *Gets the active color (the one that currently being moved)
-     * @return the color
-     */
-    public Piece.Color getActiveColor(){return activeColor;}
-
-    /**
      * Gets the players color based on the piece they are playing
      * @param player The player playing on the board
      * @param model The board being played on
@@ -66,30 +57,6 @@ public class BoardView implements Iterable {
             return Piece.Color.RED;
         }
         return null;
-    }
-
-    /**
-     * A method to get the boards white player
-     * @return the white player
-     */
-    public Player getWhitePlayer(){return whitePlayer;}
-
-    /**
-     * A method to get the boards red player
-     * @return the red player
-     */
-    public Player getRedPlayer(){return redPlayer;}
-
-    /**
-     *Get the current active player (the one whose move it is currently)
-     * @return the player
-     */
-    public Player getActivePlayer(){
-        if (activeColor == Piece.Color.RED){
-            return redPlayer;
-        }
-        else
-            return whitePlayer;
     }
 
     /**

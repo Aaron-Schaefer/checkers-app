@@ -19,7 +19,7 @@ public class PostSignOutRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /signout} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -27,12 +27,13 @@ public class PostSignOutRoute implements Route {
     public PostSignOutRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
-        LOG.config("PostSignInRoute is initialized.");
+        LOG.config("PostSignOutRoute is initialized.");
     }
 
 
     /**
-     * Render the WebCheckers SignIn page.
+     * Post information from the current page about the current User
+     * that is signing out
      *
      * @param request
      *   the HTTP request
@@ -45,19 +46,27 @@ public class PostSignOutRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignOutRoute is invoked.");
 
-        //Gets the player, and remove him from the player lobby.
+        //Gets the Player from the session.
+        Player player = request.session().attribute("currentPlayer");
+
+        //Gets the PlayerLobby and GameCenter from the WebServer, and the Game
+        //from the GameCenter.
         PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         GameCenter gameCenter = WebServer.GAME_CENTER;
-        Player player = request.session().attribute("currentPlayer");
         Game game = gameCenter.getGame(player);
+
+        //Sets the resign Player to the player signing out if they were in a Game.
         if(game != null){
             game.setResignPlayer(player);
         }
+
+        //Removes the Player from the PlayerLobby's User, Player, and GamePlayer lists.
         playerLobby.removeUser(player);
         playerLobby.removePlayer(player);
         playerLobby.removeGamePlayer(player);
-        request.session().invalidate();
 
+        //Invalidates the session and redirects to the Home page.
+        request.session().invalidate();
         response.redirect("/");
         return "";
 
