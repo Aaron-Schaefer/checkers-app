@@ -32,7 +32,7 @@ public class GetGameRouteTest {
      * Initialization.
      */
     @BeforeEach
-    private void setup(){
+    public void setup(){
         request = mock(Request.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
@@ -42,32 +42,28 @@ public class GetGameRouteTest {
         WebServer webServer = mock(WebServer.class);
         webServer.initialize();
 
-        Player red = mock(Player.class);
-        Player white = mock(Player.class);
-
-
-
     }
 
     /**
      * Tests the attributes of the GetGameRoute.
      */
-    //@Test
-    public void testAttributes(){
-
-        final TemplateEngineTester helper = new TemplateEngineTester();
-
-        when(templateEngine.render(any(ModelAndView.class) )).thenAnswer(helper.makeAnswer());
-        CuT.handle(request, response);
-
-        helper.assertViewModelExists();
-        helper.assertViewModelIsaMap();
-
-        helper.assertViewModelAttribute("viewMode", "PLAY");
-        helper.assertViewModelAttribute("currentUser", session.attribute("currentUser"));
-
-
-    }
+//    @Test
+//    public void testAttributes(){
+//
+//        final TemplateEngineTester helper = new TemplateEngineTester();
+//
+//        when(templateEngine.render(any(ModelAndView.class) )).thenAnswer(helper.makeAnswer());
+//        CuT.handle(request, response);
+//
+//        helper.assertViewModelExists();
+//        helper.assertViewModelIsaMap();
+//        when(session.attribute("mode")).thenReturn("PLAY");
+//
+//        helper.assertViewModelAttribute("viewMode", "PLAY");
+//        //helper.assertViewModelAttribute("currentUser", session.attribute("currentUser"));
+//
+//
+//    }
 
 
 
