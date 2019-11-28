@@ -1,11 +1,12 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class to test the BoardView
@@ -27,27 +28,27 @@ public class BoardViewTest {
 
     /**
      * Setup before each test.
+     * Cannot be ran with mock objects, as the mock objects will create null pointer exceptions.
      */
     @BeforeEach
-    private void Setup(){
+    public void Setup(){
 
-        redPlayer = mock(Player.class);
-        whitePlayer = mock(Player.class);
-        board = mock(Board.class);
+        redPlayer = new Player("1");
+        whitePlayer = new Player("2");
+        board = new Board(redPlayer,whitePlayer);
         CuT1 = new BoardView(board, redPlayer);
         CuT2 = new BoardView(board, whitePlayer);
 
     }
 
     /**
-     * Test the player retrival.
+     * Test the iterator.
      */
     @Test
-    private void testPlayerRetrival(){
+    public void testIterator(){
 
-        assertEquals(CuT1.getActivePlayer(), redPlayer);
-        assertEquals(CuT2.getActivePlayer(), whitePlayer);
-
+        assertNotNull(CuT1.iterator());
+        assertNotNull(CuT2.iterator());
 
     }
 
