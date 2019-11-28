@@ -45,9 +45,17 @@ public class PostCheckTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        GameCenter gameCenter = WebServer.GAME_CENTER;
+
+        //The current Player from the session.
         Player currentPlayer = request.session().attribute("currentPlayer");
+
+        //The GameCenter, and the Game retrieved from the GameCenter.
+        GameCenter gameCenter = WebServer.GAME_CENTER;
         Game game = gameCenter.getGame(currentPlayer);
+
+        //Sets a Message to false. If a turn is made, or if the Game is resigned, the
+        //message is set to true, and the Game page is refreshed. The Message is then
+        //turned into a JSON.
         Message message = Message.info("false");
         if(game != null){
             if (game.isTurnMade() || game.getResignPlayer() != null) {

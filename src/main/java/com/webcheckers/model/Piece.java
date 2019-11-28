@@ -9,7 +9,9 @@ package com.webcheckers.model;
  */
 
 public class Piece {
+    //The type of the Piece
     private Type type;
+    //The color of the Piece
     private Color color;
     //Type of chest piece.
     public enum Type{ SINGLE, KING}
@@ -39,10 +41,6 @@ public class Piece {
      */
     public Color getColor(){
         return this.color;
-    }
-
-    public void setTypeKing(){
-        this.type = Type.KING;
     }
 
     @Override

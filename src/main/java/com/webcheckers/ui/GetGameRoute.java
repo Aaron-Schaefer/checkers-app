@@ -21,7 +21,6 @@ public class GetGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
 
-//    private final Map<String, Object> modeOptions = new HashMap<>(2);
     private Gson gson;
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /game} HTTP requests.
@@ -65,6 +64,7 @@ public class GetGameRoute implements Route {
         //The game the current Player is in.
         Game game = gameCenter.getGame(currentPlayer);
 
+        //If the game isn't null, the white Player is added as a game Player
         if(game != null){
             Player whitePlayer = game.getWhitePlayer();
             playerLobby.addGamePlayer(whitePlayer);
@@ -89,6 +89,8 @@ public class GetGameRoute implements Route {
                 } else {
                     playerLobby.notChoseInGame();
                     playerLobby.addGamePlayer(currentPlayer);
+
+                    //Creates a game. If the Mode is AI then the white Player is the AI.
                     if (session.attribute("mode").equals("AI")) {
                         AI computer = new AI();
                         game = gameCenter.makeGame(currentPlayer, computer.getPlayer());
@@ -104,7 +106,6 @@ public class GetGameRoute implements Route {
 
         //Set the Red Player and the White player as the Red Player and White Player
         //given by the game.
-
         Player redPlayer = game.getRedPlayer();
         Player whitePlayer = game.getWhitePlayer();
 
@@ -114,14 +115,10 @@ public class GetGameRoute implements Route {
         //Creates the BoardView.
         BoardView boardView = new BoardView(board, currentPlayer);
 
-
+        //The Map of if the game is over and the gameOver message.
         final Map<String, Object> modeOptions = new HashMap<>(2);
 
         //Sets the game to over by resignation from the opponent
-        System.out.println("Resigned: " + game.getResignPlayer());
-        if(game.getResignPlayer() != null){
-            System.out.println("Resigned: " + game.getResignPlayer().getName());
-        }
         if (game.getResignPlayer() != null) {
             Player resigned = game.getResignPlayer();
             Player winner = game.getOpponent(resigned);
@@ -132,6 +129,7 @@ public class GetGameRoute implements Route {
                         + " has resigned!");
             }
         }
+        //Ends the game with given end game messages if all the pieces are taken.
         else if(game.isGameOver()){
             Player winner = game.getWinner();
             if(winner == null){
@@ -142,7 +140,8 @@ public class GetGameRoute implements Route {
                 modeOptions.put("gameOverMessage", "You win! You've captured all the pieces!");
             }
             else{
-                modeOptions.put("gameOverMessage", "You lose! " + winner.getName() + " has captured all of the pieces!");
+                modeOptions.put("gameOverMessage", "You lose! " + winner.getName() + " has captured "
+                        + "all of the pieces!");
             }
         }
 

@@ -45,6 +45,8 @@ public class PostBackupMoveRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+
+        //Returns the Player to the Validate Move Route, and returns a JSON message.
         Message message = Message.info("true");
         Spark.post(WebServer.VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
         String jsonMsg = gson.toJson(message, Message.class);

@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
@@ -53,26 +54,38 @@ public class PostResignGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostSignInRoute is invoked.");
 
+        //The request's session and the current Player retrieved from the session.
         Session session = request.session();
-        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
         Player currentPlayer = session.attribute("currentPlayer");
-        Game game = WebServer.GAME_CENTER.getGame(currentPlayer);
+
+        //The PlayerLobby and GameCenter from the WebServer, and the current Game
+        //from the GameCenter.
+        PlayerLobby playerLobby = WebServer.PLAYER_LOBBY;
+        GameCenter gameCenter = WebServer.GAME_CENTER;
+        Game game = gameCenter.getGame(currentPlayer);
+
+        //The Game Board.
         Board board = game.getBoard();
+
+        //The color of the active Player.
         Piece.Color color = (currentPlayer == game.getRedPlayer()) ? Piece.Color.RED : Piece.Color.WHITE;
 
         Message message;
+        //The current Player isn't the active color then they cant resign.
         if(color != board.getActiveColor()){
             message = Message.error("You can't resign. It's not your turn");
         }
+        //The current Player is the active color then they are set to be to be
+        //the resigned Player, and the Player is removed from the PlayerLobby's Player and Game
+        //Player lists.
         else{
-//            game.makeResigned();
-//            session.attribute("resignPlayer", currentPlayer);
-//            Player resign = session.attribute("resignPlayer");
             game.setResignPlayer(currentPlayer);
             playerLobby.removePlayer(currentPlayer);
             playerLobby.removeGamePlayer(currentPlayer);
             message = Message.info("You resigned");
         }
+
+        //Turns the resign message into a JSON.
         String jsonMsg = gson.toJson(message, Message.class);
         return jsonMsg;
     }

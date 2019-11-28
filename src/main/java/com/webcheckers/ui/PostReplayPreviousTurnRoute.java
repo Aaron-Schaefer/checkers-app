@@ -46,25 +46,36 @@ public class PostReplayPreviousTurnRoute implements Route {
      */
     public Object handle(Request request, Response response) {
 
+        //The request's session.
         Session session = request.session();
 
+        //The replayed Game from the session.
         Game game = session.attribute("replayGame");
 
+        //The replayed Board from the session.
         Board board = session.attribute("replayBoard");
 
+        //The current number move from the session.
         int numMove = session.attribute("numMove");
 
+        //The previous move retrieved from the Move number.
         Move move = game.getMove(numMove -1);
 
+        //If a piece was taken during the previous Move then add the taken
+        //Piece back to the Board.
         if(move.getTakenPosition() != null){
             Position position = move.getTakenPosition();
             board.addPiece(position.getRow(), position.getCell(), move.getTakenPiece());
         }
 
+        //Undoes the Move to the Board.
         board.undoMove(move);
 
+        //Initializes the message to false.
         Message message = Message.info("false");
 
+        //If there is a previous Move then the numMove is decremented, and the
+        //message is set to true.
         if(numMove > 0) {
             session.attribute("numMove", numMove - 1);
             message = Message.info("true");

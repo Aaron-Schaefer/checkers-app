@@ -100,8 +100,10 @@ public class GetHomeRoute implements Route {
       }
     }
 
+    //The list of players used to list out on the home page. Different for different modes.
     List<Player> players = Arrays.asList(playerLobby.playerArray(playerLobby.getUsers()));
 
+    //Different actions for each mode, once chosen from the mode options list.
     if(mode != null) {
       vm.put("mode", mode);
       if(mode.equals("PLAY")) {

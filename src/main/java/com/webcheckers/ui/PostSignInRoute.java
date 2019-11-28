@@ -83,7 +83,7 @@ public class PostSignInRoute implements Route {
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
-        //If the user enters in the username of the AI
+        //If the user enters in the username of the AI.
         if(name.equals("CPU")){
             vm.put("message", NAME_CPU);
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
