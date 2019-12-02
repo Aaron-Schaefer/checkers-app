@@ -44,6 +44,12 @@ Players can login in and play checkers against eachother.
 
 ### Roadmap of Enhancements
 
+The enhancements we decided to include within the project are: Replay, Spectator, and AI.
+The replay would allow any user that is signed in to view any games that had been completed
+during the time the server was started. Spectator allowed any signed in user to view a current
+game from either of the player's perspectives. AI lets you place against an artificial intelligence
+with the ability to play against the user. All three of these enhancements were completed with Sprint 3
+ 
 ## Application Domain
 
 This section describes the application domain.
@@ -57,7 +63,12 @@ and players related attributes.
 
 ## Architecture and Design
 
-This section describes the application architecture.
+Our project is designed to operate through three different tiers that control the webpage: UI tier, Application tier,
+and Model tier. The UI tier handled webpage generation based on requests and responses from the server.
+The Application tier contained code that controlled the interpretation of players and games within the context
+of the current server that is being run. The Model tier handled all the class that were used
+to represent the models the game would need such as the board, pieces, rows, and positions, as well as the logic and
+game mechanics of a normal game of checkers.
 
 ### Summary
 
@@ -139,7 +150,11 @@ The design itself doesnt not have any significant issues. The backend logic does
 require some adjustment. One improvement could be more use of polymorphism, which 
 makes the code easier to adjust in the future. However, knowing the usage and the
 length to which the code will be used, polymorphism was deemed unnecessary.
+
 ## Testing
+In order to check our code in multiple situations, the situations needed to be simulated. To do this
+tests for every class were made checking differing exceptions and errors that could occur, however unlikely.
+Several exceptions and errors were simulated for all of the code in this project.
 
 ### Acceptance Testing
 All stories within the sprint 1 passed acceptance testing; minor issue was experienced
