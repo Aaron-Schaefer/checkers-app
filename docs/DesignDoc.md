@@ -42,6 +42,17 @@ Players can login in and play checkers against eachother.
 * Take Pieces
 * Resign
 
+### Definition of Enhancement
+1. Players will have the option to spectate any ongoing game.
+2. Player will be able to reply any game that has ended (either resigned or won).
+3. Player will be able to play vs AI.
+
+### Enhancement Features
+* Player vs AI
+* Spectate ongoing game.
+* Reply ongoing game.
+
+
 ### Roadmap of Enhancements
 
 The enhancements we decided to include within the project are: Replay, Spectator, and AI.
@@ -108,7 +119,8 @@ are used to handle different routes, whether it is posting or handling.
 GetHomeRoute and PostHomeRoute, alongisde PostSignInRoute are used when the
 application is in the state of the player lobby. GetSignIn and PostSingOut routes 
 are used when the player is signing into or signing out of the player lobby. 
-All other routes are used for making moves.
+PostSubmitTurnRoute, PostValidateMoveRoute are used to validate the moves, while 
+other routes are for enhancement features (AI, spectator, reply).
 
 ![Server UI-Tier Class Structure](UITierClassStructure.png)
 
@@ -119,7 +131,7 @@ a game center and moved our PlayerLobby into it. Originally our code only focuse
 on one game, now it can have multiple going on at once. The GameCenter class keeps
 games indexed by the players in the game in an array. The PlayerLobby was moved into
 the Application Tier it still behaves the same, managing the players in arrays and moving
-players in and out of games. As the project continues the Application teir will likely grow.
+players in and out of games. As the project continues the Application tier will likely grow.
 
 ![Application UI-Tier Class Structure](ApplClassStructure_S2.png)
 
