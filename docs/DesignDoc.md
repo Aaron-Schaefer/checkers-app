@@ -16,7 +16,7 @@ geometry: margin=1in
 
 ### Purpose
 This Project is a web based checkers game that is played in a browser.
-Players can login in and play checkers against eachother.
+Players can login in and play checkers against each other.
 
 ### Glossary and Acronyms
 
@@ -63,14 +63,11 @@ with the ability to play against the user. All three of these enhancements were 
  
 ## Application Domain
 
-This section describes the application domain.
-
 ![The WebCheckers Domain Model](DomainModel.png)
 
 There are many inter-layered elements within the domain model, however, 
-they can be classified into: game pieces, game board/logic, game session, 
-and players related attributes.
-
+the MVPs can be classified into: game pieces, game board/logic, game session, 
+and players related attributes. The only enhancement within this tier is the AI logic.
 
 ## Architecture and Design
 
@@ -100,17 +97,19 @@ Details of the components within these tiers are supplied below.
 
 ### Overview of User Interface
 
-This section describes the web interface flow; this is how the user views and interacts
+This is how the user views and interacts
 with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](StateChart.png)
 
 The user begin in the home page, "/", the user proceeds to "/signin" to 
-sign in to player the game. Afterwards, they have an option to begin the 
-game if another player is present, during which they will be redirected 
+sign in to player the game. Afterwards, they have an option to playe vs player, play vs AI,
+spectate an ongoing game, or reply a game that has ended. They begin the 
+game if another player (or against the AI if they choose) is present, during which they will be redirected 
 to "/game". "/validateMove" and "/submitMove" were used to validate and 
-move the pieces. After a player win, or when a plyer resigns, the game is 
-re-dicrected back to the game lobby.
+move the pieces. After a player win, or when a player resigns, the game is 
+re-directed back to the player lobby. The player can then choose any mode again. Game ID & Mode
+are used to keep track of the games and which mode the player is on.
 
 
 ### UI Tier
@@ -151,7 +150,8 @@ position can track a piece's location in an individual space in a row on the boa
 and its movement due to user interaction. The MoveValidator did exactly that it 
 provided the logic of the piece movement, restricting pieces to move in on legal 
 ways but also to create forceful taking of the opponent which is part of the MVP. 
-Although there is a King Class it is empty and does nothing.
+Although there is a King Class it is empty and does nothing. For the enhancement,
+an AI class was added to handle the AI logic.
 
 ![Model UI-Tier Class Structure](ModelTierClassStructure.png)
 
@@ -166,18 +166,23 @@ length to which the code will be used, polymorphism was deemed unnecessary.
 ## Testing
 In order to check our code in multiple situations, the situations needed to be simulated. To do this
 tests for every class were made checking differing exceptions and errors that could occur, however unlikely.
-Several exceptions and errors were simulated for all of the code in this project.
+Several exceptions and errors were simulated for all of the code in this project. Object creation, interaction, and insertion
+were all tested.
 
 ### Acceptance Testing
 All stories within the sprint 1 passed acceptance testing; minor issue was experienced
 while attempting to run the application on Windows based machines, however it was fixed.
 Minor issues were also experienced during sprint 2, where make move occasional throw 
 errors, likely due to an error caused by json. The king piece is not fully functional,
-and is being moved to sprint 3.
+and is being moved to sprint 3. All criteria were met for testing during sprint 3, and final product was 
+released/published.
 
 ### Unit Testing and Code Coverage
 Major issues were experienced during unit testing, and is in the process of being 
 polished up with the help of the TA. Code coverage for sprint 1 has all passed, however,
 the code coverage is still relatively low. Sprint 2 unit testing was not much better,
-as some tests were not fully passing and not all unit tests are complete.. Unit testing 
-for both sprints are still work in progress.
+as some tests were not fully passing and not all unit tests are complete.. Unit testing for Sprint 3
+went relatively well. The application tier received 77% coverage, an relatively good amount for the application
+tier. The model tier received 37% coverage, which can be improved to be 75% plus. Issues were experienced with
+testing the UI tier, with the code coverage only at a mere 7%. This is due to errors encountered while attempting to
+call the when().thenAnswer().
