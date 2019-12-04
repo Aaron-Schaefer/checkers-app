@@ -50,7 +50,7 @@ Players can login in and play checkers against eachother.
 ### Enhancement Features
 * Player vs AI
 * Spectate ongoing game.
-* Reply ongoing game.
+* Reply finished game.
 
 
 ### Roadmap of Enhancements
@@ -116,7 +116,7 @@ re-dicrected back to the game lobby.
 ### UI Tier
 The Server-side UI tier of the architecture is illustrated below. Elements
 are used to handle different routes, whether it is posting or handling. 
-GetHomeRoute and PostHomeRoute, alongisde PostSignInRoute are used when the
+GetHomeRoute and PostHomeRoute, alongside PostSignInRoute are used when the
 application is in the state of the player lobby. GetSignIn and PostSingOut routes 
 are used when the player is signing into or signing out of the player lobby. 
 PostSubmitTurnRoute, PostValidateMoveRoute are used to validate the moves, while 
@@ -158,10 +158,10 @@ Although there is a King Class it is empty and does nothing.
 
 
 ### Design Improvements
-The design itself doesnt not have any significant issues. The backend logic does
-require some adjustment. One improvement could be more use of polymorphism, which 
+ One improvement could be more use of polymorphism, which 
 makes the code easier to adjust in the future. However, knowing the usage and the
-length to which the code will be used, polymorphism was deemed unnecessary.
+length to which the code will be used, polymorphism was deemed unnecessary. Another would to
+better use the application tier and minimize the interactions between the UI and the model.
 
 ## Testing
 In order to check our code in multiple situations, the situations needed to be simulated. To do this
@@ -169,11 +169,8 @@ tests for every class were made checking differing exceptions and errors that co
 Several exceptions and errors were simulated for all of the code in this project.
 
 ### Acceptance Testing
-All stories within the sprint 1 passed acceptance testing; minor issue was experienced
-while attempting to run the application on Windows based machines, however it was fixed.
-Minor issues were also experienced during sprint 2, where make move occasional throw 
-errors, likely due to an error caused by json. The king piece is not fully functional,
-and is being moved to sprint 3.
+All stories in MVP have been tested and work. 3 enhancements have also been tested (Replay, Spectator and AI) 
+to this point. Help and tournament mode are not fully finished and tested yet.
 
 ### Unit Testing and Code Coverage
 Major issues were experienced during unit testing, and is in the process of being 
@@ -181,3 +178,29 @@ polished up with the help of the TA. Code coverage for sprint 1 has all passed, 
 the code coverage is still relatively low. Sprint 2 unit testing was not much better,
 as some tests were not fully passing and not all unit tests are complete.. Unit testing 
 for both sprints are still work in progress.
+
+### Code Metrics
+Classes that exceeded complexity metrics benchmarks:
+* MoveValidator
+* AI
+* GetHomeRoute
+* GetGameRoute
+* PostValidateMoveRoute
+* GetSpectatorRoute
+* PostSubmitTurnRoute
+* GetReplayGameRoute
+
+Analysis:
+
+MoveValidator likely will be hard to get complexity down just due to the complexity
+of the checkers game rules themselves. AI also is very close to the benchmark of 3.00 at 3.20
+so it can be looked at but not a major issue. The Routes however should not be as complex
+as they are and should be looked at. Somme of the functionality should probably be offloaded to 
+other classes probably in the application tier or even the model.
+
+Martin Package Metrics:
+
+![Martin Package](MartinPackageHotSpots.PNG)
+
+Instability of model needs to be addressed. some of the problems may be caused by interaction between UI and model 
+that would be better put in the application.
